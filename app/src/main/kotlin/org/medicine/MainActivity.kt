@@ -4,35 +4,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
-import org.medicine.ui.theme.MedicTheme
+import androidx.compose.material.Scaffold
+import org.medicine.ui.theme.MedicineTheme
 
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+
     setContent {
-      MedicTheme {
-        // A surface container using the 'background' color from the theme
-        Surface(color = MaterialTheme.colors.background) {
-          Greeting("Android")
+      MedicineTheme {
+        Scaffold(backgroundColor = MaterialTheme.colors.background) {
         }
       }
     }
-  }
-}
-
-@Composable
-fun Greeting(name: String) {
-  Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-  MedicTheme {
-    Greeting("Android")
   }
 }
