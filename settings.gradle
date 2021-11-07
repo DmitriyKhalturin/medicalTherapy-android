@@ -8,4 +8,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "Medicine"
 include ":app"
-include ":Medicine-Schedule"
+include ":schedule"
+
+project(":schedule").projectDir = new File(rootDir, "Medicine-Schedule")
