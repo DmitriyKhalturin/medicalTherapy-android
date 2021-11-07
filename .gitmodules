@@ -1,0 +1,3 @@
+[submodule "Medicine-Schedule"]
+	path = Medicine-Schedule
+	url = dmitriykhalturin.github.com:DmitriyKhalturin/Medicine-Schedule.git
