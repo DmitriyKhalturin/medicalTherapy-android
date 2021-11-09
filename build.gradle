@@ -23,7 +23,7 @@ buildscript {
     activityComposeVersion = "1.4.0"
     navigationComposeVersion = "2.4.0-beta02"
     constraintlayoutComposeVersion = "1.0.0-rc01"
-    composeVersion = "1.0.4"
+    composeVersion = "1.0.5"
   }
 
   repositories {
