@@ -2,10 +2,10 @@
 <resources>
   <color name="haleNavy">#555B6E</color>
 
-  <color name="mediumRose">#F4978E</color>
-  <color name="rose">#D87373</color>
   <color name="thinRose">#E7B7B7</color>
   <color name="peachRose">#F8AD9D</color>
+  <color name="mediumRose">#F4978E</color>
+  <color name="rose">#D87373</color>
   <color name="roseBud">#FBB596</color>
   <color name="peach">#FEC89A</color>
   <color name="seashell">#FFF8F4</color>
