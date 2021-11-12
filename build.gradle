@@ -9,6 +9,7 @@ buildscript {
     buildToolsVersion = "31.0.0"
 
     kotlinVersion = "1.5.31"
+    hiltVersion = "2.37"
 
     // App dependencies
     desugarJdkVersion = "1.1.5"
@@ -22,6 +23,7 @@ buildscript {
 
     activityComposeVersion = "1.4.0"
     navigationComposeVersion = "2.4.0-beta02"
+    hiltNavigationComposeVersion = "1.0.0-alpha03"
     constraintlayoutComposeVersion = "1.0.0-rc01"
     composeVersion = "1.0.5"
   }
@@ -37,6 +39,8 @@ buildscript {
 
     // NOTE: Do not place your application dependencies here; they belong
     // in the individual module build.gradle files
+
+    classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
   }
 }
 
