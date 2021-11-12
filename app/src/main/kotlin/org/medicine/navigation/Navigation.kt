@@ -2,14 +2,13 @@ package org.medicine.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
 import androidx.navigation.compose.composable
 import androidx.navigation.createGraph
 import org.medicine.ui.screen.*
 import org.medicine.viewmodel.*
-import java.time.LocalDate
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -23,7 +22,7 @@ fun buildNavGraph(navController: NavController): NavGraph = remember {
   navController.createGraph(Route.Schedule.name) {
 
     composable(route = Route.Schedule.name) {
-      val viewModel = viewModel<ScheduleViewModel>()
+      val viewModel = hiltViewModel<ScheduleViewModel>()
 
       ScheduleScreen(viewModel)
     }
@@ -31,9 +30,8 @@ fun buildNavGraph(navController: NavController): NavGraph = remember {
     composable(
       route = Route.Medication.name,
       arguments = RouteArguments.Medication.arguments,
-    ) { backStackEntry ->
-      val medicationId = requireNotNull(backStackEntry.arguments?.getLong(RouteArgumentsName.Id.name))
-      val viewModel = viewModel<MedicationViewModel>(factory = MedicationViewModel.Factory(medicationId))
+    ) {
+      val viewModel = hiltViewModel<MedicationViewModel>()
 
       MedicationScreen(viewModel)
     }
@@ -41,9 +39,8 @@ fun buildNavGraph(navController: NavController): NavGraph = remember {
     composable(
       route = Route.Event.name,
       arguments = RouteArguments.Event.arguments,
-    ) { backStackEntry ->
-      val eventId = requireNotNull(backStackEntry.arguments?.getLong(RouteArgumentsName.Id.name))
-      val viewModel = viewModel<EventViewModel>(factory = EventViewModel.Factory(eventId))
+    ) {
+      val viewModel = hiltViewModel<EventViewModel>()
 
       EventScreen(viewModel)
     }
@@ -51,15 +48,14 @@ fun buildNavGraph(navController: NavController): NavGraph = remember {
     composable(
       route = Route.DaySchedule.name,
       arguments = RouteArguments.DaySchedule.arguments,
-    ) { backStackEntry ->
-      val scheduleDate = requireNotNull(backStackEntry.arguments?.get(RouteArgumentsName.Date.name) as? LocalDate)
-      val viewModel = viewModel<DayScheduleViewModel>(factory = DayScheduleViewModel.Factory(scheduleDate))
+    ) {
+      val viewModel = hiltViewModel<DayScheduleViewModel>()
 
       DaySchedule(viewModel)
     }
 
     composable(route = Route.About.name) {
-      val viewModel = viewModel<AboutViewModel>()
+      val viewModel = hiltViewModel<AboutViewModel>()
 
       AboutScreen(viewModel)
     }

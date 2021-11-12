@@ -1,5 +1,6 @@
 package org.medicine.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.medicine.common.BaseViewModel
 import javax.inject.Inject
@@ -9,5 +10,7 @@ import javax.inject.Inject
  * for Medicine on 11.11.2021 0:24.
  */
 @HiltViewModel
-class ScheduleViewModel @Inject constructor(): BaseViewModel() {
+class ScheduleViewModel @Inject constructor(
+  savedStateHandle: SavedStateHandle,
+): BaseViewModel() {
 }
