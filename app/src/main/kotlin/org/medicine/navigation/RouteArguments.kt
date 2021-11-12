@@ -25,7 +25,7 @@ enum class RouteArguments(val arguments: List<NamedNavArgument>) {
 
   DaySchedule(listOf(
     navArgument(RouteArgumentsName.Date.name) {
-      type = NavType.fromArgType(type = "LocalDate", packageName = "java.time")
+      type = NavType.fromArgType(type = "java.time.LocalDate", packageName = null)
     }
   ));
 }

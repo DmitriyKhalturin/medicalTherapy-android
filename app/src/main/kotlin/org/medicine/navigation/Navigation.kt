@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.createGraph
 import org.medicine.ui.screen.*
 import org.medicine.viewmodel.*
+import java.time.LocalDate
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -32,7 +33,7 @@ fun buildNavGraph(navController: NavController): NavGraph = remember {
       arguments = RouteArguments.Medication.arguments,
     ) { backStackEntry ->
       val medicationId = requireNotNull(backStackEntry.arguments?.getLong(RouteArgumentsName.Id.name))
-      val viewModel = viewModel<MedicationViewModel>()
+      val viewModel = viewModel<MedicationViewModel>(factory = MedicationViewModel.Factory(medicationId))
 
       MedicationScreen(viewModel)
     }
@@ -42,7 +43,7 @@ fun buildNavGraph(navController: NavController): NavGraph = remember {
       arguments = RouteArguments.Event.arguments,
     ) { backStackEntry ->
       val eventId = requireNotNull(backStackEntry.arguments?.getLong(RouteArgumentsName.Id.name))
-      val viewModel = viewModel<EventViewModel>()
+      val viewModel = viewModel<EventViewModel>(factory = EventViewModel.Factory(eventId))
 
       EventScreen(viewModel)
     }
@@ -51,8 +52,8 @@ fun buildNavGraph(navController: NavController): NavGraph = remember {
       route = Route.DaySchedule.name,
       arguments = RouteArguments.DaySchedule.arguments,
     ) { backStackEntry ->
-      val scheduleDate = requireNotNull(backStackEntry.arguments?.getLong(RouteArgumentsName.Date.name))
-      val viewModel = viewModel<DayScheduleViewModel>()
+      val scheduleDate = requireNotNull(backStackEntry.arguments?.get(RouteArgumentsName.Date.name) as? LocalDate)
+      val viewModel = viewModel<DayScheduleViewModel>(factory = DayScheduleViewModel.Factory(scheduleDate))
 
       DaySchedule(viewModel)
     }
