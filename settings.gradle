@@ -9,5 +9,7 @@ dependencyResolutionManagement {
 rootProject.name = "Medicine"
 include ":app"
 include ":schedule"
+include ":source"
 
 project(":schedule").projectDir = new File(rootDir, "Medicine-Schedule")
+project(":source").projectDir = new File(rootDir, "Medicine-Source")

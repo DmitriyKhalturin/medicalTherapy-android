@@ -89,4 +89,5 @@ dependencies {
   implementation "androidx.hilt:hilt-navigation-compose:$hiltNavigationComposeVersion"
 
   implementation project(":schedule")
+  implementation project(":source")
 }
