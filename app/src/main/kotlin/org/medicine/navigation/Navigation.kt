@@ -15,6 +15,8 @@ import org.medicine.viewmodel.*
  * for Medicine on 11.11.2021 0:03.
  */
 
+/* https://developer.android.com/jetpack/compose/libraries#hilt-navigation */
+
 @Composable
 fun buildNavGraph(navController: NavController): NavGraph = remember {
   navController.createGraph(Route.Schedule.name) {
@@ -22,7 +24,7 @@ fun buildNavGraph(navController: NavController): NavGraph = remember {
     composable(route = Route.Schedule.name) {
       val viewModel = viewModel<ScheduleViewModel>()
 
-      ScheduleScreen()
+      ScheduleScreen(viewModel)
     }
 
     composable(
@@ -32,7 +34,7 @@ fun buildNavGraph(navController: NavController): NavGraph = remember {
       val medicationId = requireNotNull(backStackEntry.arguments?.getLong(RouteArgumentsName.Id.name))
       val viewModel = viewModel<MedicationViewModel>()
 
-      MedicationScreen()
+      MedicationScreen(viewModel)
     }
 
     composable(
@@ -42,7 +44,7 @@ fun buildNavGraph(navController: NavController): NavGraph = remember {
       val eventId = requireNotNull(backStackEntry.arguments?.getLong(RouteArgumentsName.Id.name))
       val viewModel = viewModel<EventViewModel>()
 
-      EventScreen()
+      EventScreen(viewModel)
     }
 
     composable(
@@ -52,13 +54,13 @@ fun buildNavGraph(navController: NavController): NavGraph = remember {
       val scheduleDate = requireNotNull(backStackEntry.arguments?.getLong(RouteArgumentsName.Date.name))
       val viewModel = viewModel<DayScheduleViewModel>()
 
-      DaySchedule()
+      DaySchedule(viewModel)
     }
 
     composable(route = Route.About.name) {
       val viewModel = viewModel<AboutViewModel>()
 
-      AboutScreen()
+      AboutScreen(viewModel)
     }
   }
 }
