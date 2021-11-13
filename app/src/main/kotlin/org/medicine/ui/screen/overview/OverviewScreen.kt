@@ -12,7 +12,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import org.medicine.navigation.Route
 import org.medicine.tools.EMPTY_STRING
-import org.medicine.ui.screen.overview.composable.FetchingTherapies
 import org.medicine.ui.screen.overview.composable.NoOneTherapies
 import org.medicine.ui.screen.overview.composable.Therapies
 import org.medicine.ui.screen.overview.model.OverviewViewState
@@ -54,7 +53,6 @@ fun Overview(
     Box(modifier = Modifier.padding(innerPadding)) {
       when (uiState) {
         is OverviewViewState.Initial -> Unit
-        is OverviewViewState.FetchingTherapies -> FetchingTherapies()
         is OverviewViewState.NoOneTherapies -> NoOneTherapies()
         is OverviewViewState.Therapies -> Therapies()
       }
@@ -83,7 +81,7 @@ fun OverviewPreview() {
   MedicineTheme {
     Overview(
       rememberNavController(),
-      OverviewViewState.FetchingTherapies,
+      OverviewViewState.Initial,
     )
   }
 }

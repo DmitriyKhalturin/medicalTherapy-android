@@ -29,7 +29,6 @@ class OverviewViewModel @Inject constructor(
     launch {
       when (val state = uiState) {
         is OverviewViewState.Initial -> reduce(state, intent)
-        is OverviewViewState.FetchingTherapies -> Unit
         is OverviewViewState.NoOneTherapies -> Unit
         is OverviewViewState.Therapies -> Unit
       }
@@ -44,8 +43,6 @@ class OverviewViewModel @Inject constructor(
   }
 
   private suspend fun fetchTherapies() {
-    uiState = OverviewViewState.FetchingTherapies
-
     // Fetch therapies and set view state.
     delay(1000)
 

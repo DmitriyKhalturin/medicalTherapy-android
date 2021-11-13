@@ -6,7 +6,6 @@ package org.medicine.ui.screen.overview.model
  */
 sealed class OverviewViewState {
   object Initial : OverviewViewState()
-  object FetchingTherapies : OverviewViewState()
   object NoOneTherapies : OverviewViewState()
   data class Therapies(
     val activeTherapies: List<TherapyModel>,
