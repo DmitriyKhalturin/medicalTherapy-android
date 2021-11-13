@@ -26,6 +26,8 @@ buildscript {
     hiltNavigationComposeVersion = "1.0.0-alpha03"
     constraintlayoutComposeVersion = "1.0.0-rc01"
     composeVersion = "1.0.5"
+
+    persistentRoomVersion = "2.3.0"
   }
 
   repositories {
