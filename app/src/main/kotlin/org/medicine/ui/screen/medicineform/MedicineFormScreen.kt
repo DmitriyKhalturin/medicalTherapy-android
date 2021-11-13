@@ -1,7 +1,6 @@
-package org.medicine.ui.screen
+package org.medicine.ui.screen.medicineform
 
 import androidx.compose.runtime.Composable
-import org.medicine.ui.screen.medicineform.MedicineFormViewModel
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>

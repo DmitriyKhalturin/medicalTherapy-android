@@ -1,7 +1,6 @@
-package org.medicine.ui.screen
+package org.medicine.ui.screen.dealform
 
 import androidx.compose.runtime.Composable
-import org.medicine.ui.screen.dealform.DealFormViewModel
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>

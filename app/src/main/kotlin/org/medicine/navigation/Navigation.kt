@@ -7,12 +7,12 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph
 import androidx.navigation.compose.composable
 import androidx.navigation.createGraph
-import org.medicine.ui.screen.ApplicationInfoScreen
-import org.medicine.ui.screen.DealFormScreen
-import org.medicine.ui.screen.MedicineFormScreen
-import org.medicine.ui.screen.TherapyFormScreen
+import org.medicine.ui.screen.applicationinfo.ApplicationInfoScreen
 import org.medicine.ui.screen.dayschedule.DayScheduleScreen
+import org.medicine.ui.screen.dealform.DealFormScreen
+import org.medicine.ui.screen.medicineform.MedicineFormScreen
 import org.medicine.ui.screen.overview.OverviewScreen
+import org.medicine.ui.screen.therapyform.TherapyFormScreen
 import org.medicine.ui.screen.therapyschedule.TherapyScheduleScreen
 
 /**
@@ -24,7 +24,7 @@ import org.medicine.ui.screen.therapyschedule.TherapyScheduleScreen
 
 @Composable
 fun buildNavGraph(navController: NavController): NavGraph = remember {
-  navController.createGraph(Route.TherapySchedule.name) {
+  navController.createGraph(Route.Overview.name) {
 
     composable(route = Route.Overview.name) {
       OverviewScreen(navController = navController, viewModel = hiltViewModel())

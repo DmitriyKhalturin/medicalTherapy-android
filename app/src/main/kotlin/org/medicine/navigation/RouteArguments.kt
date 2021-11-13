@@ -12,14 +12,12 @@ enum class RouteArguments(val arguments: List<NamedNavArgument>) {
   Medicine(listOf(
     navArgument(RouteArgumentsName.Id.name) {
       type = NavType.LongType
-      nullable = true
     }
   )),
 
   Deal(listOf(
     navArgument(RouteArgumentsName.Id.name) {
       type = NavType.LongType
-      nullable = true
     }
   )),
 
