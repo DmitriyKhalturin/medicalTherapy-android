@@ -1,7 +1,7 @@
 package org.medicine.ui.screen
 
 import androidx.compose.runtime.Composable
-import org.medicine.viewmodel.DealFormViewModel
+import org.medicine.ui.screen.medicineform.MedicineFormViewModel
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -9,5 +9,5 @@ import org.medicine.viewmodel.DealFormViewModel
  */
 
 @Composable
-fun DealFormScreen(viewModel: DealFormViewModel) {
+fun MedicineFormScreen(viewModel: MedicineFormViewModel) {
 }

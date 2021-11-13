@@ -1,7 +1,7 @@
 package org.medicine.ui.screen
 
 import androidx.compose.runtime.Composable
-import org.medicine.viewmodel.TherapyFormViewModel
+import org.medicine.ui.screen.therapyform.TherapyFormViewModel
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>

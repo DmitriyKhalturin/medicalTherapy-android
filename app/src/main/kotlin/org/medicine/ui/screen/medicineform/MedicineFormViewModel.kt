@@ -1,19 +1,18 @@
-package org.medicine.viewmodel
+package org.medicine.ui.screen.medicineform
 
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.medicine.common.BaseViewModel
+import org.medicine.common.viewmodel.BaseViewModel
 import org.medicine.navigation.RouteArgumentsName
-import java.time.LocalDate
 import javax.inject.Inject
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
- * for Medicine on 11.11.2021 0:40.
+ * for Medicine on 11.11.2021 0:39.
  */
 @HiltViewModel
-class DayScheduleViewModel @Inject constructor(
+class MedicineFormViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
-  private val scheduleDate = requireNotNull(savedStateHandle.get<LocalDate>(RouteArgumentsName.Date.name))
+  private val medicineId = requireNotNull(savedStateHandle.get<Long>(RouteArgumentsName.Id.name))
 }

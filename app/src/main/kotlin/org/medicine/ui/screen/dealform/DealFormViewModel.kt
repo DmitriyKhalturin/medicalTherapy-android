@@ -1,18 +1,18 @@
-package org.medicine.viewmodel
+package org.medicine.ui.screen.dealform
 
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.medicine.common.BaseViewModel
+import org.medicine.common.viewmodel.BaseViewModel
 import org.medicine.navigation.RouteArgumentsName
 import javax.inject.Inject
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
- * for Medicine on 11.11.2021 0:39.
+ * for Medicine on 11.11.2021 0:40.
  */
 @HiltViewModel
-class MedicineFormViewModel @Inject constructor(
+class DealFormViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
-  private val medicineId = requireNotNull(savedStateHandle.get<Long>(RouteArgumentsName.Id.name))
+  private val dealId = requireNotNull(savedStateHandle.get<Long>(RouteArgumentsName.Id.name))
 }

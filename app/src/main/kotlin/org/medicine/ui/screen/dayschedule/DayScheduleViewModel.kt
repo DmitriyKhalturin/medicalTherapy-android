@@ -1,9 +1,10 @@
-package org.medicine.viewmodel
+package org.medicine.ui.screen.dayschedule
 
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.medicine.common.BaseViewModel
+import org.medicine.common.viewmodel.BaseViewModel
 import org.medicine.navigation.RouteArgumentsName
+import java.time.LocalDate
 import javax.inject.Inject
 
 /**
@@ -11,8 +12,8 @@ import javax.inject.Inject
  * for Medicine on 11.11.2021 0:40.
  */
 @HiltViewModel
-class DealFormViewModel @Inject constructor(
+class DayScheduleViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
-  private val dealId = requireNotNull(savedStateHandle.get<Long>(RouteArgumentsName.Id.name))
+  private val scheduleDate = requireNotNull(savedStateHandle.get<LocalDate>(RouteArgumentsName.Date.name))
 }

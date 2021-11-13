@@ -1,7 +1,7 @@
-package org.medicine.viewmodel
+package org.medicine.ui.screen.applicationinfo
 
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.medicine.common.BaseViewModel
+import org.medicine.common.viewmodel.BaseViewModel
 import javax.inject.Inject
 
 /**

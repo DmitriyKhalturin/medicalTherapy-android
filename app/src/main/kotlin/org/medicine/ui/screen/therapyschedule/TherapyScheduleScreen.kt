@@ -1,7 +1,6 @@
-package org.medicine.ui.screen
+package org.medicine.ui.screen.therapyschedule
 
 import androidx.compose.runtime.Composable
-import org.medicine.viewmodel.TherapyScheduleViewModel
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>

@@ -7,7 +7,13 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph
 import androidx.navigation.compose.composable
 import androidx.navigation.createGraph
-import org.medicine.ui.screen.*
+import org.medicine.ui.screen.ApplicationInfoScreen
+import org.medicine.ui.screen.DealFormScreen
+import org.medicine.ui.screen.MedicineFormScreen
+import org.medicine.ui.screen.TherapyFormScreen
+import org.medicine.ui.screen.dayschedule.DayScheduleScreen
+import org.medicine.ui.screen.overview.OverviewScreen
+import org.medicine.ui.screen.therapyschedule.TherapyScheduleScreen
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
