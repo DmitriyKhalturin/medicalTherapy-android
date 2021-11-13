@@ -27,7 +27,7 @@ fun buildNavGraph(navController: NavController): NavGraph = remember {
   navController.createGraph(Route.TherapySchedule.name) {
 
     composable(route = Route.Overview.name) {
-      OverviewScreen(viewModel = hiltViewModel())
+      OverviewScreen(navController = navController, viewModel = hiltViewModel())
     }
 
     composable(route = Route.TherapySchedule.name) {
