@@ -9,14 +9,14 @@ import androidx.navigation.navArgument
  * for Medicine on 11.11.2021 0:26.
  */
 enum class RouteArguments(val arguments: List<NamedNavArgument>) {
-  Medication(listOf(
+  Medicine(listOf(
     navArgument(RouteArgumentsName.Id.name) {
       type = NavType.LongType
       nullable = true
     }
   )),
 
-  Event(listOf(
+  Deal(listOf(
     navArgument(RouteArgumentsName.Id.name) {
       type = NavType.LongType
       nullable = true

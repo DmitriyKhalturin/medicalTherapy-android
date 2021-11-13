@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -20,6 +21,7 @@ class MainActivity : ComponentActivity() {
 
     setContent {
       val scaffoldState = rememberScaffoldState()
+      val coroutineScope = rememberCoroutineScope()
       val navController = rememberNavController()
 
       MedicineTheme {

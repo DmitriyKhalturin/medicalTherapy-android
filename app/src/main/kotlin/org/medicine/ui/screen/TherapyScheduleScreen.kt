@@ -1,7 +1,7 @@
 package org.medicine.ui.screen
 
 import androidx.compose.runtime.Composable
-import org.medicine.viewmodel.DayScheduleViewModel
+import org.medicine.viewmodel.TherapyScheduleViewModel
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -9,5 +9,5 @@ import org.medicine.viewmodel.DayScheduleViewModel
  */
 
 @Composable
-fun DayScheduleScreen(viewModel: DayScheduleViewModel) {
+fun TherapyScheduleScreen(viewModel: TherapyScheduleViewModel) {
 }

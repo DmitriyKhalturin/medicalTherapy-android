@@ -18,35 +18,43 @@ import org.medicine.ui.screen.*
 
 @Composable
 fun buildNavGraph(navController: NavController): NavGraph = remember {
-  navController.createGraph(Route.Schedule.name) {
+  navController.createGraph(Route.TherapySchedule.name) {
 
-    composable(route = Route.Schedule.name) {
-      ScheduleScreen(hiltViewModel())
+    composable(route = Route.Overview.name) {
+      OverviewScreen(viewModel = hiltViewModel())
+    }
+
+    composable(route = Route.TherapySchedule.name) {
+      TherapyScheduleScreen(viewModel = hiltViewModel())
+    }
+
+    composable(route = Route.TherapyForm.name) {
+      TherapyFormScreen(viewModel = hiltViewModel())
     }
 
     composable(
-      route = Route.Medication.name,
-      arguments = RouteArguments.Medication.arguments,
+      route = Route.MedicineForm.name,
+      arguments = RouteArguments.Medicine.arguments,
     ) {
-      MedicationScreen(hiltViewModel())
+      MedicineFormScreen(viewModel = hiltViewModel())
     }
 
     composable(
-      route = Route.Event.name,
-      arguments = RouteArguments.Event.arguments,
+      route = Route.DealForm.name,
+      arguments = RouteArguments.Deal.arguments,
     ) {
-      EventScreen(hiltViewModel())
+      DealFormScreen(viewModel = hiltViewModel())
     }
 
     composable(
       route = Route.DaySchedule.name,
       arguments = RouteArguments.DaySchedule.arguments,
     ) {
-      DaySchedule(hiltViewModel())
+      DayScheduleScreen(viewModel = hiltViewModel())
     }
 
-    composable(route = Route.About.name) {
-      AboutScreen(hiltViewModel())
+    composable(route = Route.ApplicationInfo.name) {
+      ApplicationInfoScreen(viewModel = hiltViewModel())
     }
   }
 }

@@ -5,9 +5,11 @@ package org.medicine.navigation
  * for Medicine on 11.11.2021 0:20.
  */
 enum class Route {
-  Schedule,
-  Medication,
-  Event,
+  Overview,
+  TherapySchedule,
+  TherapyForm,
+  MedicineForm,
+  DealForm,
   DaySchedule,
-  About;
+  ApplicationInfo;
 }

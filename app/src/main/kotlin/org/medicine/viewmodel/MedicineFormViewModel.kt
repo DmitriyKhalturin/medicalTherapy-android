@@ -11,8 +11,8 @@ import javax.inject.Inject
  * for Medicine on 11.11.2021 0:39.
  */
 @HiltViewModel
-class MedicationViewModel @Inject constructor(
+class MedicineFormViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
-  private val medicationId = requireNotNull(savedStateHandle.get<Long>(RouteArgumentsName.Id.name))
+  private val medicineId = requireNotNull(savedStateHandle.get<Long>(RouteArgumentsName.Id.name))
 }
