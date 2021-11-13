@@ -1,4 +1,4 @@
-package org.medicine.common
+package org.medicine.common.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
