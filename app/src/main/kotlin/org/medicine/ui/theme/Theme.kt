@@ -4,8 +4,11 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import org.medicine.R
+import org.medicine.scheduler.theme.MedicineScheduleColors
+import org.medicine.scheduler.theme.MedicineScheduleTheme
 
 private val LightColorPalette
   @Composable get() = lightColors(
@@ -24,14 +27,28 @@ private val LightColorPalette
     onSurface = colorResource(id = R.color.darkGray),
   )
 
+private val LightMedicineSchedulePalette
+  @Composable get() = MedicineScheduleColors(
+    content = Color(0xFF555B6E),
+    today = Color(0xFFFFDCDC),
+    onToday = Color(0xE6F13434),
+    medicine = Color(0xFFF08C8C),
+    onMedicine = Color(0xE6FFF9F9),
+    deal = Color(0xFFA0CCCA),
+    onDeal = Color(0xE6E2F1F1),
+    true,
+  )
+
 @Composable
 fun MedicineTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-  val colors = LightColorPalette
-
   MaterialTheme(
-    colors = colors,
+    colors = LightColorPalette,
     typography = Typography,
     shapes = Shapes,
-    content = content
-  )
+  ) {
+    MedicineScheduleTheme(
+      medicineScheduleColors = LightMedicineSchedulePalette,
+      content = content
+    )
+  }
 }
