@@ -28,6 +28,8 @@ buildscript {
     composeVersion = "1.0.5"
 
     persistentRoomVersion = "2.3.0"
+
+    gsonVersion = "2.8.6"
   }
 
   repositories {
