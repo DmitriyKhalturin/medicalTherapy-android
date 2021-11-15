@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.medicine.navigation.buildNavGraph
-import org.medicine.ui.theme.MedicineTheme
+import org.medicine.ui.theme.MedicalTherapyTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
       val coroutineScope = rememberCoroutineScope()
       val navController = rememberNavController()
 
-      MedicineTheme {
+      MedicalTherapyTheme {
         NavHost(
           navController = navController,
           graph = buildNavGraph(navController),

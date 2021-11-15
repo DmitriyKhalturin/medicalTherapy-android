@@ -15,7 +15,7 @@ import org.medicine.tools.EMPTY_STRING
 import org.medicine.ui.screen.overview.composable.NoOneTherapies
 import org.medicine.ui.screen.overview.composable.Therapies
 import org.medicine.ui.screen.overview.model.OverviewViewState
-import org.medicine.ui.theme.MedicineTheme
+import org.medicine.ui.theme.MedicalTherapyTheme
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -78,7 +78,7 @@ fun OverviewTopBar(
 @Preview(showSystemUi = true)
 @Composable
 fun OverviewPreview() {
-  MedicineTheme {
+  MedicalTherapyTheme {
     Overview(
       rememberNavController(),
       OverviewViewState.Initial,
