@@ -40,6 +40,7 @@ fun NoOneTherapies(createTherapyOnClick: () -> Unit) {
   }
 }
 
+
 @Preview(showBackground = true)
 @Composable
 fun NoOneTherapiesPreview() {

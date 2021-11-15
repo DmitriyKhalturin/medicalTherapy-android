@@ -1,5 +1,6 @@
-package org.medicine.ui.screen.overview.composable
+package org.medicine.ui.screen.overview.composable.therapies
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.Text
@@ -7,7 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import org.medicine.ui.screen.overview.composable.TherapiesTab
 import org.medicine.ui.theme.MedicalTherapyTheme
 
 /**
@@ -24,11 +28,12 @@ fun TherapiesTabRow(
   TabRow(selectedTabIndex = tabSelectedIndex) {
     tabs.forEachIndexed { index, therapiesTab ->
       Tab(selected = index == tabSelectedIndex, onClick = { tabOnClick(index) }) {
-        Text(text = therapiesTab.title)
+        Text(text = therapiesTab.title, modifier = Modifier.padding(8.dp))
       }
     }
   }
 }
+
 
 @Preview(showBackground = true)
 @Composable

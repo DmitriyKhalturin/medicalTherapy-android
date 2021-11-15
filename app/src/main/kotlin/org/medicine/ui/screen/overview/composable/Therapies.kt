@@ -1,8 +1,14 @@
 package org.medicine.ui.screen.overview.composable
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import org.medicine.ui.screen.overview.composable.therapies.ActiveTherapies
+import org.medicine.ui.screen.overview.composable.therapies.ArchivedTherapies
+import org.medicine.ui.screen.overview.composable.therapies.TherapiesTabRow
+import org.medicine.ui.screen.overview.model.TherapyModel
 import org.medicine.ui.theme.MedicalTherapyTheme
 
 /**
@@ -11,26 +17,43 @@ import org.medicine.ui.theme.MedicalTherapyTheme
  */
 
 @Composable
-fun Therapies() {
+fun Therapies(
+  activeTherapies: List<TherapyModel>,
+  archivedTherapies: List<TherapyModel>,
+  openTherapyOnClick: (Long) -> Unit,
+  createTherapyOnClick: () -> Unit,
+) {
   var tabSelectedIndex by remember { mutableStateOf(0) }
 
-  Column {
-    val therapiesTabs = TherapiesTab.values()
-
+  Column(modifier = Modifier.fillMaxSize()) {
     TherapiesTabRow(
-      tabs = therapiesTabs,
+      tabs = TherapiesTab.values(),
       tabSelectedIndex = tabSelectedIndex,
       tabOnClick = { index -> tabSelectedIndex = index }
     )
 
-    therapiesTabs[tabSelectedIndex].content()
+    when (tabSelectedIndex) {
+      TherapiesTab.Active.ordinal -> ActiveTherapies(activeTherapies, openTherapyOnClick, createTherapyOnClick)
+      TherapiesTab.Archived.ordinal -> ArchivedTherapies(archivedTherapies, openTherapyOnClick)
+    }
   }
 }
+
+enum class TherapiesTab(val title: String) {
+  Active("Active"),
+  Archived("Archived");
+}
+
 
 @Preview(showBackground = true)
 @Composable
 fun TherapiesPreview() {
   MedicalTherapyTheme {
-    Therapies()
+    Therapies(
+      activeTherapies = listOf(),
+      archivedTherapies = listOf(),
+      openTherapyOnClick = { },
+      createTherapyOnClick = { }
+    )
   }
 }

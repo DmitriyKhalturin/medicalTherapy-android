@@ -53,8 +53,17 @@ fun Overview(
     Box(modifier = Modifier.padding(innerPadding)) {
       when (uiState) {
         is OverviewViewState.Initial -> Unit
-        is OverviewViewState.NoOneTherapies -> NoOneTherapies(createTherapyOnClick = { })
-        is OverviewViewState.Therapies -> Therapies()
+        is OverviewViewState.NoOneTherapies ->
+          NoOneTherapies(
+            createTherapyOnClick = { }
+          )
+        is OverviewViewState.Therapies ->
+          Therapies(
+            uiState.activeTherapies,
+            uiState.archivedTherapies,
+            createTherapyOnClick = { },
+            openTherapyOnClick = { }
+          )
       }
     }
   }

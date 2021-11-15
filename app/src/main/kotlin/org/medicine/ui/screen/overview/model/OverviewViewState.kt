@@ -9,6 +9,6 @@ sealed class OverviewViewState {
   object NoOneTherapies : OverviewViewState()
   data class Therapies(
     val activeTherapies: List<TherapyModel>,
-    val archivedTherapies: List<TherapyModel>
+    val archivedTherapies: List<TherapyModel>,
   ) : OverviewViewState()
 }
