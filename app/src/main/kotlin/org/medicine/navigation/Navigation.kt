@@ -34,27 +34,30 @@ fun buildNavGraph(navController: NavController): NavGraph = remember {
       TherapyScheduleScreen(viewModel = hiltViewModel())
     }
 
-    composable(route = Route.TherapyForm.name) {
+    composable(
+      route = Route.TherapyForm.name,
+      arguments = RouteArguments.Id.arguments,
+    ) {
       TherapyFormScreen(viewModel = hiltViewModel())
     }
 
     composable(
       route = Route.MedicineForm.name,
-      arguments = RouteArguments.Medicine.arguments,
+      arguments = RouteArguments.Id.arguments,
     ) {
       MedicineFormScreen(viewModel = hiltViewModel())
     }
 
     composable(
       route = Route.DealForm.name,
-      arguments = RouteArguments.Deal.arguments,
+      arguments = RouteArguments.Id.arguments,
     ) {
       DealFormScreen(viewModel = hiltViewModel())
     }
 
     composable(
       route = Route.DaySchedule.name,
-      arguments = RouteArguments.DaySchedule.arguments,
+      arguments = RouteArguments.Date.arguments,
     ) {
       DayScheduleScreen(viewModel = hiltViewModel())
     }

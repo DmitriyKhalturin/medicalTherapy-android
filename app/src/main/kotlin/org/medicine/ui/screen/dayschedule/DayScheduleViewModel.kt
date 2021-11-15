@@ -15,5 +15,11 @@ import javax.inject.Inject
 class DayScheduleViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
-  private val scheduleDate = requireNotNull(savedStateHandle.get<LocalDate>(RouteArgumentsName.Date.name))
+  private val scheduleDate = savedStateHandle.get<LocalDate>(RouteArgumentsName.Date.name)
+
+  init {
+    if (scheduleDate == null) {
+      val a = scheduleDate
+    }
+  }
 }

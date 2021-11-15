@@ -1,11 +1,14 @@
 package org.medicine.ui.screen.overview
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
@@ -52,7 +55,18 @@ fun Overview(
   ) { innerPadding ->
     Box(modifier = Modifier.padding(innerPadding)) {
       when (uiState) {
-        is OverviewViewState.Initial -> Unit
+        is OverviewViewState.Initial -> {
+          Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Ass(
+              withArgument = {
+                navController.navigate(Route.DaySchedule.name)
+              },
+              withoutArgument = {
+                navController.navigate(Route.DaySchedule.name)
+              },
+            )
+          }
+        }
         is OverviewViewState.NoOneTherapies ->
           NoOneTherapies(
             createTherapyOnClick = { }
@@ -70,6 +84,21 @@ fun Overview(
             }
           )
       }
+    }
+  }
+}
+
+@Composable
+fun Ass(
+  withArgument: () -> Unit,
+  withoutArgument: () -> Unit
+) {
+  Column() {
+    Button(onClick = { withArgument() }) {
+      Text(text = "with argument")
+    }
+    Button(onClick = { withoutArgument() }) {
+      Text(text = "without argument")
     }
   }
 }
