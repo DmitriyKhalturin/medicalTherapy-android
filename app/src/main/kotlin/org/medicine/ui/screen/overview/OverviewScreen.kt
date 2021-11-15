@@ -53,7 +53,7 @@ fun Overview(
     Box(modifier = Modifier.padding(innerPadding)) {
       when (uiState) {
         is OverviewViewState.Initial -> Unit
-        is OverviewViewState.NoOneTherapies -> NoOneTherapies()
+        is OverviewViewState.NoOneTherapies -> NoOneTherapies(createTherapyOnClick = { })
         is OverviewViewState.Therapies -> Therapies()
       }
     }
@@ -75,7 +75,7 @@ fun OverviewTopBar(
 }
 
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 fun OverviewPreview() {
   MedicalTherapyTheme {
