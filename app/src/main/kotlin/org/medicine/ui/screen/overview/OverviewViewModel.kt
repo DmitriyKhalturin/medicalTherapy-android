@@ -3,8 +3,8 @@ package org.medicine.ui.screen.overview
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import org.medicine.common.exception.UnimplementedViewStateException
 import org.medicine.common.viewmodel.BaseViewModel
 import org.medicine.common.viewmodel.IntentHandler
@@ -17,9 +17,7 @@ import javax.inject.Inject
  * for Medicine on 13.11.2021 6:06.
  */
 @HiltViewModel
-class OverviewViewModel @Inject constructor(
-  savedStateHandle: SavedStateHandle,
-) : BaseViewModel(), IntentHandler<OverviewIntent> {
+class OverviewViewModel @Inject constructor() : BaseViewModel(), IntentHandler<OverviewIntent> {
 
   var uiState by mutableStateOf<OverviewViewState>(OverviewViewState.Initial)
     private set
@@ -43,8 +41,8 @@ class OverviewViewModel @Inject constructor(
 
   private suspend fun fetchTherapies() {
     // Fetch therapies and set view state.
-    //delay(1000)
-    //
-    //uiState = OverviewViewState.NoOneTherapies
+    delay(1000)
+
+    uiState = OverviewViewState.NoOneTherapies
   }
 }
