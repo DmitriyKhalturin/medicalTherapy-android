@@ -5,5 +5,6 @@ package org.medicine.ui.screen.overview.model
  * for Medicine on 13.11.2021 7:13.
  */
 data class TherapyModel(
-  val id: Long = 0L
+  val id: Long = 0L,
+  val name: String,
 )

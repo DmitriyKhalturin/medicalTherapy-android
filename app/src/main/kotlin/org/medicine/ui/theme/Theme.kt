@@ -7,8 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import org.medicine.R
-import org.medicine.scheduler.theme.MedicineScheduleColors
-import org.medicine.scheduler.theme.MedicineScheduleTheme
+import org.medicine.scheduler.theme.MedicalTherapyScheduleColors
+import org.medicine.scheduler.theme.MedicalTherapyScheduleTheme
 
 private val LightColorPalette
   @Composable get() = lightColors(
@@ -28,7 +28,7 @@ private val LightColorPalette
   )
 
 private val LightMedicineSchedulePalette
-  @Composable get() = MedicineScheduleColors(
+  @Composable get() = MedicalTherapyScheduleColors(
     content = Color(0xFF555B6E),
     today = Color(0xFFFFDCDC),
     onToday = Color(0xE6F13434),
@@ -46,8 +46,8 @@ fun MedicineTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composab
     typography = Typography,
     shapes = Shapes,
   ) {
-    MedicineScheduleTheme(
-      medicineScheduleColors = LightMedicineSchedulePalette,
+    MedicalTherapyScheduleTheme(
+      medicalTherapyScheduleColors = LightMedicineSchedulePalette,
       content = content
     )
   }

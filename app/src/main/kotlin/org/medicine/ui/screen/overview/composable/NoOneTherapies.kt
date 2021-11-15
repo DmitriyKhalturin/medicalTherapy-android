@@ -15,4 +15,5 @@ fun NoOneTherapies() {
 @Preview
 @Composable
 fun NoOneTherapiesPreview() {
+
 }
