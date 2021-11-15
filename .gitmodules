@@ -1,0 +1,7 @@
+[submodule "MedicalTherapy-Schedule"]
+	path = MedicalTherapy-Schedule
+	url = dmitriykhalturin.github.com:DmitriyKhalturin/MedicalTherapy-Schedule.git
+
+[submodule "MedicalTherapy-Source"]
+	path = MedicalTherapy-Source
+	url = dmitriykhalturin.github.com:DmitriyKhalturin/MedicalTherapy-Source.git
