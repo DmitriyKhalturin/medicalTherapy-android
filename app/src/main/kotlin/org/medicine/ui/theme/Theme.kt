@@ -2,12 +2,14 @@ package org.medicine.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ProvideTextStyle
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.TextStyle
 import org.medicine.R
 import org.medicine.scheduler.theme.MedicalTherapyScheduleColors
 import org.medicine.scheduler.theme.MedicalTherapyScheduleTheme
@@ -60,7 +62,10 @@ fun MedicalTherapyTheme(
         medicalTherapyScheduleColors = LightMedicineSchedulePalette
       ) {
         /** Provide theme parts (style, color, etc). */
-        content()
+        ProvideTextStyle(
+          value = TextStyle(color = MaterialTheme.colors.onBackground),
+          content = content
+        )
       }
     }
   }
