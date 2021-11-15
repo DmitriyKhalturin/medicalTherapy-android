@@ -61,8 +61,13 @@ fun Overview(
           Therapies(
             uiState.activeTherapies,
             uiState.archivedTherapies,
-            createTherapyOnClick = { },
-            openTherapyOnClick = { }
+            createTherapyOnClick = {
+              navController.navigate(Route.TherapyForm.name)
+            },
+            openTherapyOnClick = {
+              // TODO: pass Id to savedStateHandle
+              navController.navigate(Route.TherapyForm.name)
+            }
           )
       }
     }

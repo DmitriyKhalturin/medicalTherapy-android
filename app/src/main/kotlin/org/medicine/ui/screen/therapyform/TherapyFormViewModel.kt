@@ -3,6 +3,7 @@ package org.medicine.ui.screen.therapyform
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.medicine.common.viewmodel.BaseViewModel
+import org.medicine.navigation.RouteArgumentsName
 import javax.inject.Inject
 
 /**
@@ -13,4 +14,5 @@ import javax.inject.Inject
 class TherapyFormViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
 ): BaseViewModel() {
+  private val therapyId = requireNotNull(savedStateHandle.get<Long>(RouteArgumentsName.Id.name))
 }
