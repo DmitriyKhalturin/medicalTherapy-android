@@ -5,9 +5,6 @@ import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
-import androidx.navigation.compose.composable
-import androidx.navigation.createGraph
-import org.medicine.navigation.Route.Companion.name
 import org.medicine.ui.screen.applicationinfo.ApplicationInfoScreen
 import org.medicine.ui.screen.dayschedule.DayScheduleScreen
 import org.medicine.ui.screen.dealform.DealFormScreen
@@ -21,37 +18,39 @@ import org.medicine.ui.screen.therapyschedule.TherapyScheduleScreen
  * for Medicine on 11.11.2021 0:03.
  */
 
-/* https://developer.android.com/jetpack/compose/libraries#hilt-navigation */
+/**
+ * Documentation by [hilt](https://developer.android.com/jetpack/compose/libraries#hilt-navigation)
+ */
 
 @Composable
 fun buildNavGraph(navController: NavController): NavGraph = remember {
-  navController.createGraph(Route.Overview.name) {
+  navController.createGraph(Route.Overview) {
 
-    composable(route = Route.Overview.name) {
+    composable(Route.Overview) {
       OverviewScreen(navController = navController, viewModel = hiltViewModel())
     }
 
-    composable(route = Route.TherapySchedule.name) {
+    composable(Route.TherapySchedule) {
       TherapyScheduleScreen(viewModel = hiltViewModel())
     }
 
-    composable(route = Route.TherapyForm.name) {
+    composable(Route.TherapyForm) {
       TherapyFormScreen(viewModel = hiltViewModel())
     }
 
-    composable(route = Route.MedicineForm.name) {
+    composable(Route.MedicineForm) {
       MedicineFormScreen(viewModel = hiltViewModel())
     }
 
-    composable(route = Route.DealForm.name) {
+    composable(Route.DealForm) {
       DealFormScreen(viewModel = hiltViewModel())
     }
 
-    composable(route = Route.DaySchedule.name) {
+    composable(Route.DaySchedule) {
       DayScheduleScreen(viewModel = hiltViewModel())
     }
 
-    composable(route = Route.ApplicationInfo.name) {
+    composable(Route.ApplicationInfo) {
       ApplicationInfoScreen(viewModel = hiltViewModel())
     }
   }
