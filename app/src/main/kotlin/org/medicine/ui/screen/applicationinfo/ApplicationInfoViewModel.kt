@@ -1,5 +1,6 @@
 package org.medicine.ui.screen.applicationinfo
 
+import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.medicine.common.viewmodel.BaseViewModel
 import javax.inject.Inject
@@ -9,5 +10,7 @@ import javax.inject.Inject
  * for Medicine on 11.11.2021 0:40.
  */
 @HiltViewModel
-class ApplicationInfoViewModel @Inject constructor(): BaseViewModel() {
+class ApplicationInfoViewModel @Inject constructor(
+  savedStateHandle: SavedStateHandle,
+): BaseViewModel() {
 }

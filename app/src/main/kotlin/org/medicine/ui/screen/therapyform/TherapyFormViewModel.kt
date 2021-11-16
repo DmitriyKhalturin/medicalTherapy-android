@@ -1,5 +1,6 @@
 package org.medicine.ui.screen.therapyform
 
+import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.medicine.common.viewmodel.BaseViewModel
 import javax.inject.Inject
@@ -9,4 +10,6 @@ import javax.inject.Inject
  * for Medicine on 13.11.2021 6:03.
  */
 @HiltViewModel
-class TherapyFormViewModel @Inject constructor(): BaseViewModel()
+class TherapyFormViewModel @Inject constructor(
+  savedStateHandle: SavedStateHandle,
+): BaseViewModel()

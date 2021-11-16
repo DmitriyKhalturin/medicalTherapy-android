@@ -6,15 +6,17 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import org.medicine.navigation.Route
-import org.medicine.navigation.Route.Companion.name
+import org.medicine.navigation.Destination
+import org.medicine.navigation.navigate
 import org.medicine.tools.EMPTY_STRING
 import org.medicine.ui.screen.overview.composable.NoOneTherapies
 import org.medicine.ui.screen.overview.composable.Therapies
+import org.medicine.ui.screen.overview.model.OverviewIntent
 import org.medicine.ui.screen.overview.model.OverviewViewState
 import org.medicine.ui.theme.MedicalTherapyTheme
 
@@ -28,10 +30,16 @@ fun OverviewScreen(
   navController: NavController,
   viewModel: OverviewViewModel,
 ) {
+  val uiState = viewModel.uiState
+
   Overview(
     navController,
-    viewModel.uiState,
+    uiState,
   )
+
+  LaunchedEffect(key1 = uiState) {
+    viewModel.obtainIntent(OverviewIntent.EnterScreen)
+  }
 }
 
 @Composable
@@ -46,7 +54,7 @@ fun Overview(
     topBar = {
       OverviewTopBar(
         applicationOnClick = {
-          navController.navigate(Route.ApplicationInfo.name)
+          navController.navigate(Destination.ApplicationInfo)
         }
       )
     }
@@ -56,17 +64,19 @@ fun Overview(
         is OverviewViewState.Initial -> Unit
         is OverviewViewState.NoOneTherapies ->
           NoOneTherapies(
-            createTherapyOnClick = { }
+            createTherapyOnClick = {
+              navController.navigate(Destination.TherapyForm())
+            }
           )
         is OverviewViewState.Therapies ->
           Therapies(
             uiState.activeTherapies,
             uiState.archivedTherapies,
             createTherapyOnClick = {
-              navController.navigate(Route.TherapyForm.name)
+              navController.navigate(Destination.TherapyForm())
             },
-            openTherapyOnClick = {
-              navController.navigate(Route.TherapyForm.name)
+            openTherapyOnClick = { therapyId ->
+              navController.navigate(Destination.TherapySchedule(therapyId))
             }
           )
       }
