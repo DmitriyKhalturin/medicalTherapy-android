@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph
 import androidx.navigation.compose.composable
 import androidx.navigation.createGraph
+import org.medicine.navigation.Route.Companion.name
 import org.medicine.ui.screen.applicationinfo.ApplicationInfoScreen
 import org.medicine.ui.screen.dayschedule.DayScheduleScreen
 import org.medicine.ui.screen.dealform.DealFormScreen
