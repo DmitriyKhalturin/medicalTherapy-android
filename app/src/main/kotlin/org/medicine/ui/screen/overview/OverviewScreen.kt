@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import org.medicine.navigation.Route
+import org.medicine.navigation.Route.Companion.name
 import org.medicine.tools.EMPTY_STRING
 import org.medicine.ui.screen.overview.composable.NoOneTherapies
 import org.medicine.ui.screen.overview.composable.Therapies
@@ -88,7 +89,7 @@ fun OverviewTopBar(
 }
 
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun OverviewPreview() {
   MedicalTherapyTheme {
