@@ -34,8 +34,15 @@ fun Therapies(
     )
 
     when (tabSelectedIndex) {
-      TherapiesTab.Active.ordinal -> ActiveTherapies(activeTherapies, openTherapyOnClick, createTherapyOnClick)
-      TherapiesTab.Archived.ordinal -> ArchivedTherapies(archivedTherapies, openTherapyOnClick)
+      TherapiesTab.Active.ordinal -> ActiveTherapies(
+        therapies = activeTherapies,
+        openTherapyOnClick = openTherapyOnClick,
+        createTherapyOnClick = createTherapyOnClick,
+      )
+      TherapiesTab.Archived.ordinal -> ArchivedTherapies(
+        therapies = archivedTherapies,
+        openTherapyOnClick = openTherapyOnClick,
+      )
     }
   }
 }

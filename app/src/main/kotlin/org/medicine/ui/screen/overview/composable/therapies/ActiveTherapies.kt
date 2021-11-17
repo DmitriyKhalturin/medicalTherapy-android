@@ -29,6 +29,7 @@ import org.medicine.ui.theme.MedicalTherapyTheme
 
 @Composable
 fun ActiveTherapies(
+  modifier: Modifier = Modifier,
   therapies: List<TherapyModel>,
   openTherapyOnClick: (Long) -> Unit,
   createTherapyOnClick: () -> Unit,
@@ -36,8 +37,8 @@ fun ActiveTherapies(
   val lazyListState = rememberLazyListState()
 
   Column(
-    modifier = Modifier.fillMaxSize(),
-    horizontalAlignment = Alignment.CenterHorizontally
+    modifier = modifier.fillMaxSize(),
+    horizontalAlignment = Alignment.CenterHorizontally,
   ) {
     LazyColumn(
       modifier = Modifier.weight(1f),

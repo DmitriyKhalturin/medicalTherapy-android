@@ -21,11 +21,12 @@ import org.medicine.ui.theme.MedicalTherapyTheme
 
 @Composable
 fun TherapiesTabRow(
+  modifier: Modifier = Modifier,
   tabs: Array<TherapiesTab>,
   tabSelectedIndex: Int,
   tabOnClick: (Int) -> Unit
 ) {
-  TabRow(selectedTabIndex = tabSelectedIndex) {
+  TabRow(modifier = modifier, selectedTabIndex = tabSelectedIndex) {
     tabs.forEachIndexed { index, therapiesTab ->
       Tab(selected = index == tabSelectedIndex, onClick = { tabOnClick(index) }) {
         Text(text = therapiesTab.title, modifier = Modifier.padding(8.dp))

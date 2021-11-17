@@ -3,6 +3,7 @@ package org.medicine.ui.screen.overview.composable.therapies
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,10 +19,16 @@ import org.medicine.ui.theme.MedicalTherapyTheme
 
 @Composable
 fun ArchivedTherapies(
+  modifier: Modifier = Modifier,
   therapies: List<TherapyModel>,
   openTherapyOnClick: (Long) -> Unit,
 ) {
-  LazyColumn(modifier = Modifier.fillMaxSize()) {
+  val lazyListState = rememberLazyListState()
+
+  LazyColumn(
+    modifier = modifier.fillMaxSize(),
+    state = lazyListState,
+  ) {
     items(therapies) { therapy ->
       ArchivedTherapyItem(therapy = therapy, openTherapyOnClick = openTherapyOnClick)
     }
