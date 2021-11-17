@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.medicine.ui.screen.overview.model.TherapyModel
-import org.medicine.ui.stub.data.Models
+import org.medicine.ui.stub.data.stubTherapy
 import org.medicine.ui.theme.MedicalTherapyTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -79,6 +79,6 @@ fun ActiveTherapyItem(
 @Composable
 fun ActiveTherapyItemPreview() {
   MedicalTherapyTheme {
-    ActiveTherapyItem(therapy = Models.therapy, openTherapyOnClick = { })
+    ActiveTherapyItem(therapy = stubTherapy(), openTherapyOnClick = { })
   }
 }

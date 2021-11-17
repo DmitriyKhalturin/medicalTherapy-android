@@ -9,6 +9,7 @@ import org.medicine.ui.screen.overview.composable.therapies.ActiveTherapies
 import org.medicine.ui.screen.overview.composable.therapies.ArchivedTherapies
 import org.medicine.ui.screen.overview.composable.therapies.TherapiesTabRow
 import org.medicine.ui.screen.overview.model.TherapyModel
+import org.medicine.ui.stub.data.stubActiveTherapies
 import org.medicine.ui.theme.MedicalTherapyTheme
 
 /**
@@ -50,8 +51,8 @@ enum class TherapiesTab(val title: String) {
 fun TherapiesPreview() {
   MedicalTherapyTheme {
     Therapies(
-      activeTherapies = listOf(),
-      archivedTherapies = listOf(),
+      activeTherapies = stubActiveTherapies(),
+      archivedTherapies = emptyList(),
       openTherapyOnClick = { },
       createTherapyOnClick = { }
     )

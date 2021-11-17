@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import org.medicine.tools.EMPTY_STRING
 import org.medicine.ui.screen.overview.composable.therapies.item.ActiveTherapyItem
 import org.medicine.ui.screen.overview.model.TherapyModel
-import org.medicine.ui.stub.data.Models
+import org.medicine.ui.stub.data.stubActiveTherapies
 import org.medicine.ui.theme.MedicalTherapyTheme
 
 /**
@@ -64,10 +64,7 @@ fun ActiveTherapies(
 fun ActiveTherapiesPreview() {
   MedicalTherapyTheme {
     ActiveTherapies(
-      therapies = List(3) { Models.therapy }
-        .mapIndexed { index, therapy ->
-          if (index == 0) therapy.copy(description = "Composables should be side-effect free. However, when they're necessary to mutate the state of the app, they should be called from a controlled environment that is aware of the lifecycle of the composable. In this page, you'll learn about the different side-effect APIs Jetpack Compose offers.") else therapy
-        },
+      therapies = stubActiveTherapies(),
       openTherapyOnClick = { },
       createTherapyOnClick = { },
     )

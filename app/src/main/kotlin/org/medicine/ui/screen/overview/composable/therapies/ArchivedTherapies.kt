@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import org.medicine.ui.screen.overview.composable.therapies.item.ArchivedTherapyItem
 import org.medicine.ui.screen.overview.model.TherapyModel
-import org.medicine.ui.stub.data.Models
+import org.medicine.ui.stub.data.stubArchivedTherapies
 import org.medicine.ui.theme.MedicalTherapyTheme
 
 /**
@@ -33,6 +33,6 @@ fun ArchivedTherapies(
 @Composable
 fun ArchivedTherapiesPreview() {
   MedicalTherapyTheme {
-    ArchivedTherapies(therapies = List(3) { Models.therapy }, openTherapyOnClick = { })
+    ArchivedTherapies(therapies = stubArchivedTherapies(), openTherapyOnClick = { })
   }
 }

@@ -11,8 +11,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import org.medicine.R
-import org.medicine.scheduler.theme.MedicalTherapyScheduleColors
-import org.medicine.scheduler.theme.MedicalTherapyScheduleTheme
+import org.medicine.schedule.theme.MedicalTherapyScheduleColors
+import org.medicine.schedule.theme.MedicalTherapyScheduleTheme
 
 private val LightColorPalette
   @Composable get() = lightColors(

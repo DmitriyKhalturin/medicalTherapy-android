@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.medicine.tools.EMPTY_STRING
 import org.medicine.ui.screen.overview.model.TherapyModel
-import org.medicine.ui.stub.data.Models
+import org.medicine.ui.stub.data.stubTherapy
 import org.medicine.ui.theme.MedicalTherapyTheme
 import java.time.format.DateTimeFormatter
 
@@ -71,6 +71,6 @@ fun ArchivedTherapyItem(
 @Composable
 fun ArchivedTherapyItemPreview() {
   MedicalTherapyTheme {
-    ArchivedTherapyItem(therapy = Models.therapy, openTherapyOnClick = { })
+    ArchivedTherapyItem(therapy = stubTherapy(), openTherapyOnClick = { })
   }
 }
