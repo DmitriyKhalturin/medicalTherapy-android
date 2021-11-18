@@ -5,3 +5,7 @@
 [submodule "MedicalTherapy-Source"]
 	path = MedicalTherapy-Source
 	url = dmitriykhalturin.github.com:DmitriyKhalturin/MedicalTherapy-Source.git
+
+[submodule "ReelDatePicker"]
+	path = ReelDatePicker
+	url = dmitriykhalturin.github.com:DmitriyKhalturin/ReelDatePicker.git
