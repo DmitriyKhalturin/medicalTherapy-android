@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import org.medicine.common.exception.UnimplementedViewStateException
 import org.medicine.common.viewmodel.BaseViewModel
 import org.medicine.common.viewmodel.IntentHandler
@@ -42,10 +41,5 @@ class OverviewViewModel @Inject constructor(
     }
   }
 
-  private suspend fun fetchTherapies() {
-    // Fetch therapies and set view state.
-    delay(1500)
-
-    uiState = OverviewViewState.NoOneTherapies
-  }
+  private suspend fun fetchTherapies() = Unit
 }
