@@ -1,12 +1,14 @@
 package org.medicine.ui.screen.overview
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -65,7 +67,12 @@ fun Overview(
       )
     }
   ) { innerPadding ->
-    Box(modifier = Modifier.padding(innerPadding)) {
+    Box(
+      modifier = Modifier
+        .fillMaxSize()
+        .padding(innerPadding),
+      contentAlignment = Alignment.Center
+    ) {
       when (uiState) {
         is OverviewViewState.Initial -> TestReelDatePicker()
         is OverviewViewState.NoOneTherapies ->
@@ -92,9 +99,9 @@ fun Overview(
 
 @Composable
 fun TestReelDatePicker() {
-  val date = LocalDate.now()
-  val startDate = date.minusDays(3)
-  val endDate = date.plusDays(4)
+  val date = LocalDate.of(2021, 11, 27)
+  val startDate = date.minusDays(2)
+  val endDate = date.plusDays(5)
 
   ReelDatePickerTheme(
     colors = ReelDatePickerColors(
@@ -104,12 +111,14 @@ fun TestReelDatePicker() {
     )
   ) {
     ReelDatePicker(
+      datePickerTitle = "Date:",
+      numberPickerTitle = "Day",
       modifier = Modifier.padding(16.dp),
       startDate = startDate,
       endDate = endDate,
-      date = date,
+      selectedDate = date,
       dateOnChange = {
-
+        //
       }
     )
   }
