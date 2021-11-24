@@ -14,6 +14,3 @@ include ":tools"
 
 project(":schedule").projectDir = new File(rootDir, "MedicalTherapy-Schedule")
 project(":source").projectDir = new File(rootDir, "MedicalTherapy-Source")
-
-include ":reeldatepicker"
-project(":reeldatepicker").projectDir = new File(rootDir, "ReelDatePicker")

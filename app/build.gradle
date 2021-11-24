@@ -91,6 +91,4 @@ dependencies {
   implementation project(":schedule")
   implementation project(":source")
   implementation project(":tools")
-
-  implementation project(":reeldatepicker")
 }
