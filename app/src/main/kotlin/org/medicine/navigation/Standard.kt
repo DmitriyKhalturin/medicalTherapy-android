@@ -40,15 +40,21 @@ fun NavController.navigate(
   navOptions: NavOptions? = null,
   navigatorExtras: Navigator.Extras? = null
 ) {
-  navigate(destination.route.name, destination as? Parcelable, navOptions, navigatorExtras)
+  if (destination !is Parcelable) throw DestinationShouldBeParcelable(destination.route)
+
+  navigate(destination.route.name, destination as Parcelable, navOptions, navigatorExtras)
 }
 
-fun <T> SavedStateHandle.destination() = this.get<T>(DESTINATION_PARCELABLE) ?: throw IllegalDestination()
+fun <T> SavedStateHandle.destination() = try {
+  requireNotNull(get<T>(DESTINATION_PARCELABLE))
+} catch (e: Exception) {
+  throw IllegalDestination()
+}
 
 
 private fun NavController.navigate(
   route: String,
-  destinationParcelable: Parcelable? = null,
+  destinationParcelable: Parcelable,
   navOptions: NavOptions? = null,
   navigatorExtras: Navigator.Extras? = null
 ) {
