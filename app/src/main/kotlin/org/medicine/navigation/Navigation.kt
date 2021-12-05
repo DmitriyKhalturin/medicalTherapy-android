@@ -35,7 +35,7 @@ fun buildNavGraph(navController: NavController): NavGraph = remember {
     }
 
     composable(Route.TherapyForm) {
-      TherapyFormScreen(viewModel = hiltViewModel())
+      TherapyFormScreen(navController = navController, viewModel = hiltViewModel())
     }
 
     composable(Route.MedicineForm) {
