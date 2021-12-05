@@ -6,5 +6,4 @@ package org.medicine.ui.screen.overview.model
  */
 sealed class OverviewIntent {
   object EnterScreen: OverviewIntent()
-  object Oth: OverviewIntent()
 }

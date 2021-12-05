@@ -34,7 +34,7 @@ fun OverviewScreen(
 ) {
   val uiState = viewModel.uiState
 
-  Overview(
+  OverviewView(
     navController,
     uiState,
   )
@@ -45,7 +45,7 @@ fun OverviewScreen(
 }
 
 @Composable
-fun Overview(
+fun OverviewView(
   navController: NavController,
   uiState: OverviewViewState,
 ) {
@@ -110,7 +110,7 @@ fun OverviewTopBar(
 @Composable
 fun OverviewPreview() {
   MedicalTherapyTheme {
-    Overview(
+    OverviewView(
       rememberNavController(),
       OverviewViewState.Initial,
     )
