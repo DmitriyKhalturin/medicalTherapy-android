@@ -7,7 +7,7 @@ package org.medicine.ui.screen.therapyform.model
 sealed class TherapyFormViewState {
   object Initial : TherapyFormViewState()
   data class Therapy(
-    val therapyId: Long,
+    val therapyId: Long?,
     val therapyForm: TherapyFormModel,
   ) : TherapyFormViewState()
 }
