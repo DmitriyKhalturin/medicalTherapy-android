@@ -45,7 +45,7 @@ fun OverviewScreen(
 }
 
 @Composable
-fun OverviewView(
+private fun OverviewView(
   navController: NavController,
   uiState: OverviewViewState,
 ) {
@@ -92,7 +92,7 @@ fun OverviewView(
 }
 
 @Composable
-fun OverviewTopBar(
+private fun OverviewTopBar(
   applicationOnClick: () -> Unit,
 ) {
   TopAppBar(

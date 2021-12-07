@@ -58,14 +58,14 @@ fun ActiveTherapyItem(
 
       val pattern = DateTimeFormatter.ofPattern("dd MMMM")
 
-      val a = if (LocalDate.now().isBefore(therapy.startDate)) {
+      val date = if (LocalDate.now().isBefore(therapy.startDate)) {
         "Лечение начнется ${therapy.startDate.format(pattern)}"
       } else {
         "Лечение закончиться ${therapy.endDate.format(pattern)}"
       }
 
       Text(
-        text = a,
+        text = date,
         modifier = Modifier.padding(top = 8.dp),
         fontSize = 13.sp,
         fontStyle = FontStyle.Italic,
