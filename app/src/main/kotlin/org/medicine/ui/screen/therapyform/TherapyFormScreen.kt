@@ -36,6 +36,7 @@ fun TherapyFormScreen(
     uiState,
     { showDatePickerDialog(activity.supportFragmentManager, it) },
     { viewModel.obtainIntent(TherapyFormIntent.SetTherapyForm(it)) },
+    { therapyId, therapyForm -> viewModel.obtainIntent(TherapyFormIntent.SaveTherapyForm(therapyId, therapyForm)) },
   )
 
   LaunchedEffect(key1 = uiState) {
@@ -67,6 +68,7 @@ private fun TherapyFormView(
   uiState: TherapyFormViewState,
   therapyDateOnChange: (TherapyDateOnChange) -> Unit,
   therapyFormOnChange: (TherapyFormModel) -> Unit,
+  saveTherapyForm: (Long?, TherapyFormModel) -> Unit,
 ) {
   when (uiState) {
     is TherapyFormViewState.Initial -> Unit
@@ -76,6 +78,7 @@ private fun TherapyFormView(
       { therapyFormOnChange(uiState.therapyForm.copy(description = it)) },
       { therapyDateOnChange { therapyFormOnChange(uiState.therapyForm.copy(startDate = it)) } },
       { therapyDateOnChange { therapyFormOnChange(uiState.therapyForm.copy(endDate = it)) } },
+      { saveTherapyForm(uiState.therapyId, uiState.therapyForm) },
     )
   }
 }
@@ -88,7 +91,7 @@ fun TherapyFormViewPreview() {
     TherapyFormView(
       rememberNavController(),
       TherapyFormViewState.Initial,
-      {}, {},
+      {}, {}, { _, _, -> },
     )
   }
 }

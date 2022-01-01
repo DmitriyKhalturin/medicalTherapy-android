@@ -66,11 +66,16 @@ class TherapyFormViewModel @Inject constructor(
   private fun reduce(state: TherapyFormViewState.Therapy, intent: TherapyFormIntent) {
     when (intent) {
       is TherapyFormIntent.SetTherapyForm -> setTherapyForm(intent.therapyForm)
+      is TherapyFormIntent.SaveTherapyForm -> saveTherapyForm(intent.therapyId, intent.therapyForm)
       else -> throw UnimplementedViewStateException(intent, state)
     }
   }
 
   private fun setTherapyForm(therapyForm: TherapyFormModel) {
     uiState = TherapyFormViewState.Therapy(therapyId, therapyForm)
+  }
+
+  private fun saveTherapyForm(therapyId: Long?, therapyForm: TherapyFormModel) {
+    //
   }
 }
