@@ -73,6 +73,7 @@ dependencies {
 
   implementation "androidx.appcompat:appcompat:$appCompatVersion"
   implementation "com.google.android.material:material:$materialVersion"
+  implementation "com.google.accompanist:accompanist-systemuicontroller:$systemUIControllerVersion"
   implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
 
   implementation "androidx.activity:activity-compose:$activityComposeVersion"
