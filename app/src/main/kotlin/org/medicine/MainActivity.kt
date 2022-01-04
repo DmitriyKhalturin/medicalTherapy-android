@@ -1,8 +1,8 @@
 package org.medicine
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -12,7 +12,7 @@ import org.medicine.navigation.buildNavGraph
 import org.medicine.ui.theme.MedicalTherapyTheme
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
