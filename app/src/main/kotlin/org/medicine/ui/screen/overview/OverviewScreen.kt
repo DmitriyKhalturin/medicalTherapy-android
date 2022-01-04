@@ -17,6 +17,7 @@ import org.medicine.navigation.Destination
 import org.medicine.navigation.navigate
 import org.medicine.tools.EMPTY_STRING
 import org.medicine.ui.screen.overview.composable.NoOneTherapies
+import org.medicine.ui.screen.overview.composable.PrepareTherapies
 import org.medicine.ui.screen.overview.composable.Therapies
 import org.medicine.ui.screen.overview.model.OverviewIntent
 import org.medicine.ui.screen.overview.model.OverviewViewState
@@ -68,7 +69,8 @@ private fun OverviewView(
       contentAlignment = Alignment.Center
     ) {
       when (uiState) {
-        is OverviewViewState.Initial -> Unit
+        is OverviewViewState.Initial ->
+          PrepareTherapies()
         is OverviewViewState.NoOneTherapies ->
           NoOneTherapies(
             createTherapyOnClick = {
