@@ -39,7 +39,7 @@ fun TherapyFormScreen(
     { therapyId, therapyForm -> viewModel.obtainIntent(TherapyFormIntent.SaveTherapyForm(therapyId, therapyForm)) },
   )
 
-  LaunchedEffect(key1 = uiState) {
+  LaunchedEffect(key1 = viewModel) {
     viewModel.obtainIntent(TherapyFormIntent.EnterScreen)
   }
 }

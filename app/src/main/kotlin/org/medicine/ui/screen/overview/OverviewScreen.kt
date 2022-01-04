@@ -40,7 +40,7 @@ fun OverviewScreen(
     uiState,
   )
 
-  LaunchedEffect(key1 = uiState) {
+  LaunchedEffect(key1 = viewModel) {
     viewModel.obtainIntent(OverviewIntent.EnterScreen)
   }
 }
