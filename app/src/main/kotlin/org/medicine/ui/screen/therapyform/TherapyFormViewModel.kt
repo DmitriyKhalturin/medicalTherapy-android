@@ -50,14 +50,13 @@ class TherapyFormViewModel @Inject constructor(
     therapyId?.also {
       // ***
 
-      obtainIntent(
-        TherapyFormIntent.SetTherapyForm(
-          TherapyFormModel(
-            EMPTY_STRING,
-            EMPTY_STRING,
-            LocalDate.now(),
-            LocalDate.now(),
-          )
+      uiState = TherapyFormViewState.Therapy(
+        it,
+        TherapyFormModel(
+          EMPTY_STRING,
+          EMPTY_STRING,
+          LocalDate.now(),
+          LocalDate.now(),
         )
       )
     }
