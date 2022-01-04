@@ -10,9 +10,12 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.dp
 import org.medicine.R
 import org.medicine.schedule.theme.MedicalTherapyScheduleColors
 import org.medicine.schedule.theme.MedicalTherapyScheduleTheme
+
+internal val AppBarHeight = 56.dp
 
 private val LightColorPalette
   @Composable get() = lightColors(

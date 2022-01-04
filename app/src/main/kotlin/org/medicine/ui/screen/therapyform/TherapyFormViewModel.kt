@@ -47,25 +47,22 @@ class TherapyFormViewModel @Inject constructor(
   }
 
   private fun fetchTherapy() {
-    therapyId?.also {
-      // ***
-
-      uiState = TherapyFormViewState.Therapy(
-        it,
-        TherapyFormModel(
-          EMPTY_STRING,
-          EMPTY_STRING,
-          LocalDate.now(),
-          LocalDate.now(),
-        )
+    uiState = TherapyFormViewState.Therapy(
+      therapyId,
+      TherapyFormModel(
+        EMPTY_STRING,
+        EMPTY_STRING,
+        LocalDate.now(),
+        LocalDate.now(),
       )
-    }
+    )
   }
 
   private fun reduce(state: TherapyFormViewState.Therapy, intent: TherapyFormIntent) {
     when (intent) {
       is TherapyFormIntent.SetTherapyForm -> setTherapyForm(intent.therapyForm)
       is TherapyFormIntent.SaveTherapyForm -> saveTherapyForm(intent.therapyId, intent.therapyForm)
+      is TherapyFormIntent.EnterScreen -> Unit
       else -> throw UnimplementedViewStateException(intent, state)
     }
   }
