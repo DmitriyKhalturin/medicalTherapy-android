@@ -1,6 +1,8 @@
 package org.medicine.ui.screen.overview.composable
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -23,19 +25,17 @@ import org.medicine.ui.theme.MedicalTherapyTheme
 
 @Composable
 fun NoOneTherapies(createTherapyOnClick: () -> Unit) {
-  Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-      Icon(
-        Icons.Outlined.Info,
-        EMPTY_STRING,
-        modifier = Modifier.size(48.dp),
-        tint = MaterialTheme.colors.primaryVariant
-      )
-      Text(text = "Список протоколов лечения пуст.", modifier = Modifier.padding(16.dp))
-      Button(onClick = { createTherapyOnClick() }) {
-        Icon(Icons.Filled.Add, EMPTY_STRING)
-        Text(text = "Создать протокол лечения")
-      }
+  Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Icon(
+      Icons.Outlined.Info,
+      EMPTY_STRING,
+      modifier = Modifier.size(48.dp),
+      tint = MaterialTheme.colors.primaryVariant
+    )
+    Text(text = "Список протоколов лечения пуст.", modifier = Modifier.padding(16.dp))
+    Button(onClick = { createTherapyOnClick() }) {
+      Icon(Icons.Filled.Add, EMPTY_STRING)
+      Text(text = "Создать протокол лечения")
     }
   }
 }

@@ -66,7 +66,7 @@ private fun OverviewView(
       modifier = Modifier
         .fillMaxSize()
         .padding(innerPadding),
-      contentAlignment = Alignment.Center
+      contentAlignment = Alignment.Center,
     ) {
       when (uiState) {
         is OverviewViewState.Initial ->
