@@ -38,6 +38,7 @@ fun OverviewScreen(
   OverviewView(
     navController,
     uiState,
+    { viewModel.therapyLoadingDone() },
   )
 
   LaunchedEffect(key1 = viewModel) {
@@ -49,6 +50,7 @@ fun OverviewScreen(
 private fun OverviewView(
   navController: NavController,
   uiState: OverviewViewState,
+  therapyLoadingDone: () -> Unit,
 ) {
   val scaffoldState = rememberScaffoldState()
 
@@ -70,7 +72,11 @@ private fun OverviewView(
     ) {
       when (uiState) {
         is OverviewViewState.Initial ->
-          PrepareTherapies()
+          PrepareTherapies(
+            therapyLoadingDone = {
+              therapyLoadingDone()
+            }
+          )
         is OverviewViewState.NoOneTherapies ->
           NoOneTherapies(
             createTherapyOnClick = {
@@ -115,6 +121,7 @@ fun OverviewPreview() {
     OverviewView(
       rememberNavController(),
       OverviewViewState.Initial,
+      { },
     )
   }
 }
