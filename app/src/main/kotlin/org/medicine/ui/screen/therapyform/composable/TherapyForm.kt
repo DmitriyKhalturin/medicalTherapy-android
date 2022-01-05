@@ -2,14 +2,19 @@ package org.medicine.ui.screen.therapyform.composable
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.medicine.R
@@ -37,26 +42,31 @@ fun TherapyForm(
   val formatter = DateTimeFormatter.ofPattern(stringResource(R.string.therapyDateFormat), Locale.getDefault())
 
   Column(horizontalAlignment = Alignment.CenterHorizontally) {
-    val fieldModifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+    val fieldModifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp)
+    val focusManager = LocalFocusManager.current
 
     OutlinedTextField(
       modifier = fieldModifier,
       value = therapyForm.name,
-      onValueChange = nameOnChange
+      onValueChange = nameOnChange,
+      keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+      keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
     )
     OutlinedTextField(
       modifier = fieldModifier,
       value = therapyForm.description,
-      onValueChange = descriptionOnChange
+      onValueChange = descriptionOnChange,
+      keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+      keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
     )
     OutlinedTextField(
-      modifier = fieldModifier.clickable { startDateOnClick() },
+      modifier = fieldModifier.clickable { focusManager.clearFocus(); startDateOnClick() },
       value = formatter.format(therapyForm.startDate),
       onValueChange = { },
       enabled = false,
     )
     OutlinedTextField(
-      modifier = fieldModifier.clickable { endDateOnClick() },
+      modifier = fieldModifier.clickable { focusManager.clearFocus(); endDateOnClick() },
       value = formatter.format(therapyForm.endDate),
       onValueChange = { },
       enabled = false
