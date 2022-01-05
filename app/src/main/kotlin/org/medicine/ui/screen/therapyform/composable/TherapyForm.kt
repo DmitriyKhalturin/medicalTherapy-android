@@ -53,13 +53,13 @@ fun TherapyForm(
       modifier = fieldModifier.clickable { startDateOnClick() },
       value = formatter.format(therapyForm.startDate),
       onValueChange = { },
-      readOnly = true,
+      enabled = false,
     )
     OutlinedTextField(
       modifier = fieldModifier.clickable { endDateOnClick() },
       value = formatter.format(therapyForm.endDate),
       onValueChange = { },
-      readOnly = true
+      enabled = false
     )
 
     OutlinedButton(

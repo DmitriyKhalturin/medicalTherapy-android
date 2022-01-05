@@ -20,7 +20,9 @@ import org.medicine.ui.screen.therapyform.model.TherapyFormModel
 import org.medicine.ui.screen.therapyform.model.TherapyFormViewState
 import org.medicine.ui.theme.AppBarHeight
 import org.medicine.ui.theme.MedicalTherapyTheme
+import java.time.Instant
 import java.time.LocalDate
+import java.time.ZoneId
 import java.util.*
 
 /**
@@ -59,7 +61,9 @@ private fun showDatePickerDialog(fragmentManager: FragmentManager, callback: The
 
     calendar.timeInMillis = it
 
-    val date = LocalDate.from(calendar.toInstant())
+    val date = Instant.ofEpochMilli(it)
+      .atZone(ZoneId.systemDefault())
+      .toLocalDate()
 
     callback(date)
   }
@@ -104,7 +108,7 @@ fun TherapyFormViewPreview() {
     TherapyFormView(
       rememberNavController(),
       TherapyFormViewState.Initial,
-      {}, {}, { _, _, -> },
+      {}, {}, { _, _ -> },
     )
   }
 }
