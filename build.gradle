@@ -28,7 +28,7 @@ buildscript {
     constraintlayoutComposeVersion = "1.0.0-rc02"
     composeVersion = "1.0.5"
 
-    persistentRoomVersion = "2.3.0"
+    persistentRoomVersion = "2.4.0"
 
     gsonVersion = "2.8.6"
   }
