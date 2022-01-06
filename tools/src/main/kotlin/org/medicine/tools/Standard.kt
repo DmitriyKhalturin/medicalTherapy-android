@@ -1,6 +1,7 @@
 package org.medicine.tools
 
 import java.time.LocalDate
+import java.time.Period
 import java.time.temporal.ChronoUnit
 
 /**
@@ -11,6 +12,8 @@ import java.time.temporal.ChronoUnit
 const val EMPTY_STRING = ""
 
 fun LocalDate.daysUntil(future: LocalDate) = this.until(future, ChronoUnit.DAYS).toInt()
+
+fun LocalDate.betweenDays(future: LocalDate) = Period.between(this, future).days
 
 fun ClosedRange<LocalDate>.toList(): List<LocalDate> {
   var item = start
