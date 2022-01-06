@@ -25,7 +25,10 @@ import org.medicine.ui.theme.MedicalTherapyTheme
 
 @Composable
 fun NoOneTherapies(createTherapyOnClick: () -> Unit) {
-  Column(horizontalAlignment = Alignment.CenterHorizontally) {
+  Column(
+    modifier = Modifier.padding(16.dp),
+    horizontalAlignment = Alignment.CenterHorizontally,
+  ) {
     Icon(
       Icons.Outlined.Info,
       EMPTY_STRING,
@@ -45,6 +48,6 @@ fun NoOneTherapies(createTherapyOnClick: () -> Unit) {
 @Composable
 fun NoOneTherapiesPreview() {
   MedicalTherapyTheme {
-    NoOneTherapies(createTherapyOnClick = { })
+    NoOneTherapies(createTherapyOnClick = {})
   }
 }

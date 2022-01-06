@@ -66,8 +66,8 @@ fun ActiveTherapiesPreview() {
   MedicalTherapyTheme {
     ActiveTherapies(
       therapies = stubActiveTherapies(),
-      openTherapyOnClick = { },
-      createTherapyOnClick = { },
+      openTherapyOnClick = {},
+      createTherapyOnClick = {},
     )
   }
 }

@@ -79,6 +79,9 @@ fun ActiveTherapyItem(
 @Composable
 fun ActiveTherapyItemPreview() {
   MedicalTherapyTheme {
-    ActiveTherapyItem(therapy = stubTherapy(), openTherapyOnClick = { })
+    ActiveTherapyItem(
+      therapy = stubTherapy(),
+      openTherapyOnClick = {},
+    )
   }
 }

@@ -41,6 +41,10 @@ fun TherapiesTabRow(
 fun TherapiesTabRowPreview() {
   MedicalTherapyTheme {
     val tabSelectedIndex by remember { mutableStateOf(0) }
-    TherapiesTabRow(tabs = TherapiesTab.values(), tabSelectedIndex = tabSelectedIndex, tabOnClick = { })
+    TherapiesTabRow(
+      tabs = TherapiesTab.values(),
+      tabSelectedIndex = tabSelectedIndex,
+      tabOnClick = {},
+    )
   }
 }

@@ -60,8 +60,7 @@ fun TherapiesPreview() {
     Therapies(
       activeTherapies = stubActiveTherapies(),
       archivedTherapies = emptyList(),
-      openTherapyOnClick = { },
-      createTherapyOnClick = { }
+      {}, {},
     )
   }
 }

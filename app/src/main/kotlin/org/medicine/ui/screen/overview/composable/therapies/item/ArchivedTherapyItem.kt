@@ -71,6 +71,9 @@ fun ArchivedTherapyItem(
 @Composable
 fun ArchivedTherapyItemPreview() {
   MedicalTherapyTheme {
-    ArchivedTherapyItem(therapy = stubTherapy(), openTherapyOnClick = { })
+    ArchivedTherapyItem(
+      therapy = stubTherapy(),
+      openTherapyOnClick = {},
+    )
   }
 }
