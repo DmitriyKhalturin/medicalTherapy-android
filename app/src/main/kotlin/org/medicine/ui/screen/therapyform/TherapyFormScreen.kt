@@ -44,8 +44,9 @@ fun TherapyFormScreen(
     navController,
     uiState,
     { showDatePickerDialog(activity.supportFragmentManager, it) },
-    { viewModel.obtainIntent(TherapyFormIntent.SetTherapyForm(it)) },
-    { therapyId, therapyForm -> viewModel.obtainIntent(TherapyFormIntent.SaveTherapyForm(therapyId, therapyForm)) },
+    { viewModel.obtainIntent(TherapyFormIntent.FillTherapy(it)) },
+    { therapyId, therapyForm -> viewModel.obtainIntent(TherapyFormIntent.SaveTherapy(therapyId, therapyForm)) },
+    { therapyId -> viewModel.obtainIntent(TherapyFormIntent.DeleteTherapy(therapyId)) }
   )
 
   LaunchedEffect(key1 = viewModel) {
@@ -79,7 +80,8 @@ private fun TherapyFormView(
   uiState: TherapyFormViewState,
   therapyDateOnChange: (TherapyDateOnChange) -> Unit,
   therapyFormOnChange: (TherapyFormModel) -> Unit,
-  saveTherapyForm: (Long?, TherapyFormModel) -> Unit,
+  saveTherapy: (Long?, TherapyFormModel) -> Unit,
+  deleteTherapy: (Long) -> Unit,
 ) {
   Box(
     modifier = Modifier
@@ -90,12 +92,14 @@ private fun TherapyFormView(
     when (uiState) {
       is TherapyFormViewState.Initial -> Unit
       is TherapyFormViewState.Therapy -> TherapyForm(
-        uiState.therapyForm,
-        { therapyFormOnChange(uiState.therapyForm.copy(name = it)) },
-        { therapyFormOnChange(uiState.therapyForm.copy(description = it)) },
-        { therapyDateOnChange { therapyFormOnChange(uiState.therapyForm.copy(startDate = it)) } },
-        { therapyDateOnChange { therapyFormOnChange(uiState.therapyForm.copy(endDate = it)) } },
-        { saveTherapyForm(uiState.therapyId, uiState.therapyForm) },
+        uiState.therapyId,
+        uiState.therapy,
+        { therapyFormOnChange(uiState.therapy.copy(name = it)) },
+        { therapyFormOnChange(uiState.therapy.copy(description = it)) },
+        { therapyDateOnChange { therapyFormOnChange(uiState.therapy.copy(startDate = it)) } },
+        { therapyDateOnChange { therapyFormOnChange(uiState.therapy.copy(endDate = it)) } },
+        { saveTherapy(uiState.therapyId, uiState.therapy) },
+        { uiState.therapyId?.let(deleteTherapy) },
       )
     }
   }
@@ -109,7 +113,7 @@ fun TherapyFormViewPreview() {
     TherapyFormView(
       rememberNavController(),
       TherapyFormViewState.Initial,
-      {}, {}, { _, _ -> },
+      {}, {}, { _, _ -> }, {},
     )
   }
 }

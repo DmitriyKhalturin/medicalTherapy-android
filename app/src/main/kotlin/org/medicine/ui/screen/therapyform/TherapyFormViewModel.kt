@@ -66,17 +66,18 @@ class TherapyFormViewModel @Inject constructor(
   private suspend fun reduce(state: TherapyFormViewState.Therapy, intent: TherapyFormIntent) {
     when (intent) {
       is TherapyFormIntent.EnterScreen -> Unit
-      is TherapyFormIntent.SetTherapyForm -> setTherapyForm(intent.therapy)
-      is TherapyFormIntent.SaveTherapyForm -> saveTherapyForm(intent.therapyId, intent.therapy)
-      else -> throw UnimplementedViewStateException(intent, state)
+      is TherapyFormIntent.FillTherapy -> fillTherapy(intent.therapy)
+      is TherapyFormIntent.SaveTherapy -> saveTherapy(intent.therapyId, intent.therapy)
+      is TherapyFormIntent.DeleteTherapy -> deleteTherapy(intent.therapyId)
+      // else -> throw UnimplementedViewStateException(intent, state)
     }
   }
 
-  private fun setTherapyForm(therapy: TherapyFormModel) {
+  private fun fillTherapy(therapy: TherapyFormModel) {
     uiState = TherapyFormViewState.Therapy(therapyId, therapy)
   }
 
-  private suspend fun saveTherapyForm(therapyId: Long?, therapy: TherapyFormModel) {
+  private suspend fun saveTherapy(therapyId: Long?, therapy: TherapyFormModel) {
     val entity = map(therapyId, therapy)
 
     if (therapyId != null) {
@@ -84,5 +85,9 @@ class TherapyFormViewModel @Inject constructor(
     } else {
       repository.createTherapy(entity)
     }
+  }
+
+  private suspend fun deleteTherapy(therapyId: Long) {
+    repository.deleteTherapy(therapyId)
   }
 }

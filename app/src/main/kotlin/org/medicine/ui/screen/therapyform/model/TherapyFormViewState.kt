@@ -8,6 +8,6 @@ sealed class TherapyFormViewState {
   object Initial : TherapyFormViewState()
   data class Therapy(
     val therapyId: Long?,
-    val therapyForm: TherapyFormModel,
+    val therapy: TherapyFormModel,
   ) : TherapyFormViewState()
 }
