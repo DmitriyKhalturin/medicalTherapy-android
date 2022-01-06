@@ -121,7 +121,7 @@ fun OverviewPreview() {
     OverviewView(
       rememberNavController(),
       OverviewViewState.Initial,
-      { },
+      {},
     )
   }
 }

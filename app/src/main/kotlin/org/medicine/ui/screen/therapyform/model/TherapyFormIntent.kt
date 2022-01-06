@@ -6,6 +6,6 @@ package org.medicine.ui.screen.therapyform.model
  */
 sealed class TherapyFormIntent {
   object EnterScreen : TherapyFormIntent()
-  data class SetTherapyForm(val therapyForm: TherapyFormModel) : TherapyFormIntent()
-  data class SaveTherapyForm(val therapyId: Long?, val therapyForm: TherapyFormModel) : TherapyFormIntent()
+  data class SetTherapyForm(val therapy: TherapyFormModel) : TherapyFormIntent()
+  data class SaveTherapyForm(val therapyId: Long?, val therapy: TherapyFormModel) : TherapyFormIntent()
 }

@@ -10,11 +10,12 @@ import org.medicine.common.viewmodel.BaseViewModel
 import org.medicine.common.viewmodel.IntentHandler
 import org.medicine.navigation.Destination
 import org.medicine.navigation.destination
-import org.medicine.tools.EMPTY_STRING
+import org.medicine.source.repository.MedicalTherapyRepository
 import org.medicine.ui.screen.therapyform.model.TherapyFormIntent
 import org.medicine.ui.screen.therapyform.model.TherapyFormModel
 import org.medicine.ui.screen.therapyform.model.TherapyFormViewState
-import java.time.LocalDate
+import org.medicine.ui.screen.therapyform.model.map.TherapyFormMapper.buildEmptyModel
+import org.medicine.ui.screen.therapyform.model.map.TherapyFormMapper.map
 import javax.inject.Inject
 
 /**
@@ -23,6 +24,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class TherapyFormViewModel @Inject constructor(
+  private val repository: MedicalTherapyRepository,
   savedStateHandle: SavedStateHandle,
 ): BaseViewModel(), IntentHandler<TherapyFormIntent> {
 
@@ -33,45 +35,54 @@ class TherapyFormViewModel @Inject constructor(
     private set
 
   override fun obtainIntent(intent: TherapyFormIntent) {
-    when (val state = uiState) {
-      is TherapyFormViewState.Initial -> reduce(state, intent)
-      is TherapyFormViewState.Therapy -> reduce(state, intent)
+    launch {
+      when (val state = uiState) {
+        is TherapyFormViewState.Initial -> reduce(state, intent)
+        is TherapyFormViewState.Therapy -> reduce(state, intent)
+      }
     }
   }
 
-  private fun reduce(state: TherapyFormViewState.Initial, intent: TherapyFormIntent) {
+  private suspend fun reduce(state: TherapyFormViewState.Initial, intent: TherapyFormIntent) {
     when (intent) {
       is TherapyFormIntent.EnterScreen -> fetchTherapy()
       else -> throw UnimplementedViewStateException(intent, state)
     }
   }
 
-  private fun fetchTherapy() {
+  private suspend fun fetchTherapy() {
+    val model = if (therapyId != null ) {
+      map(repository.getTherapy(therapyId))
+    } else {
+      buildEmptyModel()
+    }
+
     uiState = TherapyFormViewState.Therapy(
       therapyId,
-      TherapyFormModel(
-        EMPTY_STRING,
-        EMPTY_STRING,
-        LocalDate.now(),
-        LocalDate.now(),
-      )
+      model,
     )
   }
 
-  private fun reduce(state: TherapyFormViewState.Therapy, intent: TherapyFormIntent) {
+  private suspend fun reduce(state: TherapyFormViewState.Therapy, intent: TherapyFormIntent) {
     when (intent) {
-      is TherapyFormIntent.SetTherapyForm -> setTherapyForm(intent.therapyForm)
-      is TherapyFormIntent.SaveTherapyForm -> saveTherapyForm(intent.therapyId, intent.therapyForm)
       is TherapyFormIntent.EnterScreen -> Unit
+      is TherapyFormIntent.SetTherapyForm -> setTherapyForm(intent.therapy)
+      is TherapyFormIntent.SaveTherapyForm -> saveTherapyForm(intent.therapyId, intent.therapy)
       else -> throw UnimplementedViewStateException(intent, state)
     }
   }
 
-  private fun setTherapyForm(therapyForm: TherapyFormModel) {
-    uiState = TherapyFormViewState.Therapy(therapyId, therapyForm)
+  private fun setTherapyForm(therapy: TherapyFormModel) {
+    uiState = TherapyFormViewState.Therapy(therapyId, therapy)
   }
 
-  private fun saveTherapyForm(therapyId: Long?, therapyForm: TherapyFormModel) {
-    //
+  private suspend fun saveTherapyForm(therapyId: Long?, therapy: TherapyFormModel) {
+    val entity = map(therapyId, therapy)
+
+    if (therapyId != null) {
+      repository.updateTherapy(entity)
+    } else {
+      repository.createTherapy(entity)
+    }
   }
 }
