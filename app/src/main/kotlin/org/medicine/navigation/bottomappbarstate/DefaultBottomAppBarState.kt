@@ -1,0 +1,18 @@
+package org.medicine.navigation.bottomappbarstate
+
+import androidx.compose.material.FabPosition
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+
+/**
+ * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
+ * for Medicine on 07.01.2022 14:08.
+ */
+class DefaultBottomAppBarState : BottomAppBarState {
+  @Composable override fun statusBarColor(): Color = MaterialTheme.colors.background
+  @Composable override fun navigationBarColor(): Color = MaterialTheme.colors.background
+  override val floatingActionButtonPosition: FabPosition = FabPosition.Center
+  @Composable override fun BuildFloatingActionButton() = Unit
+  @Composable override fun BuildBottomAppBar() = Unit
+}
