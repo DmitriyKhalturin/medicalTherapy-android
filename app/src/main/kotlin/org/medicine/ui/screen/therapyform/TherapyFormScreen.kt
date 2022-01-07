@@ -3,7 +3,6 @@ package org.medicine.ui.screen.therapyform
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -18,7 +17,6 @@ import org.medicine.ui.screen.therapyform.composable.TherapyForm
 import org.medicine.ui.screen.therapyform.model.TherapyFormIntent
 import org.medicine.ui.screen.therapyform.model.TherapyFormModel
 import org.medicine.ui.screen.therapyform.model.TherapyFormViewState
-import org.medicine.ui.theme.AppBarHeight
 import org.medicine.ui.theme.MedicalTherapyTheme
 import java.time.Instant
 import java.time.LocalDate
@@ -83,9 +81,7 @@ private fun TherapyFormView(
   deleteTherapy: (Long) -> Unit,
 ) {
   Box(
-    modifier = Modifier
-      .fillMaxSize()
-      .padding(top = AppBarHeight),
+    modifier = Modifier.fillMaxSize(),
     contentAlignment = Alignment.TopCenter,
   ) {
     when (uiState) {

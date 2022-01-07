@@ -2,10 +2,6 @@ package org.medicine.ui.screen.overview
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -15,7 +11,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import org.medicine.navigation.Destination
 import org.medicine.navigation.navigate
-import org.medicine.tools.EMPTY_STRING
 import org.medicine.ui.screen.overview.composable.NoOneTherapies
 import org.medicine.ui.screen.overview.composable.PrepareTherapies
 import org.medicine.ui.screen.overview.composable.Therapies
@@ -38,7 +33,7 @@ fun OverviewScreen(
   OverviewView(
     navController,
     uiState,
-    { viewModel.therapyLoadingDone() },
+    therapyLoadingDone = { viewModel.therapyLoadingDone() },
   )
 
   LaunchedEffect(key1 = viewModel) {
@@ -52,65 +47,36 @@ private fun OverviewView(
   uiState: OverviewViewState,
   therapyLoadingDone: () -> Unit,
 ) {
-  val scaffoldState = rememberScaffoldState()
-
-  Scaffold(
-    scaffoldState = scaffoldState,
-    topBar = {
-      OverviewTopBar(
-        applicationOnClick = {
-          navController.navigate(Destination.ApplicationInfo)
-        }
-      )
-    }
-  ) { innerPadding ->
-    Box(
-      modifier = Modifier
-        .fillMaxSize()
-        .padding(innerPadding),
-      contentAlignment = Alignment.Center,
-    ) {
-      when (uiState) {
-        is OverviewViewState.Initial ->
-          PrepareTherapies(
-            therapyLoadingDone = {
-              therapyLoadingDone()
-            }
-          )
-        is OverviewViewState.NoOneTherapies ->
-          NoOneTherapies(
-            createTherapyOnClick = {
-              navController.navigate(Destination.TherapyForm())
-            }
-          )
-        is OverviewViewState.Therapies ->
-          Therapies(
-            uiState.activeTherapies,
-            uiState.archivedTherapies,
-            createTherapyOnClick = {
-              navController.navigate(Destination.TherapyForm())
-            },
-            openTherapyOnClick = { therapyId ->
-              navController.navigate(Destination.TherapySchedule(therapyId))
-            }
-          )
-      }
+  Box(
+    modifier = Modifier.fillMaxSize(),
+    contentAlignment = Alignment.Center,
+  ) {
+    when (uiState) {
+      is OverviewViewState.Initial ->
+        PrepareTherapies(
+          therapyLoadingDone = {
+            therapyLoadingDone()
+          }
+        )
+      is OverviewViewState.NoOneTherapies ->
+        NoOneTherapies(
+          createTherapyOnClick = {
+            navController.navigate(Destination.TherapyForm())
+          }
+        )
+      is OverviewViewState.Therapies ->
+        Therapies(
+          uiState.activeTherapies,
+          uiState.archivedTherapies,
+          createTherapyOnClick = {
+            navController.navigate(Destination.TherapyForm())
+          },
+          openTherapyOnClick = { therapyId ->
+            navController.navigate(Destination.TherapySchedule(therapyId))
+          }
+        )
     }
   }
-}
-
-@Composable
-private fun OverviewTopBar(
-  applicationOnClick: () -> Unit,
-) {
-  TopAppBar(
-    title = {},
-    actions = {
-      IconButton(onClick = { applicationOnClick() }) {
-        Icon(Icons.Outlined.Info, EMPTY_STRING)
-      }
-    },
-  )
 }
 
 
@@ -121,7 +87,7 @@ fun OverviewPreview() {
     OverviewView(
       rememberNavController(),
       OverviewViewState.Initial,
-      {},
+      therapyLoadingDone = {},
     )
   }
 }

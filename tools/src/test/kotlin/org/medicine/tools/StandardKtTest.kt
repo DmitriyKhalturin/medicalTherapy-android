@@ -3,6 +3,10 @@ package org.medicine.tools
 import org.junit.Test
 import java.time.LocalDate
 
+/**
+ * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
+ * for Medicine on 08.11.2021 2:49.
+ */
 class StandardKtTest {
 
   @Test

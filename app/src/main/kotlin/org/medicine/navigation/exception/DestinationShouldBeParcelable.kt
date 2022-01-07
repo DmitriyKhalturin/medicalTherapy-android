@@ -1,4 +1,6 @@
-package org.medicine.navigation
+package org.medicine.navigation.exception
+
+import org.medicine.navigation.Route
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>

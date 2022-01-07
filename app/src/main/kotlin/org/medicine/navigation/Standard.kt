@@ -8,6 +8,8 @@ import androidx.core.net.toUri
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.*
 import androidx.navigation.compose.composable
+import org.medicine.navigation.exception.DestinationShouldBeParcelable
+import org.medicine.navigation.exception.IllegalDestination
 import java.lang.reflect.Method
 
 /**
