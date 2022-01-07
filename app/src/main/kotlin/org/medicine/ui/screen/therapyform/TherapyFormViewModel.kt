@@ -51,11 +51,7 @@ class TherapyFormViewModel @Inject constructor(
   }
 
   private suspend fun fetchTherapy() {
-    val model = if (therapyId != null ) {
-      map(repository.getTherapy(therapyId))
-    } else {
-      buildEmptyModel()
-    }
+    val model = if (therapyId != null ) { map(repository.getTherapy(therapyId)) } else { buildEmptyModel() }
 
     uiState = TherapyFormViewState.Therapy(
       therapyId,
