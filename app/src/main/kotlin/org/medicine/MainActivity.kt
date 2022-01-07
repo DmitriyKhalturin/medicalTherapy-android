@@ -4,7 +4,11 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.material.BottomAppBar
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
@@ -56,10 +60,18 @@ class MainActivity : AppCompatActivity() {
           },
           isFloatingActionButtonDocked = true,
           bottomBar = {
-            bottomAppBarState.value.BuildBottomAppBar()
+            if (bottomAppBarState.value.isVisibleBottomAppBar) {
+              BottomAppBar(cutoutShape = MaterialTheme.shapes.medium.copy(CornerSize(percent = 50))) {
+                bottomAppBarState.value.BuildBottomAppBarContent(this)
+              }
+            }
           },
         ) { innerPadding ->
-          Box(modifier = Modifier.padding(innerPadding)) {
+          Box(
+            modifier = Modifier
+              .fillMaxSize()
+              .padding(innerPadding)
+          ) {
             NavHost(
               navController = navController,
               graph = navGraph,

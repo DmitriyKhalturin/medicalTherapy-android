@@ -1,15 +1,21 @@
 package org.medicine.ui.screen.overview
 
-import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavController
+import org.medicine.navigation.Destination
 import org.medicine.navigation.bottomappbarstate.BottomAppBarState
+import org.medicine.navigation.navigate
 import org.medicine.tools.EMPTY_STRING
 
-class OverviewBottomAppBarState : BottomAppBarState {
+class OverviewBottomAppBarState(private val navController: NavController) : BottomAppBarState {
   @Composable override fun statusBarColor(): Color = MaterialTheme.colors.background
   @Composable override fun navigationBarColor(): Color = MaterialTheme.colors.primaryVariant
   override val floatingActionButtonPosition: FabPosition = FabPosition.Center
@@ -18,7 +24,7 @@ class OverviewBottomAppBarState : BottomAppBarState {
   override fun BuildFloatingActionButton() {
     FloatingActionButton(
       onClick = {
-                //
+        //
       },
       content = {
         Icon(Icons.Filled.Add, EMPTY_STRING)
@@ -26,10 +32,18 @@ class OverviewBottomAppBarState : BottomAppBarState {
     )
   }
 
+  override val isVisibleBottomAppBar: Boolean = true
+
   @Composable
-  override fun BuildBottomAppBar() {
-    BottomAppBar(cutoutShape = MaterialTheme.shapes.medium.copy(CornerSize(percent = 50))) {
-      //
-    }
+  override fun BuildBottomAppBarContent(context: RowScope) = with(context) {
+    Spacer(modifier = Modifier.weight(weight = 1f, fill = true))
+    IconButton(
+      onClick = {
+        navController.navigate(Destination.ApplicationInfo)
+      },
+      content = {
+        Icon(Icons.Outlined.Info, EMPTY_STRING)
+      }
+    )
   }
 }

@@ -1,5 +1,6 @@
 package org.medicine.navigation.bottomappbarstate
 
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.FabPosition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -13,5 +14,6 @@ interface BottomAppBarState {
   @Composable fun navigationBarColor(): Color
   val floatingActionButtonPosition: FabPosition
   @Composable fun BuildFloatingActionButton()
-  @Composable fun BuildBottomAppBar()
+  val isVisibleBottomAppBar: Boolean
+  @Composable fun BuildBottomAppBarContent(context: RowScope)
 }

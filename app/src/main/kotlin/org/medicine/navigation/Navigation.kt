@@ -35,7 +35,7 @@ fun buildNavGraph(navController: NavController, setBottomAppBar: @Composable (Bo
   navController.createGraph(Route.Overview) {
 
     composable(Route.Overview) {
-      setBottomAppBar(OverviewBottomAppBarState())
+      setBottomAppBar(OverviewBottomAppBarState(navController))
       OverviewScreen(navController = navController, viewModel = hiltViewModel())
     }
 
