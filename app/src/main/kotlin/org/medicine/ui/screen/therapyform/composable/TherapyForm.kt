@@ -6,9 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,14 +30,11 @@ import java.util.*
 
 @Composable
 fun TherapyForm(
-  therapyId: Long?,
   therapy: TherapyFormModel,
   nameOnChange: (String) -> Unit,
   descriptionOnChange: (String) -> Unit,
   startDateOnClick: () -> Unit,
   endDateOnClick: () -> Unit,
-  saveTherapyOnClick: () -> Unit,
-  deleteTherapyOnClick: () -> Unit,
 ) {
   val formatter = DateTimeFormatter.ofPattern(stringResource(R.string.therapyDateFormat), Locale.getDefault())
 
@@ -78,27 +73,6 @@ fun TherapyForm(
       onValueChange = { },
       enabled = false
     )
-
-    val controlModifier = Modifier
-      .fillMaxWidth()
-      .padding(top = 16.dp)
-
-    OutlinedButton(
-      modifier = controlModifier,
-      onClick = { saveTherapyOnClick() }
-    ) {
-      Text(text = "Сохранить протокол лечения")
-    }
-
-    if (therapyId != null) {
-      Button(
-        modifier = controlModifier,
-        onClick = { deleteTherapyOnClick() }
-      ) {
-        Icon(Icons.Filled.Delete, EMPTY_STRING)
-        Text(text = "Удалить протокол лечения")
-      }
-    }
   }
 }
 
@@ -110,14 +84,13 @@ fun TherapyFormPreview() {
 
   MedicalTherapyTheme {
     TherapyForm(
-      therapyId = null,
       therapy = TherapyFormModel(
         "First therapy.",
         EMPTY_STRING,
         todayDate,
         todayDate.plusDays(5),
       ),
-      {}, {}, {}, {}, {}, {},
+      {}, {}, {}, {},
     )
   }
 }

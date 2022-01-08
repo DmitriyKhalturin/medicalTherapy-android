@@ -13,6 +13,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.android.material.datepicker.MaterialDatePicker
+import org.medicine.navigation.bottomappbarstate.BottomAppBarState
+import org.medicine.ui.screen.therapyform.bottomappbarstate.NewTherapyFormBottomAppBarState
+import org.medicine.ui.screen.therapyform.bottomappbarstate.OldTherapyFormBottomAppBarState
+import org.medicine.ui.screen.therapyform.bottomappbarstate.TherapyFormBottomAppBarState
 import org.medicine.ui.screen.therapyform.composable.TherapyForm
 import org.medicine.ui.screen.therapyform.model.TherapyFormIntent
 import org.medicine.ui.screen.therapyform.model.TherapyFormModel
@@ -32,8 +36,36 @@ import java.util.*
 fun TherapyFormScreen(
   navController: NavController,
   viewModel: TherapyFormViewModel,
+  bottomAppBarStateCallback: @Composable (BottomAppBarState) -> Unit,
 ) {
   val uiState = viewModel.uiState
+
+  when (uiState) {
+    is TherapyFormViewState.Initial ->
+      bottomAppBarStateCallback(TherapyFormBottomAppBarState())
+    is TherapyFormViewState.Therapy -> {
+      val therapyId = uiState.therapyId
+      val therapy = uiState.therapy
+      val state = if (therapyId == null) {
+        NewTherapyFormBottomAppBarState(
+          backOnClick = {
+            viewModel.obtainIntent(TherapyFormIntent.SaveTherapy(therapyId, therapy))
+          }
+        )
+      } else {
+        OldTherapyFormBottomAppBarState(
+          backOnClick = {
+            viewModel.obtainIntent(TherapyFormIntent.SaveTherapy(therapyId, therapy))
+          },
+          deleteOnClick = {
+            viewModel.obtainIntent(TherapyFormIntent.DeleteTherapy(therapyId))
+          }
+        )
+      }
+
+      bottomAppBarStateCallback(state)
+    }
+  }
 
   val activity = LocalContext.current as AppCompatActivity
 
@@ -42,8 +74,6 @@ fun TherapyFormScreen(
     uiState,
     { showDatePickerDialog(activity.supportFragmentManager, it) },
     { viewModel.obtainIntent(TherapyFormIntent.FillTherapy(it)) },
-    { therapyId, therapyForm -> viewModel.obtainIntent(TherapyFormIntent.SaveTherapy(therapyId, therapyForm)) },
-    { therapyId -> viewModel.obtainIntent(TherapyFormIntent.DeleteTherapy(therapyId)) }
   )
 
   LaunchedEffect(key1 = viewModel) {
@@ -77,8 +107,6 @@ private fun TherapyFormView(
   uiState: TherapyFormViewState,
   therapyDateOnChange: (TherapyDateOnChange) -> Unit,
   therapyFormOnChange: (TherapyFormModel) -> Unit,
-  saveTherapy: (Long?, TherapyFormModel) -> Unit,
-  deleteTherapy: (Long) -> Unit,
 ) {
   Box(
     modifier = Modifier.fillMaxSize(),
@@ -87,14 +115,11 @@ private fun TherapyFormView(
     when (uiState) {
       is TherapyFormViewState.Initial -> Unit
       is TherapyFormViewState.Therapy -> TherapyForm(
-        uiState.therapyId,
         uiState.therapy,
         { therapyFormOnChange(uiState.therapy.copy(name = it)) },
         { therapyFormOnChange(uiState.therapy.copy(description = it)) },
         { therapyDateOnChange { therapyFormOnChange(uiState.therapy.copy(startDate = it)) } },
         { therapyDateOnChange { therapyFormOnChange(uiState.therapy.copy(endDate = it)) } },
-        { saveTherapy(uiState.therapyId, uiState.therapy) },
-        { uiState.therapyId?.let(deleteTherapy) },
       )
     }
   }
@@ -108,7 +133,7 @@ fun TherapyFormViewPreview() {
     TherapyFormView(
       rememberNavController(),
       TherapyFormViewState.Initial,
-      {}, {}, { _, _ -> }, {},
+      {}, {},
     )
   }
 }

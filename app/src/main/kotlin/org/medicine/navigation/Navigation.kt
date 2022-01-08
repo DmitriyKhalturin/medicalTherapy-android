@@ -17,7 +17,6 @@ import org.medicine.ui.screen.medicineform.bottomappbarstate.MedicineFormBottomA
 import org.medicine.ui.screen.overview.OverviewScreen
 import org.medicine.ui.screen.overview.bottomappbarstate.OverviewBottomAppBarState
 import org.medicine.ui.screen.therapyform.TherapyFormScreen
-import org.medicine.ui.screen.therapyform.bottomappbarstate.TherapyFormBottomAppBarState
 import org.medicine.ui.screen.therapyschedule.TherapyScheduleScreen
 import org.medicine.ui.screen.therapyschedule.bottomappbarstate.TherapyScheduleBottomAppBarState
 
@@ -45,8 +44,11 @@ fun buildNavGraph(navController: NavController, callback: @Composable (BottomApp
     }
 
     composable(Route.TherapyForm) {
-      callback(TherapyFormBottomAppBarState())
-      TherapyFormScreen(navController = navController, viewModel = hiltViewModel())
+      TherapyFormScreen(
+        navController = navController,
+        viewModel = hiltViewModel(),
+        bottomAppBarStateCallback = callback,
+      )
     }
 
     composable(Route.MedicineForm) {
