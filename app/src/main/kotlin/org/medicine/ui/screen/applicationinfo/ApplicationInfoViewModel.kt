@@ -12,5 +12,4 @@ import javax.inject.Inject
 @HiltViewModel
 class ApplicationInfoViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
-): BaseViewModel() {
-}
+): BaseViewModel()

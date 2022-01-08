@@ -65,7 +65,7 @@ fun buildNavGraph(navController: NavController, callback: @Composable (BottomApp
     }
 
     composable(Route.ApplicationInfo) {
-      callback(ApplicationInfoBottomAppBarState())
+      callback(ApplicationInfoBottomAppBarState(navController))
       ApplicationInfoScreen(viewModel = hiltViewModel())
     }
   }

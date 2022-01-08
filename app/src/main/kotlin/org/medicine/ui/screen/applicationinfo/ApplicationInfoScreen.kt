@@ -1,5 +1,6 @@
 package org.medicine.ui.screen.applicationinfo
 
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 
 /**
@@ -9,4 +10,5 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun ApplicationInfoScreen(viewModel: ApplicationInfoViewModel) {
+  Text(text = "Описание программы. Далее вставим фич-реквестре.")
 }
