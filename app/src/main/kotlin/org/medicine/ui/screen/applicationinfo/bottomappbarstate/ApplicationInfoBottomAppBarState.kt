@@ -1,4 +1,4 @@
-package org.medicine.ui.screen.therapyform
+package org.medicine.ui.screen.applicationinfo.bottomappbarstate
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.FabPosition
@@ -11,7 +11,7 @@ import org.medicine.navigation.bottomappbarstate.BottomAppBarState
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
  * for Medicine on 07.01.2022 14:08.
  */
-class TherapyFormBottomAppBarState() : BottomAppBarState {
+class ApplicationInfoBottomAppBarState() : BottomAppBarState {
   @Composable override fun statusBarColor(): Color = MaterialTheme.colors.background
   @Composable override fun navigationBarColor(): Color = MaterialTheme.colors.background
   override val floatingActionButtonPosition: FabPosition = FabPosition.Center

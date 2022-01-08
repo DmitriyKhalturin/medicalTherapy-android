@@ -1,4 +1,4 @@
-package org.medicine.ui.screen.overview
+package org.medicine.ui.screen.overview.bottomappbarstate
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import org.medicine.navigation.Destination
@@ -24,10 +25,10 @@ class OverviewBottomAppBarState(private val navController: NavController) : Bott
   override fun BuildFloatingActionButton() {
     FloatingActionButton(
       onClick = {
-        //
+        navController.navigate(Destination.TherapyForm())
       },
       content = {
-        Icon(Icons.Filled.Add, EMPTY_STRING)
+        Icon(Icons.Filled.Add, EMPTY_STRING, modifier = Modifier.scale(1.25f))
       }
     )
   }
@@ -42,7 +43,7 @@ class OverviewBottomAppBarState(private val navController: NavController) : Bott
         navController.navigate(Destination.ApplicationInfo)
       },
       content = {
-        Icon(Icons.Outlined.Info, EMPTY_STRING)
+        Icon(Icons.Outlined.Info, EMPTY_STRING, tint = Color.White)
       }
     )
   }
