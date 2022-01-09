@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,11 +32,14 @@ import java.util.*
 
 @Composable
 fun TherapyForm(
+  therapyId: Long?,
   therapy: TherapyFormModel,
   nameOnChange: (String) -> Unit,
   descriptionOnChange: (String) -> Unit,
   startDateOnClick: () -> Unit,
   endDateOnClick: () -> Unit,
+  saveTherapyOnClick: () -> Unit,
+  deleteTherapyOnClick: () -> Unit,
 ) {
   val formatter = DateTimeFormatter.ofPattern(stringResource(R.string.therapyDateFormat), Locale.getDefault())
 
@@ -42,37 +47,62 @@ fun TherapyForm(
     modifier = Modifier.padding(16.dp),
     horizontalAlignment = Alignment.CenterHorizontally
   ) {
-    val fieldModifier = Modifier
-      .fillMaxWidth()
-      .padding(vertical = 4.dp)
-    val focusManager = LocalFocusManager.current
+    Column(modifier = Modifier.weight(weight = 1f)) {
+      val fieldModifier = Modifier
+        .fillMaxWidth()
+        .padding(vertical = 4.dp)
+      val focusManager = LocalFocusManager.current
 
-    OutlinedTextField(
-      modifier = fieldModifier,
-      value = therapy.name,
-      onValueChange = nameOnChange,
-      keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-      keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-    )
-    OutlinedTextField(
-      modifier = fieldModifier,
-      value = therapy.description,
-      onValueChange = descriptionOnChange,
-      keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-      keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-    )
-    OutlinedTextField(
-      modifier = fieldModifier.clickable { focusManager.clearFocus(); startDateOnClick() },
-      value = formatter.format(therapy.startDate),
-      onValueChange = { },
-      enabled = false,
-    )
-    OutlinedTextField(
-      modifier = fieldModifier.clickable { focusManager.clearFocus(); endDateOnClick() },
-      value = formatter.format(therapy.endDate),
-      onValueChange = { },
-      enabled = false
-    )
+      OutlinedTextField(
+        modifier = fieldModifier,
+        value = therapy.name,
+        onValueChange = nameOnChange,
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+      )
+      OutlinedTextField(
+        modifier = fieldModifier,
+        value = therapy.description,
+        onValueChange = descriptionOnChange,
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+      )
+      OutlinedTextField(
+        modifier = fieldModifier.clickable { focusManager.clearFocus(); startDateOnClick() },
+        value = formatter.format(therapy.startDate),
+        onValueChange = { },
+        enabled = false,
+      )
+      OutlinedTextField(
+        modifier = fieldModifier.clickable { focusManager.clearFocus(); endDateOnClick() },
+        value = formatter.format(therapy.endDate),
+        onValueChange = { },
+        enabled = false
+      )
+    }
+
+    Column {
+      val controlModifier = Modifier
+        .fillMaxWidth()
+        .padding(bottom = 16.dp)
+
+      OutlinedButton(
+        modifier = controlModifier,
+        onClick = { saveTherapyOnClick() }
+      ) {
+        Text(text = "Сохранить протокол лечения")
+      }
+
+      if (therapyId != null) {
+        Button(
+          modifier = controlModifier,
+          onClick = { deleteTherapyOnClick() }
+        ) {
+          Icon(Icons.Filled.Delete, EMPTY_STRING)
+          Text(text = "Удалить протокол лечения")
+        }
+      }
+    }
   }
 }
 
@@ -84,13 +114,14 @@ fun TherapyFormPreview() {
 
   MedicalTherapyTheme {
     TherapyForm(
+      therapyId = null,
       therapy = TherapyFormModel(
         "First therapy.",
         EMPTY_STRING,
         todayDate,
         todayDate.plusDays(5),
       ),
-      {}, {}, {}, {},
+      {}, {}, {}, {}, {}, {},
     )
   }
 }

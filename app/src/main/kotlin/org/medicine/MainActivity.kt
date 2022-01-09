@@ -3,7 +3,9 @@ package org.medicine
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.background
 import androidx.compose.material.MaterialTheme
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -29,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         systemUiController.setNavigationBarColor(color = MaterialTheme.colors.background)
 
         NavHost(
+          modifier = Modifier.background(MaterialTheme.colors.background),
           navController = navController,
           graph = buildNavGraph(navController, systemUiController),
         )
