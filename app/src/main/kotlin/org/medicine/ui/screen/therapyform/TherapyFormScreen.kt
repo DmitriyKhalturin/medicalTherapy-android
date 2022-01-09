@@ -55,7 +55,6 @@ fun TherapyFormScreen(
   LaunchedEffect(key1 = viewModel) {
     viewModel.obtainIntent(TherapyFormIntent.EnterScreen)
   }
-
 }
 
 private fun showDatePickerDialog(fragmentManager: FragmentManager, callback: TherapyDateOnChange) {

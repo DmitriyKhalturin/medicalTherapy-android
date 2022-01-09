@@ -52,7 +52,7 @@ fun buildNavGraph(navController: NavController, systemUiController: SystemUiCont
     }
 
     composable(Route.ApplicationInfo) {
-      ApplicationInfoScreen(viewModel = hiltViewModel())
+      ApplicationInfoScreen(systemUiController = systemUiController, viewModel = hiltViewModel())
     }
   }
 }
