@@ -22,7 +22,6 @@ fun Therapies(
   activeTherapies: List<TherapyModel>,
   archivedTherapies: List<TherapyModel>,
   openTherapyOnClick: (Long) -> Unit,
-  createTherapyOnClick: () -> Unit,
 ) {
   var tabSelectedIndex by remember { mutableStateOf(0) }
 
@@ -37,7 +36,6 @@ fun Therapies(
       TherapiesTab.Active.ordinal -> ActiveTherapies(
         therapies = activeTherapies,
         openTherapyOnClick = openTherapyOnClick,
-        createTherapyOnClick = createTherapyOnClick,
       )
       TherapiesTab.Archived.ordinal -> ArchivedTherapies(
         therapies = archivedTherapies,
@@ -60,7 +58,7 @@ fun TherapiesPreview() {
     Therapies(
       activeTherapies = stubActiveTherapies(),
       archivedTherapies = emptyList(),
-      {}, {},
+      openTherapyOnClick = {},
     )
   }
 }

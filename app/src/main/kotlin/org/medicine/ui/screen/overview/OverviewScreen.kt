@@ -1,21 +1,31 @@
 package org.medicine.ui.screen.overview
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.systemuicontroller.SystemUiController
 import org.medicine.navigation.Destination
 import org.medicine.navigation.navigate
+import org.medicine.tools.EMPTY_STRING
 import org.medicine.ui.screen.overview.composable.NoOneTherapies
 import org.medicine.ui.screen.overview.composable.PrepareTherapies
 import org.medicine.ui.screen.overview.composable.Therapies
 import org.medicine.ui.screen.overview.model.OverviewIntent
 import org.medicine.ui.screen.overview.model.OverviewViewState
+import org.medicine.ui.stub.data.stubActiveTherapies
 import org.medicine.ui.theme.MedicalTherapyTheme
 
 /**
@@ -26,14 +36,17 @@ import org.medicine.ui.theme.MedicalTherapyTheme
 @Composable
 fun OverviewScreen(
   navController: NavController,
+  systemUiController: SystemUiController,
   viewModel: OverviewViewModel,
 ) {
   val uiState = viewModel.uiState
 
+  systemUiController.setStatusBarColor(MaterialTheme.colors.background)
+  systemUiController.setNavigationBarColor(MaterialTheme.colors.primaryVariant)
+
   OverviewView(
     navController,
     uiState,
-    therapyLoadingDone = { viewModel.therapyLoadingDone() },
   )
 
   LaunchedEffect(key1 = viewModel) {
@@ -45,36 +58,50 @@ fun OverviewScreen(
 private fun OverviewView(
   navController: NavController,
   uiState: OverviewViewState,
-  therapyLoadingDone: () -> Unit,
 ) {
-  Box(
-    modifier = Modifier.fillMaxSize(),
-    contentAlignment = Alignment.Center,
+  Scaffold(
+    floatingActionButtonPosition = FabPosition.End,
+    isFloatingActionButtonDocked = true,
+    floatingActionButton = {
+      FloatingActionButton(
+        onClick = {
+          navController.navigate(Destination.TherapyForm())
+        },
+        content =  {
+          Icon(Icons.Filled.Add, EMPTY_STRING)
+        },
+      )
+    },
+    bottomBar = {
+      BottomAppBar(cutoutShape = MaterialTheme.shapes.medium.copy(CornerSize(percent = 50))) {
+        IconButton(onClick = {
+          navController.navigate(Destination.ApplicationInfo)
+        }) {
+          Icon(Icons.Outlined.Info, EMPTY_STRING, tint = Color.White)
+        }
+        Spacer(modifier = Modifier.weight(weight = 1f, fill = true))
+      }
+    }
   ) {
-    when (uiState) {
-      is OverviewViewState.Initial ->
-        PrepareTherapies(
-          therapyLoadingDone = {
-            therapyLoadingDone()
-          }
-        )
-      is OverviewViewState.NoOneTherapies ->
-        NoOneTherapies(
-          createTherapyOnClick = {
-            navController.navigate(Destination.TherapyForm())
-          }
-        )
-      is OverviewViewState.Therapies ->
-        Therapies(
-          uiState.activeTherapies,
-          uiState.archivedTherapies,
-          createTherapyOnClick = {
-            navController.navigate(Destination.TherapyForm())
-          },
-          openTherapyOnClick = { therapyId ->
-            navController.navigate(Destination.TherapySchedule(therapyId))
-          }
-        )
+    Box(
+      modifier = Modifier
+        .fillMaxSize()
+        .padding(it),
+    ) {
+      when (uiState) {
+        is OverviewViewState.Initial ->
+          PrepareTherapies()
+        is OverviewViewState.NoOneTherapies ->
+          NoOneTherapies()
+        is OverviewViewState.Therapies ->
+          Therapies(
+            uiState.activeTherapies,
+            uiState.archivedTherapies,
+            openTherapyOnClick = { therapyId ->
+              navController.navigate(Destination.TherapySchedule(therapyId))
+            }
+          )
+      }
     }
   }
 }
@@ -86,8 +113,12 @@ fun OverviewPreview() {
   MedicalTherapyTheme {
     OverviewView(
       rememberNavController(),
-      OverviewViewState.Initial,
-      therapyLoadingDone = {},
+      //OverviewViewState.Initial,
+      //OverviewViewState.NoOneTherapies,
+      OverviewViewState.Therapies(
+        activeTherapies = stubActiveTherapies(),
+        archivedTherapies = emptyList(),
+      )
     )
   }
 }

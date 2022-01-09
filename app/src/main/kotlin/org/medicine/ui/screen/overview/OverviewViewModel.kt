@@ -42,8 +42,4 @@ class OverviewViewModel @Inject constructor(
   }
 
   private suspend fun fetchTherapies() = Unit
-
-  fun therapyLoadingDone() {
-    uiState = OverviewViewState.NoOneTherapies
-  }
 }

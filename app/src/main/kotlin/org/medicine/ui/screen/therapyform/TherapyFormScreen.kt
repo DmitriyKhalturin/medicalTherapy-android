@@ -13,10 +13,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.android.material.datepicker.MaterialDatePicker
-import org.medicine.navigation.bottomappbarstate.BottomAppBarState
-import org.medicine.ui.screen.therapyform.bottomappbarstate.NewTherapyFormBottomAppBarState
-import org.medicine.ui.screen.therapyform.bottomappbarstate.OldTherapyFormBottomAppBarState
-import org.medicine.ui.screen.therapyform.bottomappbarstate.TherapyFormBottomAppBarState
 import org.medicine.ui.screen.therapyform.composable.TherapyForm
 import org.medicine.ui.screen.therapyform.model.TherapyFormIntent
 import org.medicine.ui.screen.therapyform.model.TherapyFormModel
@@ -33,16 +29,31 @@ import java.util.*
  */
 
 @Composable
-fun TherapyFormScreen(
-  navController: NavController,
-  viewModel: TherapyFormViewModel,
-  bottomAppBarStateCallback: @Composable (BottomAppBarState) -> Unit,
-) {
+fun TherapyFormScreen(navController: NavController, viewModel: TherapyFormViewModel) {
   val uiState = viewModel.uiState
 
+  val activity = LocalContext.current as AppCompatActivity
+
+  TherapyFormView(
+    navController,
+    uiState,
+    { showDatePickerDialog(activity.supportFragmentManager, it) },
+    { viewModel.obtainIntent(TherapyFormIntent.FillTherapy(it)) },
+  )
+
+  LaunchedEffect(key1 = viewModel) {
+    viewModel.obtainIntent(TherapyFormIntent.EnterScreen)
+  }
+}
+
+/*private fun setBottomAppBarState(
+  uiState: TherapyFormViewState,
+  viewModel: TherapyFormViewModel,
+  bottomAppBarState: MutableState<BottomAppBarState>,
+) {
   when (uiState) {
     is TherapyFormViewState.Initial ->
-      bottomAppBarStateCallback(TherapyFormBottomAppBarState())
+      bottomAppBarState.value = TherapyFormBottomAppBarState()
     is TherapyFormViewState.Therapy -> {
       val therapyId = uiState.therapyId
       val therapy = uiState.therapy
@@ -63,23 +74,10 @@ fun TherapyFormScreen(
         )
       }
 
-      bottomAppBarStateCallback(state)
+      bottomAppBarState.update(state)
     }
   }
-
-  val activity = LocalContext.current as AppCompatActivity
-
-  TherapyFormView(
-    navController,
-    uiState,
-    { showDatePickerDialog(activity.supportFragmentManager, it) },
-    { viewModel.obtainIntent(TherapyFormIntent.FillTherapy(it)) },
-  )
-
-  LaunchedEffect(key1 = viewModel) {
-    viewModel.obtainIntent(TherapyFormIntent.EnterScreen)
-  }
-}
+}*/
 
 private fun showDatePickerDialog(fragmentManager: FragmentManager, callback: TherapyDateOnChange) {
   val builder = MaterialDatePicker.Builder.datePicker()
