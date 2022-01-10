@@ -15,15 +15,14 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.android.material.datepicker.MaterialDatePicker
+import org.medicine.tools.time.toLocalDate
+import org.medicine.tools.time.toLong
 import org.medicine.ui.screen.therapyform.composable.TherapyForm
 import org.medicine.ui.screen.therapyform.model.TherapyFormIntent
 import org.medicine.ui.screen.therapyform.model.TherapyFormModel
 import org.medicine.ui.screen.therapyform.model.TherapyFormViewState
 import org.medicine.ui.theme.MedicalTherapyTheme
-import java.time.Instant
 import java.time.LocalDate
-import java.time.ZoneId
-import java.util.*
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -46,7 +45,7 @@ fun TherapyFormScreen(
   TherapyFormView(
     navController,
     uiState,
-    { showDatePickerDialog(activity.supportFragmentManager, it) },
+    { date, callback -> showDatePickerDialog(activity.supportFragmentManager, date, callback) },
     { viewModel.obtainIntent(TherapyFormIntent.FillTherapy(it)) },
     { therapyId, therapyForm -> viewModel.obtainIntent(TherapyFormIntent.SaveTherapy(therapyId, therapyForm)) },
     { therapyId -> viewModel.obtainIntent(TherapyFormIntent.DeleteTherapy(therapyId)) }
@@ -57,20 +56,12 @@ fun TherapyFormScreen(
   }
 }
 
-private fun showDatePickerDialog(fragmentManager: FragmentManager, callback: TherapyDateOnChange) {
+private fun showDatePickerDialog(fragmentManager: FragmentManager, date: LocalDate, callback: TherapyDateOnChange) {
   val builder = MaterialDatePicker.Builder.datePicker()
-  val datePicker = builder.build()
+  val datePicker = builder.setSelection(date.toLong()).build()
 
   datePicker.addOnPositiveButtonClickListener {
-    val calendar = Calendar.getInstance(TimeZone.getDefault())
-
-    calendar.timeInMillis = it
-
-    val date = Instant.ofEpochMilli(it)
-      .atZone(ZoneId.systemDefault())
-      .toLocalDate()
-
-    callback(date)
+    callback(it.toLocalDate())
   }
   datePicker.show(fragmentManager, null)
 }
@@ -81,7 +72,7 @@ private typealias TherapyDateOnChange = (LocalDate) -> Unit
 private fun TherapyFormView(
   navController: NavController,
   uiState: TherapyFormViewState,
-  therapyDateOnChange: (TherapyDateOnChange) -> Unit,
+  therapyDateOnChange: (LocalDate, TherapyDateOnChange) -> Unit,
   therapyFormOnChange: (TherapyFormModel) -> Unit,
   saveTherapy: (Long?, TherapyFormModel) -> Unit,
   deleteTherapy: (Long) -> Unit,
@@ -97,8 +88,8 @@ private fun TherapyFormView(
         uiState.therapy,
         { therapyFormOnChange(uiState.therapy.copy(name = it)) },
         { therapyFormOnChange(uiState.therapy.copy(description = it)) },
-        { therapyDateOnChange { therapyFormOnChange(uiState.therapy.copy(startDate = it)) } },
-        { therapyDateOnChange { therapyFormOnChange(uiState.therapy.copy(endDate = it)) } },
+        { therapyDateOnChange(uiState.therapy.startDate) { therapyFormOnChange(uiState.therapy.copy(startDate = it)) } },
+        { therapyDateOnChange(uiState.therapy.endDate) { therapyFormOnChange(uiState.therapy.copy(endDate = it)) } },
         { saveTherapy(uiState.therapyId, uiState.therapy) },
         { uiState.therapyId?.let(deleteTherapy) },
       )
@@ -114,7 +105,7 @@ fun TherapyFormViewPreview() {
     TherapyFormView(
       rememberNavController(),
       TherapyFormViewState.Initial,
-      {}, {}, { _, _ -> }, {},
+      { _, _ -> }, {}, { _, _ -> }, {},
     )
   }
 }
