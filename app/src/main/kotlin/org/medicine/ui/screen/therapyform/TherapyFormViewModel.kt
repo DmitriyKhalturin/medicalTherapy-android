@@ -40,6 +40,7 @@ class TherapyFormViewModel @Inject constructor(
       when (val state = uiState) {
         is TherapyFormViewState.Initial -> reduce(state, intent)
         is TherapyFormViewState.Therapy -> reduce(state, intent)
+        else -> throw UnimplementedViewStateException(intent, state)
       }
     }
   }
@@ -64,7 +65,7 @@ class TherapyFormViewModel @Inject constructor(
     when (intent) {
       is TherapyFormIntent.EnterScreen -> Unit
       is TherapyFormIntent.FillTherapy -> fillTherapy(intent.therapy)
-      is TherapyFormIntent.SaveTherapy -> saveTherapy(intent.therapyId, intent.therapy)
+      is TherapyFormIntent.CreateOrSaveTherapy -> createOrSaveTherapy(intent.therapyId, intent.therapy)
       is TherapyFormIntent.DeleteTherapy -> deleteTherapy(intent.therapyId)
       // else -> throw UnimplementedViewStateException(intent, state)
     }
@@ -74,7 +75,7 @@ class TherapyFormViewModel @Inject constructor(
     uiState = TherapyFormViewState.Therapy(therapyId, therapy)
   }
 
-  private suspend fun saveTherapy(therapyId: Long?, therapy: TherapyFormModel) {
+  private suspend fun createOrSaveTherapy(therapyId: Long?, therapy: TherapyFormModel) {
     val failedFields = TherapyFormModel.FailedFields(
       therapy.name.isEmptyOrBlank(),
       therapy.description.isEmptyOrBlank(),

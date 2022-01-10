@@ -48,7 +48,7 @@ fun TherapyFormScreen(
     uiState,
     { date, callback -> showDatePickerDialog(activity.supportFragmentManager, date, callback) },
     { viewModel.obtainIntent(TherapyFormIntent.FillTherapy(it)) },
-    { therapyId, therapyForm -> viewModel.obtainIntent(TherapyFormIntent.SaveTherapy(therapyId, therapyForm)) },
+    { therapyId, therapyForm -> viewModel.obtainIntent(TherapyFormIntent.CreateOrSaveTherapy(therapyId, therapyForm)) },
     { therapyId -> viewModel.obtainIntent(TherapyFormIntent.DeleteTherapy(therapyId)) }
   )
 
