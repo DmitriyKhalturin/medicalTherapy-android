@@ -20,8 +20,8 @@ import com.google.accompanist.systemuicontroller.SystemUiController
 import org.medicine.navigation.Destination
 import org.medicine.navigation.navigate
 import org.medicine.tools.EMPTY_STRING
+import org.medicine.ui.screen.overview.composable.InitialTherapies
 import org.medicine.ui.screen.overview.composable.NoOneTherapies
-import org.medicine.ui.screen.overview.composable.PrepareTherapies
 import org.medicine.ui.screen.overview.composable.Therapies
 import org.medicine.ui.screen.overview.model.OverviewIntent
 import org.medicine.ui.screen.overview.model.OverviewViewState
@@ -41,13 +41,18 @@ fun OverviewScreen(
 ) {
   val uiState = viewModel.uiState
 
-  systemUiController.setStatusBarColor(MaterialTheme.colors.background)
+  val statusBarColor = if (uiState is OverviewViewState.Therapies) {
+    MaterialTheme.colors.primaryVariant
+  } else {
+    MaterialTheme.colors.background
+  }
+
+  systemUiController.setStatusBarColor(statusBarColor)
   systemUiController.setNavigationBarColor(MaterialTheme.colors.primaryVariant)
 
   OverviewView(
     navController,
     uiState,
-    nextStep = { viewModel.nextStep() }
   )
 
   LaunchedEffect(key1 = viewModel) {
@@ -59,7 +64,6 @@ fun OverviewScreen(
 private fun OverviewView(
   navController: NavController,
   uiState: OverviewViewState,
-  nextStep: () -> Unit
 ) {
   Scaffold(
     floatingActionButtonPosition = FabPosition.End,
@@ -92,7 +96,7 @@ private fun OverviewView(
     ) {
       when (uiState) {
         is OverviewViewState.Initial ->
-          PrepareTherapies { nextStep() }
+          InitialTherapies()
         is OverviewViewState.NoOneTherapies ->
           NoOneTherapies()
         is OverviewViewState.Therapies ->
@@ -115,13 +119,12 @@ fun OverviewPreview() {
   MedicalTherapyTheme {
     OverviewView(
       rememberNavController(),
-      //OverviewViewState.Initial,
-      //OverviewViewState.NoOneTherapies,
+      // OverviewViewState.Initial,
+      // OverviewViewState.NoOneTherapies,
       OverviewViewState.Therapies(
         activeTherapies = stubActiveTherapies(),
         archivedTherapies = emptyList(),
       ),
-      nextStep = {},
     )
   }
 }

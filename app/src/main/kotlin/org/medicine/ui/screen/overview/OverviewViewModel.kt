@@ -8,8 +8,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import org.medicine.common.exception.UnimplementedViewStateException
 import org.medicine.common.viewmodel.BaseViewModel
 import org.medicine.common.viewmodel.IntentHandler
+import org.medicine.source.repository.MedicalTherapyRepository
 import org.medicine.ui.screen.overview.model.OverviewIntent
 import org.medicine.ui.screen.overview.model.OverviewViewState
+import org.medicine.ui.screen.overview.model.map.TherapyMapper.map
 import javax.inject.Inject
 
 /**
@@ -18,6 +20,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class OverviewViewModel @Inject constructor(
+  private val repository: MedicalTherapyRepository,
   savedStateHandle: SavedStateHandle,
 ) : BaseViewModel(), IntentHandler<OverviewIntent> {
 
@@ -41,9 +44,17 @@ class OverviewViewModel @Inject constructor(
     }
   }
 
-  private suspend fun fetchTherapies() = Unit
+  private suspend fun fetchTherapies() {
+    val entities = repository.getTherapies()
 
-  fun nextStep() {
-    uiState = OverviewViewState.NoOneTherapies
+    uiState = if (entities.isEmpty()) {
+      OverviewViewState.NoOneTherapies
+    } else {
+      val (archivedEntities, activeEntities) = entities.partition { it.isArchived }
+      val activeModels = activeEntities.map { map(it) }
+      val archivedModels = archivedEntities.map { map(it) }
+
+      OverviewViewState.Therapies(activeModels, archivedModels)
+    }
   }
 }
