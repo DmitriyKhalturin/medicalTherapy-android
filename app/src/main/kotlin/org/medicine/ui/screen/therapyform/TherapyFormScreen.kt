@@ -97,8 +97,8 @@ private fun TherapyFormView(
         )
       }
       // TODO: render (saving and deleting) successful UI.
-      is TherapyFormViewState.SavingSuccessful -> navController.popBackStack()
-      is TherapyFormViewState.DeletingSuccessful -> navController.popBackStack()
+      is TherapyFormViewState.SavingSuccessful -> navController.navigateUp()
+      is TherapyFormViewState.DeletingSuccessful -> navController.navigateUp()
     }
   }
 }
