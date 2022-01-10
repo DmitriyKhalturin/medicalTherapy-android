@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import org.medicine.R
 import org.medicine.tools.EMPTY_STRING
 import org.medicine.ui.screen.therapyform.model.TherapyFormModel
+import org.medicine.ui.stub.data.stubTherapyForm
 import org.medicine.ui.theme.MedicalTherapyTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -127,13 +128,7 @@ fun TherapyFormPreview() {
   MedicalTherapyTheme {
     TherapyForm(
       therapyId = null,
-      therapy = TherapyFormModel(
-        "First therapy.",
-        EMPTY_STRING,
-        todayDate,
-        todayDate.plusDays(5),
-        TherapyFormModel.FailedFields(description = true)
-      ),
+      therapy = stubTherapyForm(),
       {}, {}, {}, {}, {}, {},
     )
   }

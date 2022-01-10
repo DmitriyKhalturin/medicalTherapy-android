@@ -1,6 +1,8 @@
 package org.medicine.ui.stub.data
 
+import org.medicine.tools.EMPTY_STRING
 import org.medicine.ui.screen.overview.model.TherapyModel
+import org.medicine.ui.screen.therapyform.model.TherapyFormModel
 import java.time.LocalDate
 
 /**
@@ -37,4 +39,16 @@ fun stubArchivedTherapies(): List<TherapyModel> {
   val therapy = stubTherapy()
 
   return List(3) { therapy }
+}
+
+fun stubTherapyForm(): TherapyFormModel {
+  val todayDate = LocalDate.now()
+
+  return TherapyFormModel(
+    name = "My first therapy.",
+    EMPTY_STRING,
+    todayDate,
+    todayDate.plusDays(5),
+    TherapyFormModel.FailedFields(description = true)
+  )
 }

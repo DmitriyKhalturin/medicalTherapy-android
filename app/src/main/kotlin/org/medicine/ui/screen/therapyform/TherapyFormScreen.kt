@@ -21,6 +21,7 @@ import org.medicine.ui.screen.therapyform.composable.TherapyForm
 import org.medicine.ui.screen.therapyform.model.TherapyFormIntent
 import org.medicine.ui.screen.therapyform.model.TherapyFormModel
 import org.medicine.ui.screen.therapyform.model.TherapyFormViewState
+import org.medicine.ui.stub.data.stubTherapyForm
 import org.medicine.ui.theme.MedicalTherapyTheme
 import java.time.LocalDate
 
@@ -109,7 +110,13 @@ fun TherapyFormViewPreview() {
   MedicalTherapyTheme {
     TherapyFormView(
       rememberNavController(),
-      TherapyFormViewState.Initial,
+      // TherapyFormViewState.Initial,
+      TherapyFormViewState.Therapy(
+        therapyId = null,
+        therapy = stubTherapyForm(),
+      ),
+      // TherapyFormViewState.SavingSuccessful,
+      // TherapyFormViewState.DeletingSuccessful,
       { _, _ -> }, {}, { _, _ -> }, {},
     )
   }
