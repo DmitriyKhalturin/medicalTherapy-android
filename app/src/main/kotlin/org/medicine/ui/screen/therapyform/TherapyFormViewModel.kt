@@ -11,6 +11,7 @@ import org.medicine.common.viewmodel.IntentHandler
 import org.medicine.navigation.Destination
 import org.medicine.navigation.destination
 import org.medicine.source.repository.MedicalTherapyRepository
+import org.medicine.tools.isEmptyOrBlank
 import org.medicine.ui.screen.therapyform.model.TherapyFormIntent
 import org.medicine.ui.screen.therapyform.model.TherapyFormModel
 import org.medicine.ui.screen.therapyform.model.TherapyFormViewState
@@ -74,16 +75,33 @@ class TherapyFormViewModel @Inject constructor(
   }
 
   private suspend fun saveTherapy(therapyId: Long?, therapy: TherapyFormModel) {
-    val entity = map(therapyId, therapy)
+    val failedFields = TherapyFormModel.FailedFields(
+      therapy.name.isEmptyOrBlank(),
+      therapy.description.isEmptyOrBlank(),
+      therapy.startDate.isAfter(therapy.endDate),
+    )
 
-    if (therapyId != null) {
-      repository.updateTherapy(entity)
+    if (failedFields.has) {
+      uiState = TherapyFormViewState.Therapy(
+        therapyId,
+        therapy.copy(failedFields = failedFields),
+      )
     } else {
-      repository.createTherapy(entity)
+      val entity = map(therapyId, therapy)
+
+      if (therapyId != null) {
+        repository.updateTherapy(entity)
+      } else {
+        repository.createTherapy(entity)
+      }
+
+      uiState = TherapyFormViewState.SavingSuccessful
     }
   }
 
   private suspend fun deleteTherapy(therapyId: Long) {
     repository.deleteTherapy(therapyId)
+
+    uiState = TherapyFormViewState.DeletingSuccessful
   }
 }

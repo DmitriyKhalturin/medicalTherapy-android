@@ -38,7 +38,7 @@ fun TherapyForm(
   descriptionOnChange: (String) -> Unit,
   startDateOnClick: () -> Unit,
   endDateOnClick: () -> Unit,
-  saveTherapyOnClick: () -> Unit,
+  createOrSaveTherapyOnClick: () -> Unit,
   deleteTherapyOnClick: () -> Unit,
 ) {
   val formatter = DateTimeFormatter.ofPattern(stringResource(R.string.therapyDateFormat), Locale.getDefault())
@@ -56,6 +56,8 @@ fun TherapyForm(
       OutlinedTextField(
         modifier = fieldModifier,
         value = therapy.name,
+        label = { Text("Therapy name") },
+        isError = therapy.failedFields.name,
         onValueChange = nameOnChange,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
@@ -63,6 +65,8 @@ fun TherapyForm(
       OutlinedTextField(
         modifier = fieldModifier,
         value = therapy.description,
+        label = { Text("Information")},
+        isError = therapy.failedFields.description,
         onValueChange = descriptionOnChange,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
@@ -70,12 +74,16 @@ fun TherapyForm(
       OutlinedTextField(
         modifier = fieldModifier.clickable { focusManager.clearFocus(); startDateOnClick() },
         value = formatter.format(therapy.startDate),
+        label = { Text("Start date") },
+        isError = therapy.failedFields.date,
         onValueChange = { },
         enabled = false,
       )
       OutlinedTextField(
         modifier = fieldModifier.clickable { focusManager.clearFocus(); endDateOnClick() },
         value = formatter.format(therapy.endDate),
+        label = { Text("End date") },
+        isError = therapy.failedFields.date,
         onValueChange = { },
         enabled = false
       )
@@ -88,9 +96,13 @@ fun TherapyForm(
 
       OutlinedButton(
         modifier = controlModifier,
-        onClick = { saveTherapyOnClick() }
+        onClick = { createOrSaveTherapyOnClick() }
       ) {
-        Text(text = "Сохранить протокол лечения")
+        if (therapyId != null) {
+          Text(text = "Сохранить протокол лечения")
+        } else {
+          Text(text = "Создать протокол лечения")
+        }
       }
 
       if (therapyId != null) {
@@ -120,6 +132,7 @@ fun TherapyFormPreview() {
         EMPTY_STRING,
         todayDate,
         todayDate.plusDays(5),
+        TherapyFormModel.FailedFields(description = true)
       ),
       {}, {}, {}, {}, {}, {},
     )

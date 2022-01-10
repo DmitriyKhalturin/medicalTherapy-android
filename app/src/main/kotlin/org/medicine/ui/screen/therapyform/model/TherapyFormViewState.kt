@@ -10,4 +10,6 @@ sealed class TherapyFormViewState {
     val therapyId: Long?,
     val therapy: TherapyFormModel,
   ) : TherapyFormViewState()
+  object SavingSuccessful: TherapyFormViewState()
+  object DeletingSuccessful: TherapyFormViewState()
 }

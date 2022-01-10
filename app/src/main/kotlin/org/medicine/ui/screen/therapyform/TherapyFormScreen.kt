@@ -74,7 +74,7 @@ private fun TherapyFormView(
   uiState: TherapyFormViewState,
   therapyDateOnChange: (LocalDate, TherapyDateOnChange) -> Unit,
   therapyFormOnChange: (TherapyFormModel) -> Unit,
-  saveTherapy: (Long?, TherapyFormModel) -> Unit,
+  createOrSaveTherapy: (Long?, TherapyFormModel) -> Unit,
   deleteTherapy: (Long) -> Unit,
 ) {
   Box(
@@ -83,16 +83,21 @@ private fun TherapyFormView(
   ) {
     when (uiState) {
       is TherapyFormViewState.Initial -> Unit
-      is TherapyFormViewState.Therapy -> TherapyForm(
-        uiState.therapyId,
-        uiState.therapy,
-        { therapyFormOnChange(uiState.therapy.copy(name = it)) },
-        { therapyFormOnChange(uiState.therapy.copy(description = it)) },
-        { therapyDateOnChange(uiState.therapy.startDate) { therapyFormOnChange(uiState.therapy.copy(startDate = it)) } },
-        { therapyDateOnChange(uiState.therapy.endDate) { therapyFormOnChange(uiState.therapy.copy(endDate = it)) } },
-        { saveTherapy(uiState.therapyId, uiState.therapy) },
-        { uiState.therapyId?.let(deleteTherapy) },
-      )
+      is TherapyFormViewState.Therapy -> uiState.run {
+        TherapyForm(
+          therapyId,
+          therapy,
+          { therapyFormOnChange(therapy.copy(name = it)) },
+          { therapyFormOnChange(therapy.copy(description = it)) },
+          { therapyDateOnChange(therapy.startDate) { therapyFormOnChange(therapy.copy(startDate = it)) } },
+          { therapyDateOnChange(therapy.endDate) { therapyFormOnChange(therapy.copy(endDate = it)) } },
+          { createOrSaveTherapy(therapyId, therapy) },
+          { therapyId?.let(deleteTherapy) },
+        )
+      }
+      // TODO: render (saving and deleting) successful UI.
+      is TherapyFormViewState.SavingSuccessful -> navController.popBackStack()
+      is TherapyFormViewState.DeletingSuccessful -> navController.popBackStack()
     }
   }
 }

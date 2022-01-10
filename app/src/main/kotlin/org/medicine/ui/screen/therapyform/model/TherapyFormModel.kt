@@ -11,4 +11,16 @@ data class TherapyFormModel(
   val description: String,
   val startDate: LocalDate,
   val endDate: LocalDate,
-)
+  val failedFields: FailedFields,
+) {
+
+  data class FailedFields(
+    val name: Boolean = false,
+    val description: Boolean = false,
+    val date: Boolean = false,
+  ) {
+
+    val has: Boolean
+      get() = name || description || date
+  }
+}

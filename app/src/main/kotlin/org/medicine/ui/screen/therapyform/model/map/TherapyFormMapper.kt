@@ -15,6 +15,7 @@ object TherapyFormMapper {
       name,
       (description ?: EMPTY_STRING),
       startDate, endDate,
+      TherapyFormModel.FailedFields(),
     )
   }
 
@@ -24,6 +25,7 @@ object TherapyFormMapper {
       EMPTY_STRING,
       LocalDate.now(),
       LocalDate.now().plusDays(BETWEEN_START_END_THERAPY_DATE),
+      TherapyFormModel.FailedFields(),
     )
 
   fun map(id: Long?, model: TherapyFormModel) = model.run {
