@@ -47,4 +47,20 @@ class StandardKtTest {
 
     assert(map.size == list.size)
   }
+
+  @Test
+  fun `Test Empty and Blank string`() {
+    val blankString = "   "
+    val string = " STRING "
+
+    assert(EMPTY_STRING.isEmpty())
+    assert(EMPTY_STRING.isBlank())
+    assert(blankString.isNotEmpty())
+    assert(blankString.isBlank())
+    assert(string.isNotEmpty())
+    assert(string.isNotBlank())
+    assert(EMPTY_STRING.isEmptyOrBlank())
+    assert(blankString.isEmptyOrBlank())
+    assert(string.isEmptyOrBlank().not())
+  }
 }

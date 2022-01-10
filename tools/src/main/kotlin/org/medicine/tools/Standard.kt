@@ -36,3 +36,6 @@ inline fun <reified T, K> List<T>.toHashMap(keyGenerator: (T) -> K): HashMap<K, 
 
   return result
 }
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun String.isEmptyOrBlank() = run { isEmpty() || isBlank() }
