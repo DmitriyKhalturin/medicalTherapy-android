@@ -47,6 +47,7 @@ fun OverviewScreen(
   OverviewView(
     navController,
     uiState,
+    nextStep = { viewModel.nextStep() }
   )
 
   LaunchedEffect(key1 = viewModel) {
@@ -58,6 +59,7 @@ fun OverviewScreen(
 private fun OverviewView(
   navController: NavController,
   uiState: OverviewViewState,
+  nextStep: () -> Unit
 ) {
   Scaffold(
     floatingActionButtonPosition = FabPosition.End,
@@ -90,7 +92,7 @@ private fun OverviewView(
     ) {
       when (uiState) {
         is OverviewViewState.Initial ->
-          PrepareTherapies()
+          PrepareTherapies { nextStep() }
         is OverviewViewState.NoOneTherapies ->
           NoOneTherapies()
         is OverviewViewState.Therapies ->
@@ -118,7 +120,8 @@ fun OverviewPreview() {
       OverviewViewState.Therapies(
         activeTherapies = stubActiveTherapies(),
         archivedTherapies = emptyList(),
-      )
+      ),
+      nextStep = {},
     )
   }
 }
