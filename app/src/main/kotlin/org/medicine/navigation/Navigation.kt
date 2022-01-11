@@ -32,7 +32,7 @@ fun buildNavGraph(navController: NavController, systemUiController: SystemUiCont
     }
 
     composable(Route.TherapySchedule) {
-      TherapyScheduleScreen(viewModel = hiltViewModel())
+      TherapyScheduleScreen(navController = navController, systemUiController = systemUiController, viewModel = hiltViewModel())
     }
 
     composable(Route.TherapyForm) {
