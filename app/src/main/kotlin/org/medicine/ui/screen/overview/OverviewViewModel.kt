@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.medicine.common.exception.UnimplementedViewStateException
 import org.medicine.common.viewmodel.BaseViewModel
 import org.medicine.common.viewmodel.IntentHandler
 import org.medicine.source.repository.MedicalTherapyRepository
@@ -29,19 +28,14 @@ class OverviewViewModel @Inject constructor(
 
   override fun obtainIntent(intent: OverviewIntent) {
     launch {
-      when (val state = uiState) {
-        is OverviewViewState.Initial -> reduce(state, intent)
-        is OverviewViewState.NoOneTherapies -> Unit
-        is OverviewViewState.Therapies -> Unit
+      when (intent) {
+        is OverviewIntent.EnterScreen -> reduce(uiState, intent)
       }
     }
   }
 
-  private suspend fun reduce(state: OverviewViewState.Initial, intent: OverviewIntent) {
-    when (intent) {
-      is OverviewIntent.EnterScreen -> fetchTherapies()
-      else -> throw UnimplementedViewStateException(intent, state)
-    }
+  private suspend fun reduce(state: OverviewViewState, intent: OverviewIntent.EnterScreen) {
+    fetchTherapies()
   }
 
   private suspend fun fetchTherapies() {
