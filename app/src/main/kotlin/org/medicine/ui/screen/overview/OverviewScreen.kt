@@ -69,14 +69,11 @@ private fun OverviewView(
     floatingActionButtonPosition = FabPosition.End,
     isFloatingActionButtonDocked = true,
     floatingActionButton = {
-      FloatingActionButton(
-        onClick = {
-          navController.navigate(Destination.TherapyForm())
-        },
-        content =  {
-          Icon(Icons.Filled.Add, EMPTY_STRING)
-        },
-      )
+      FloatingActionButton(onClick = {
+        navController.navigate(Destination.TherapyForm())
+      }) {
+        Icon(Icons.Filled.Add, EMPTY_STRING)
+      }
     },
     bottomBar = {
       BottomAppBar(cutoutShape = MaterialTheme.shapes.medium.copy(CornerSize(percent = 50))) {
@@ -99,14 +96,15 @@ private fun OverviewView(
           InitialTherapies()
         is OverviewViewState.NoOneTherapies ->
           NoOneTherapies()
-        is OverviewViewState.Therapies ->
+        is OverviewViewState.Therapies -> uiState.run {
           Therapies(
-            uiState.activeTherapies,
-            uiState.archivedTherapies,
+            activeTherapies,
+            archivedTherapies,
             openTherapyOnClick = { therapyId ->
               navController.navigate(Destination.TherapySchedule(therapyId))
             }
           )
+        }
       }
     }
   }
