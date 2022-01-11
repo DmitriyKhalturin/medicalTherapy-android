@@ -12,9 +12,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.android.material.datepicker.MaterialDatePicker
+import org.medicine.navigation.Destination
+import org.medicine.navigation.navigate
 import org.medicine.tools.time.toLocalDate
 import org.medicine.tools.time.toLong
 import org.medicine.ui.screen.therapyform.composable.TherapyForm
@@ -97,8 +100,15 @@ private fun TherapyFormView(
         )
       }
       // TODO: render (saving and deleting) successful UI.
-      is TherapyFormViewState.SavingSuccessful -> navController.navigateUp()
-      is TherapyFormViewState.DeletingSuccessful -> navController.navigateUp()
+      is TherapyFormViewState.SavingSuccessful ->
+        navController.navigate(Destination.TherapySchedule(uiState.therapyId))
+      is TherapyFormViewState.DeletingSuccessful ->
+        navController.navigate(
+          Destination.Overview,
+          NavOptions.Builder()
+            .setPopUpTo(route = null, inclusive = true)
+            .build()
+        )
     }
   }
 }

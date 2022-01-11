@@ -6,10 +6,7 @@ package org.medicine.ui.screen.therapyform.model
  */
 sealed class TherapyFormViewState {
   object Initial : TherapyFormViewState()
-  data class Therapy(
-    val therapyId: Long?,
-    val therapy: TherapyFormModel,
-  ) : TherapyFormViewState()
-  object SavingSuccessful: TherapyFormViewState()
+  data class Therapy(val therapyId: Long?, val therapy: TherapyFormModel) : TherapyFormViewState()
+  data class SavingSuccessful(val therapyId: Long): TherapyFormViewState()
   object DeletingSuccessful: TherapyFormViewState()
 }

@@ -89,14 +89,14 @@ class TherapyFormViewModel @Inject constructor(
       )
     } else {
       val entity = map(therapyId, therapy)
-
-      if (therapyId != null) {
+      val entityId = if (therapyId != null) {
         repository.updateTherapy(entity)
+        therapyId
       } else {
         repository.createTherapy(entity)
       }
 
-      uiState = TherapyFormViewState.SavingSuccessful
+      uiState = TherapyFormViewState.SavingSuccessful(entityId)
     }
   }
 

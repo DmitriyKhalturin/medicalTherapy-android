@@ -7,8 +7,5 @@ package org.medicine.ui.screen.overview.model
 sealed class OverviewViewState {
   object Initial : OverviewViewState()
   object NoOneTherapies : OverviewViewState()
-  data class Therapies(
-    val activeTherapies: List<TherapyModel>,
-    val archivedTherapies: List<TherapyModel>,
-  ) : OverviewViewState()
+  data class Therapies(val activeTherapies: List<TherapyModel>, val archivedTherapies: List<TherapyModel>) : OverviewViewState()
 }
