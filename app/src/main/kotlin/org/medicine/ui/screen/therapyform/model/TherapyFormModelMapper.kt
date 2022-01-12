@@ -1,12 +1,11 @@
-package org.medicine.ui.screen.therapyform.model.map
+package org.medicine.ui.screen.therapyform.model
 
 import org.medicine.source.database.entity.TherapyEntity
 import org.medicine.tools.EMPTY_STRING
 import org.medicine.tools.daysUntil
-import org.medicine.ui.screen.therapyform.model.TherapyFormModel
 import java.time.LocalDate
 
-object TherapyFormMapper {
+object TherapyFormModelMapper {
 
   private const val BETWEEN_START_END_THERAPY_DATE = 7L
 

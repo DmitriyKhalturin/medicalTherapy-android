@@ -14,9 +14,9 @@ import org.medicine.source.repository.MedicalTherapyRepository
 import org.medicine.tools.isEmptyOrBlank
 import org.medicine.ui.screen.therapyform.model.TherapyFormIntent
 import org.medicine.ui.screen.therapyform.model.TherapyFormModel
+import org.medicine.ui.screen.therapyform.model.TherapyFormModelMapper.buildEmptyModel
+import org.medicine.ui.screen.therapyform.model.TherapyFormModelMapper.map
 import org.medicine.ui.screen.therapyform.model.TherapyFormViewState
-import org.medicine.ui.screen.therapyform.model.map.TherapyFormMapper.buildEmptyModel
-import org.medicine.ui.screen.therapyform.model.map.TherapyFormMapper.map
 import javax.inject.Inject
 
 /**

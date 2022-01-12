@@ -9,8 +9,8 @@ import org.medicine.common.viewmodel.BaseViewModel
 import org.medicine.common.viewmodel.IntentHandler
 import org.medicine.source.repository.MedicalTherapyRepository
 import org.medicine.ui.screen.overview.model.OverviewIntent
+import org.medicine.ui.screen.overview.model.OverviewModelMapper.map
 import org.medicine.ui.screen.overview.model.OverviewViewState
-import org.medicine.ui.screen.overview.model.map.TherapyMapper.map
 import javax.inject.Inject
 
 /**

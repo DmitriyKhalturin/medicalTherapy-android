@@ -12,8 +12,8 @@ import org.medicine.navigation.Destination
 import org.medicine.navigation.destination
 import org.medicine.source.repository.MedicalTherapyRepository
 import org.medicine.ui.screen.therapyschedule.model.TherapyScheduleIntent
+import org.medicine.ui.screen.therapyschedule.model.TherapyScheduleModelMapper.map
 import org.medicine.ui.screen.therapyschedule.model.TherapyScheduleViewState
-import org.medicine.ui.screen.therapyschedule.model.map.TherapyScheduleMapper.map
 import javax.inject.Inject
 
 /**
