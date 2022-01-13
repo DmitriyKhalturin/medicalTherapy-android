@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -55,20 +56,22 @@ fun TherapyScheduleView(
     floatingActionButtonPosition = FabPosition.End,
     isFloatingActionButtonDocked = true,
     floatingActionButton = {
-      FloatingActionButton(onClick = { /*TODO*/ }) {
+      FloatingActionButton(onClick = {
+        navController.navigateUp()
+      }) {
         Icon(Icons.Filled.ArrowBack, EMPTY_STRING)
       }
     },
     bottomBar = {
       BottomAppBar(cutoutShape = MaterialTheme.shapes.medium.copy(CornerSize(percent = 50))) {
         IconButton(onClick = { /*TODO*/ }) {
-          Icon(Icons.Filled.Edit, EMPTY_STRING)
+          Icon(Icons.Filled.Edit, EMPTY_STRING, tint = Color.White)
         }
         IconButton(onClick = { /*TODO*/ }) {
-          Icon(painterResource(id = R.drawable.ic_pills), EMPTY_STRING)
+          Icon(painterResource(id = R.drawable.ic_pills), EMPTY_STRING, tint = Color.White)
         }
         IconButton(onClick = { /*TODO*/ }) {
-          Icon(painterResource(id = R.drawable.ic_event), EMPTY_STRING)
+          Icon(painterResource(id = R.drawable.ic_event), EMPTY_STRING, tint = Color.White)
         }
         Spacer(modifier = Modifier.weight(weight = 1f, fill = true))
       }
