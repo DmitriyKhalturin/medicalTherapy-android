@@ -5,7 +5,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.google.accompanist.systemuicontroller.SystemUiController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import org.medicine.common.ui.setSystemUiColors
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -13,12 +14,12 @@ import com.google.accompanist.systemuicontroller.SystemUiController
  */
 
 @Composable
-fun ApplicationInfoScreen(
-  systemUiController: SystemUiController,
-  viewModel: ApplicationInfoViewModel,
-) {
-  systemUiController.setStatusBarColor(MaterialTheme.colors.background)
-  systemUiController.setNavigationBarColor(MaterialTheme.colors.background)
+fun ApplicationInfoScreen(viewModel: ApplicationInfoViewModel) {
+  rememberSystemUiController()
+    .setSystemUiColors(
+      MaterialTheme.colors.background,
+      MaterialTheme.colors.background
+    )
 
   Text(
     modifier = Modifier.fillMaxSize(),

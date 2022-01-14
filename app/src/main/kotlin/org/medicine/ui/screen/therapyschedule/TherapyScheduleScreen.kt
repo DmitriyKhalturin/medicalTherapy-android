@@ -1,21 +1,23 @@
 package org.medicine.ui.screen.therapyschedule
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.google.accompanist.systemuicontroller.SystemUiController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.medicine.R
+import org.medicine.common.ui.setSystemUiColors
 import org.medicine.schedule.MedicalTherapySchedule
 import org.medicine.tools.EMPTY_STRING
 import org.medicine.ui.screen.therapyschedule.model.TherapyScheduleIntent
@@ -27,15 +29,14 @@ import org.medicine.ui.screen.therapyschedule.model.TherapyScheduleViewState
  */
 
 @Composable
-fun TherapyScheduleScreen(
-  navController: NavController,
-  systemUiController: SystemUiController,
-  viewModel: TherapyScheduleViewModel,
-) {
+fun TherapyScheduleScreen(navController: NavController, viewModel: TherapyScheduleViewModel) {
   val uiState = viewModel.uiState
 
-  systemUiController.setStatusBarColor(MaterialTheme.colors.background)
-  systemUiController.setNavigationBarColor(MaterialTheme.colors.primaryVariant)
+  rememberSystemUiController()
+    .setSystemUiColors(
+      MaterialTheme.colors.background,
+      MaterialTheme.colors.background
+    )
 
   TherapyScheduleView(
     navController,
@@ -47,53 +48,38 @@ fun TherapyScheduleScreen(
   }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TherapyScheduleView(
   navController: NavController,
   uiState: TherapyScheduleViewState,
 ) {
-  Scaffold(
-    floatingActionButtonPosition = FabPosition.End,
-    isFloatingActionButtonDocked = true,
-    floatingActionButton = {
-      FloatingActionButton(onClick = {
-        navController.navigateUp()
-      }) {
-        Icon(Icons.Filled.ArrowBack, EMPTY_STRING)
-      }
-    },
-    bottomBar = {
-      BottomAppBar(cutoutShape = MaterialTheme.shapes.medium.copy(CornerSize(percent = 50))) {
-        IconButton(onClick = { /*TODO*/ }) {
-          Icon(Icons.Filled.Edit, EMPTY_STRING, tint = Color.White)
-        }
-        IconButton(onClick = { /*TODO*/ }) {
-          Icon(painterResource(id = R.drawable.ic_pills), EMPTY_STRING, tint = Color.White)
-        }
-        IconButton(onClick = { /*TODO*/ }) {
-          Icon(painterResource(id = R.drawable.ic_event), EMPTY_STRING, tint = Color.White)
-        }
-        Spacer(modifier = Modifier.weight(weight = 1f, fill = true))
-      }
-    },
-  ) {
-    Box(
-      modifier = Modifier
-        .fillMaxSize()
-        .padding(it)
-    ) {
-      when (uiState) {
-        is TherapyScheduleViewState.Initial -> Unit
-        is TherapyScheduleViewState.Therapy -> uiState.run {
-          Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-          ) {
-            Text(
-              modifier = Modifier.padding(16.dp),
-              text = therapy.name,
-            )
+  val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Concealed)
 
+  LaunchedEffect(scaffoldState) {
+    scaffoldState.reveal()
+  }
+
+  BackdropScaffold(
+    scaffoldState = scaffoldState,
+    appBar = {
+      TopAppBar(
+        navigationIcon = {},
+        title = {
+          if (uiState is TherapyScheduleViewState.Therapy) {
+            Text(text = uiState.therapy.name)
+          }
+        },
+        elevation = 0.dp,
+        backgroundColor = MaterialTheme.colors.background,
+      )
+    },
+    backLayerBackgroundColor = MaterialTheme.colors.background,
+    backLayerContent = {
+      Box(modifier = Modifier.fillMaxSize()) {
+        when (uiState) {
+          is TherapyScheduleViewState.Initial -> Unit
+          is TherapyScheduleViewState.Therapy -> uiState.run {
             MedicalTherapySchedule(
               startDate = therapy.startDate,
               endDate = therapy.endDate,
@@ -107,6 +93,24 @@ fun TherapyScheduleView(
           }
         }
       }
-    }
-  }
+    },
+    headerHeight = 48.dp,
+    frontLayerShape = CutCornerShape(topStart = 32.dp),
+    frontLayerBackgroundColor = MaterialTheme.colors.secondary,
+    frontLayerContent = {
+      Row(
+        modifier = Modifier.fillMaxWidth()
+      ) {
+        IconButton(onClick = {}) {
+          Icon(Icons.Filled.Edit, EMPTY_STRING, tint = Color.White)
+        }
+          IconButton(onClick = {}) {
+          Icon(painterResource(id = R.drawable.ic_pills), EMPTY_STRING, tint = Color.White)
+        }
+          IconButton(onClick = {}) {
+          Icon(painterResource(id = R.drawable.ic_event), EMPTY_STRING, tint = Color.White)
+        }
+      }
+    },
+  )
 }

@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -12,11 +11,14 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.systemuicontroller.SystemUiController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import org.medicine.common.ui.setSystemUiColors
 import org.medicine.navigation.Destination
 import org.medicine.navigation.navigate
 import org.medicine.tools.EMPTY_STRING
@@ -34,21 +36,14 @@ import org.medicine.ui.theme.MedicalTherapyTheme
  */
 
 @Composable
-fun OverviewScreen(
-  navController: NavController,
-  systemUiController: SystemUiController,
-  viewModel: OverviewViewModel,
-) {
+fun OverviewScreen(navController: NavController, viewModel: OverviewViewModel) {
   val uiState = viewModel.uiState
 
-  val statusBarColor = if (uiState is OverviewViewState.Therapies) {
-    MaterialTheme.colors.primaryVariant
-  } else {
-    MaterialTheme.colors.background
-  }
-
-  systemUiController.setStatusBarColor(statusBarColor)
-  systemUiController.setNavigationBarColor(MaterialTheme.colors.primaryVariant)
+  rememberSystemUiController()
+    .setSystemUiColors(
+      MaterialTheme.colors.primaryVariant,
+      MaterialTheme.colors.background
+    )
 
   OverviewView(
     navController,
@@ -66,25 +61,25 @@ private fun OverviewView(
   uiState: OverviewViewState,
 ) {
   Scaffold(
-    floatingActionButtonPosition = FabPosition.End,
-    isFloatingActionButtonDocked = true,
-    floatingActionButton = {
-      FloatingActionButton(onClick = {
-        navController.navigate(Destination.TherapyForm())
-      }) {
-        Icon(Icons.Filled.Add, EMPTY_STRING)
-      }
-    },
-    bottomBar = {
-      BottomAppBar(cutoutShape = MaterialTheme.shapes.medium.copy(CornerSize(percent = 50))) {
+    topBar = {
+      TopAppBar(elevation = 0.dp) {
+        Spacer(modifier = Modifier.weight(weight = 1f, fill = true))
+
         IconButton(onClick = {
           navController.navigate(Destination.ApplicationInfo)
         }) {
           Icon(Icons.Outlined.Info, EMPTY_STRING, tint = Color.White)
         }
-        Spacer(modifier = Modifier.weight(weight = 1f, fill = true))
       }
-    }
+    },
+    floatingActionButtonPosition = FabPosition.End,
+    floatingActionButton = {
+      FloatingActionButton(onClick = {
+        navController.navigate(Destination.TherapyForm())
+      }) {
+        Icon(Icons.Filled.Add, EMPTY_STRING, modifier = Modifier.scale(scale = 1.25f))
+      }
+    },
   ) {
     Box(
       modifier = Modifier

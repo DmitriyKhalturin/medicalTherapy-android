@@ -14,8 +14,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.systemuicontroller.SystemUiController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.android.material.datepicker.MaterialDatePicker
+import org.medicine.common.ui.setSystemUiColors
 import org.medicine.navigation.Destination
 import org.medicine.navigation.navigate
 import org.medicine.tools.time.toLocalDate
@@ -34,15 +35,14 @@ import java.time.LocalDate
  */
 
 @Composable
-fun TherapyFormScreen(
-  navController: NavController,
-  systemUiController: SystemUiController,
-  viewModel: TherapyFormViewModel,
-) {
+fun TherapyFormScreen(navController: NavController, viewModel: TherapyFormViewModel) {
   val uiState = viewModel.uiState
 
-  systemUiController.setStatusBarColor(MaterialTheme.colors.background)
-  systemUiController.setNavigationBarColor(MaterialTheme.colors.background)
+  rememberSystemUiController()
+    .setSystemUiColors(
+      MaterialTheme.colors.background,
+      MaterialTheme.colors.background
+    )
 
   val activity = LocalContext.current as AppCompatActivity
 

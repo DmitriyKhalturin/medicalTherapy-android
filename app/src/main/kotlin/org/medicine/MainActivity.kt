@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
+import org.medicine.common.ui.setSystemUiColors
 import org.medicine.navigation.buildNavGraph
 import org.medicine.ui.theme.MedicalTherapyTheme
 
@@ -25,15 +26,17 @@ class MainActivity : AppCompatActivity() {
     setContent {
       MedicalTherapyTheme {
         val navController = rememberNavController()
-        val systemUiController = rememberSystemUiController()
 
-        systemUiController.setStatusBarColor(color = MaterialTheme.colors.background)
-        systemUiController.setNavigationBarColor(color = MaterialTheme.colors.background)
+        rememberSystemUiController()
+          .setSystemUiColors(
+            MaterialTheme.colors.background,
+            MaterialTheme.colors.background
+          )
 
         NavHost(
           modifier = Modifier.background(MaterialTheme.colors.background),
           navController = navController,
-          graph = buildNavGraph(navController, systemUiController),
+          graph = buildNavGraph(navController),
         )
       }
     }

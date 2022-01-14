@@ -5,7 +5,6 @@ import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
-import com.google.accompanist.systemuicontroller.SystemUiController
 import org.medicine.ui.screen.applicationinfo.ApplicationInfoScreen
 import org.medicine.ui.screen.dayschedule.DayScheduleScreen
 import org.medicine.ui.screen.dealform.DealFormScreen
@@ -24,19 +23,19 @@ import org.medicine.ui.screen.therapyschedule.TherapyScheduleScreen
  */
 
 @Composable
-fun buildNavGraph(navController: NavController, systemUiController: SystemUiController): NavGraph = remember {
+fun buildNavGraph(navController: NavController): NavGraph = remember {
   navController.createGraph(Route.Overview) {
 
     composable(Route.Overview) {
-      OverviewScreen(navController = navController, systemUiController = systemUiController, viewModel = hiltViewModel())
+      OverviewScreen(navController = navController, viewModel = hiltViewModel())
     }
 
     composable(Route.TherapySchedule) {
-      TherapyScheduleScreen(navController = navController, systemUiController = systemUiController, viewModel = hiltViewModel())
+      TherapyScheduleScreen(navController = navController, viewModel = hiltViewModel())
     }
 
     composable(Route.TherapyForm) {
-      TherapyFormScreen(navController = navController, systemUiController = systemUiController, viewModel = hiltViewModel())
+      TherapyFormScreen(navController = navController, viewModel = hiltViewModel())
     }
 
     composable(Route.MedicineForm) {
@@ -52,7 +51,7 @@ fun buildNavGraph(navController: NavController, systemUiController: SystemUiCont
     }
 
     composable(Route.ApplicationInfo) {
-      ApplicationInfoScreen(systemUiController = systemUiController, viewModel = hiltViewModel())
+      ApplicationInfoScreen(viewModel = hiltViewModel())
     }
   }
 }
