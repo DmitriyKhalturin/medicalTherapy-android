@@ -1,25 +1,26 @@
 package org.medicine.ui.screen.therapyschedule
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import kotlinx.coroutines.launch
 import org.medicine.R
 import org.medicine.common.ui.setSystemUiColors
 import org.medicine.schedule.MedicalTherapySchedule
-import org.medicine.tools.EMPTY_STRING
+import org.medicine.ui.screen.therapyschedule.composable.ToolButton
 import org.medicine.ui.screen.therapyschedule.model.TherapyScheduleIntent
 import org.medicine.ui.screen.therapyschedule.model.TherapyScheduleViewState
 
@@ -54,6 +55,7 @@ fun TherapyScheduleView(
   navController: NavController,
   uiState: TherapyScheduleViewState,
 ) {
+  val coroutineScope = rememberCoroutineScope()
   val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Concealed)
 
   LaunchedEffect(scaffoldState) {
@@ -80,37 +82,79 @@ fun TherapyScheduleView(
         when (uiState) {
           is TherapyScheduleViewState.Initial -> Unit
           is TherapyScheduleViewState.Therapy -> uiState.run {
-            MedicalTherapySchedule(
-              startDate = therapy.startDate,
-              endDate = therapy.endDate,
-              medicines = therapy.medicines,
-              deals = therapy.deals,
-              dateOnClick = {},
-              medicineOnClick = {},
-              dealOnClick = {},
-              dealsOnClick = {},
-            )
+            Column {
+              MedicalTherapySchedule(
+                modifier = Modifier.weight(weight = 1f, fill = true),
+                startDate = therapy.startDate,
+                endDate = therapy.endDate,
+                medicines = therapy.medicines,
+                deals = therapy.deals,
+                dateOnClick = {},
+                medicineOnClick = {},
+                dealOnClick = {},
+                dealsOnClick = {},
+              )
+
+              Box(
+                modifier = Modifier
+                  .background(
+                    brush = Brush.verticalGradient(
+                      colors = listOf(
+                        MaterialTheme.colors.surface,
+                        MaterialTheme.colors.background,
+                      )
+                    )
+                  )
+                  .fillMaxWidth()
+                  .padding(16.dp),
+                contentAlignment = Alignment.Center,
+              ) {
+                Row {
+                  val toolButtonModifier = Modifier.padding(horizontal = 4.dp)
+
+                  ToolButton(
+                    modifier = toolButtonModifier,
+                    imageVector = Icons.Filled.Edit,
+                    text = "Редактировать",
+                  ) {
+                    // load therapy edit form
+                    coroutineScope.launch {
+                      scaffoldState.conceal()
+                    }
+                  }
+                  ToolButton(
+                    modifier = toolButtonModifier,
+                    painter = painterResource(id = R.drawable.ic_pills),
+                    text = "Медикаменты",
+                  ) {
+                    // load medication form
+                    coroutineScope.launch {
+                      scaffoldState.conceal()
+                    }
+                  }
+                  ToolButton(
+                    modifier = toolButtonModifier,
+                    painter = painterResource(id = R.drawable.ic_event),
+                    text = "События",
+                  ) {
+                    // load event form
+                    coroutineScope.launch {
+                      scaffoldState.conceal()
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    headerHeight = 48.dp,
-    frontLayerShape = CutCornerShape(topStart = 32.dp),
-    frontLayerBackgroundColor = MaterialTheme.colors.secondary,
+    headerHeight = 0.dp,
+    frontLayerElevation = 8.dp,
+    frontLayerBackgroundColor = MaterialTheme.colors.background,
     frontLayerContent = {
-      Row(
-        modifier = Modifier.fillMaxWidth()
-      ) {
-        IconButton(onClick = {}) {
-          Icon(Icons.Filled.Edit, EMPTY_STRING, tint = Color.White)
-        }
-          IconButton(onClick = {}) {
-          Icon(painterResource(id = R.drawable.ic_pills), EMPTY_STRING, tint = Color.White)
-        }
-          IconButton(onClick = {}) {
-          Icon(painterResource(id = R.drawable.ic_event), EMPTY_STRING, tint = Color.White)
-        }
-      }
+      //
     },
+    frontLayerShape = CutCornerShape(topStart = 32.dp),
   )
 }
