@@ -112,7 +112,7 @@ fun TherapyScheduleView(
     frontLayerContent = {
       Box(modifier = Modifier.padding(top = CUT_CORNER_SIZE)) {
         when (editFormType.value) {
-          EditFormType.THERAPY -> TherapyEditForm()
+          EditFormType.THERAPY -> TherapyEditForm(navController)
           EditFormType.MEDICINE -> MedicineEditForm()
           EditFormType.DEAL -> DealEditForm()
         }
