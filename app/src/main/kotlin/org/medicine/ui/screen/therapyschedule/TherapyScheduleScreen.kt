@@ -1,19 +1,18 @@
 package org.medicine.ui.screen.therapyschedule
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import kotlinx.coroutines.launch
 import org.medicine.common.ui.setSystemUiColors
 import org.medicine.schedule.MedicalTherapySchedule
 import org.medicine.ui.screen.therapyschedule.composable.*
@@ -54,9 +53,16 @@ fun TherapyScheduleView(
   uiState: TherapyScheduleViewState,
 ) {
   val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Concealed)
+  val coroutineScope = rememberCoroutineScope()
 
   LaunchedEffect(scaffoldState) {
     scaffoldState.reveal()
+  }
+
+  BackHandler(enabled = scaffoldState.isConcealed) {
+    coroutineScope.launch {
+      scaffoldState.reveal()
+    }
   }
 
   val editFormType = remember { mutableStateOf(EditFormType.THERAPY) }
@@ -104,11 +110,7 @@ fun TherapyScheduleView(
     frontLayerElevation = 8.dp,
     frontLayerBackgroundColor = MaterialTheme.colors.background,
     frontLayerContent = {
-      Box(
-        modifier = Modifier
-          .padding(top = CUT_CORNER_SIZE)
-          .padding(16.dp)
-      ) {
+      Box(modifier = Modifier.padding(top = CUT_CORNER_SIZE)) {
         when (editFormType.value) {
           EditFormType.THERAPY -> TherapyEditForm()
           EditFormType.MEDICINE -> MedicineEditForm()

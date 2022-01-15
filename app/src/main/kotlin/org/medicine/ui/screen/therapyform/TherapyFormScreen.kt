@@ -10,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.rememberNavController
@@ -44,12 +43,9 @@ fun TherapyFormScreen(navController: NavController, viewModel: TherapyFormViewMo
       MaterialTheme.colors.background
     )
 
-  val activity = LocalContext.current as AppCompatActivity
-
   TherapyFormView(
     navController,
     uiState,
-    { date, callback -> showDatePickerDialog(activity.supportFragmentManager, date, callback) },
     { viewModel.obtainIntent(TherapyFormIntent.FillTherapy(it)) },
     { therapyId, therapyForm -> viewModel.obtainIntent(TherapyFormIntent.CreateOrSaveTherapy(therapyId, therapyForm)) },
     { therapyId -> viewModel.obtainIntent(TherapyFormIntent.DeleteTherapy(therapyId)) }
@@ -60,27 +56,29 @@ fun TherapyFormScreen(navController: NavController, viewModel: TherapyFormViewMo
   }
 }
 
-private fun showDatePickerDialog(fragmentManager: FragmentManager, date: LocalDate, callback: TherapyDateOnChange) {
-  val builder = MaterialDatePicker.Builder.datePicker()
-  val datePicker = builder.setSelection(date.toLong()).build()
-
-  datePicker.addOnPositiveButtonClickListener {
-    callback(it.toLocalDate())
-  }
-  datePicker.show(fragmentManager, null)
-}
-
 private typealias TherapyDateOnChange = (LocalDate) -> Unit
 
 @Composable
-private fun TherapyFormView(
+internal fun TherapyFormView(
   navController: NavController,
   uiState: TherapyFormViewState,
-  therapyDateOnChange: (LocalDate, TherapyDateOnChange) -> Unit,
   therapyFormOnChange: (TherapyFormModel) -> Unit,
   createOrSaveTherapy: (Long?, TherapyFormModel) -> Unit,
   deleteTherapy: (Long) -> Unit,
 ) {
+  val activity = LocalContext.current as AppCompatActivity
+
+  fun showDatePickerDialog(date: LocalDate, callback: TherapyDateOnChange) {
+    val fragmentManager = activity.supportFragmentManager
+    val builder = MaterialDatePicker.Builder.datePicker()
+    val datePicker = builder.setSelection(date.toLong()).build()
+
+    datePicker.addOnPositiveButtonClickListener {
+      callback(it.toLocalDate())
+    }
+    datePicker.show(fragmentManager, null)
+  }
+
   Box(
     modifier = Modifier.fillMaxSize(),
     contentAlignment = Alignment.TopCenter,
@@ -93,8 +91,8 @@ private fun TherapyFormView(
           therapy,
           { therapyFormOnChange(therapy.copy(name = it)) },
           { therapyFormOnChange(therapy.copy(description = it)) },
-          { therapyDateOnChange(therapy.startDate) { therapyFormOnChange(therapy.copy(startDate = it)) } },
-          { therapyDateOnChange(therapy.endDate) { therapyFormOnChange(therapy.copy(endDate = it)) } },
+          { showDatePickerDialog(therapy.startDate) { therapyFormOnChange(therapy.copy(startDate = it)) } },
+          { showDatePickerDialog(therapy.endDate) { therapyFormOnChange(therapy.copy(endDate = it)) } },
           { createOrSaveTherapy(therapyId, therapy) },
           { therapyId?.let(deleteTherapy) },
         )
@@ -127,7 +125,7 @@ fun TherapyFormViewPreview() {
       ),
       // TherapyFormViewState.SavingSuccessful,
       // TherapyFormViewState.DeletingSuccessful,
-      { _, _ -> }, {}, { _, _ -> }, {},
+      {}, { _, _ -> }, {},
     )
   }
 }

@@ -21,7 +21,7 @@ import java.lang.reflect.Method
  * Maybe implement this [variant](https://stackoverflow.com/a/65878613/3998398)
  */
 
-private const val DESTINATION_PARCELABLE = "DESTINATION_PARCELABLE"
+private const val DESTINATION_PARCELABLE = "destination:parcelable"
 
 
 inline fun NavController.createGraph(
