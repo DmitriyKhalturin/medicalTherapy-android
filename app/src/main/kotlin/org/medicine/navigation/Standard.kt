@@ -5,11 +5,12 @@ import android.os.Bundle
 import android.os.Parcelable
 import androidx.compose.runtime.Composable
 import androidx.core.net.toUri
-import androidx.lifecycle.SavedStateHandle
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.*
 import androidx.navigation.compose.composable
-import org.medicine.navigation.exception.DestinationShouldBeParcelable
-import org.medicine.navigation.exception.IllegalDestination
+import org.medicine.navigation.exception.IllegalViewModelStoreOwner
+import org.medicine.navigation.viewmodel.NavigationViewModel
 import java.lang.reflect.Method
 
 /**
@@ -21,8 +22,7 @@ import java.lang.reflect.Method
  * Maybe implement this [variant](https://stackoverflow.com/a/65878613/3998398)
  */
 
-private const val DESTINATION_PARCELABLE = "destination:parcelable"
-
+const val DESTINATION_PARCELABLE = "destination:parcelable"
 
 inline fun NavController.createGraph(
   startDestination: Route,
@@ -37,22 +37,31 @@ fun NavGraphBuilder.composable(
   composable(route = route.name, content = content)
 }
 
+@Composable
+inline fun <reified T : Destination, reified VM : NavigationViewModel<T>> navigationViewModel(): VM {
+  val viewModel = hiltViewModel<VM>()
+  val backStackEntry = LocalViewModelStoreOwner.current
+
+  if (backStackEntry is NavBackStackEntry) {
+    val destination = backStackEntry.arguments?.getParcelable<T>(DESTINATION_PARCELABLE)
+
+    if (destination != null) {
+      viewModel.destination = destination
+    }
+  } else {
+    throw IllegalViewModelStoreOwner()
+  }
+
+  return viewModel
+}
+
 fun NavController.navigate(
   destination: Destination,
   navOptions: NavOptions? = null,
   navigatorExtras: Navigator.Extras? = null
 ) {
-  if (destination !is Parcelable) throw DestinationShouldBeParcelable(destination.route)
-
   navigate(destination.route.name, destination as Parcelable, navOptions, navigatorExtras)
 }
-
-fun <T> SavedStateHandle.destination() = try {
-  requireNotNull(get<T>(DESTINATION_PARCELABLE))
-} catch (e: Exception) {
-  throw IllegalDestination()
-}
-
 
 private fun NavController.navigate(
   route: String,

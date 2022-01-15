@@ -3,13 +3,11 @@ package org.medicine.ui.screen.therapyschedule
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.medicine.common.exception.UnimplementedViewStateException
-import org.medicine.common.viewmodel.BaseViewModel
 import org.medicine.common.viewmodel.IntentHandler
 import org.medicine.navigation.Destination
-import org.medicine.navigation.destination
+import org.medicine.navigation.viewmodel.NavigationViewModel
 import org.medicine.source.repository.MedicalTherapyRepository
 import org.medicine.ui.screen.therapyschedule.model.TherapyScheduleIntent
 import org.medicine.ui.screen.therapyschedule.model.TherapyScheduleModelMapper.map
@@ -23,11 +21,10 @@ import javax.inject.Inject
 @HiltViewModel
 class TherapyScheduleViewModel @Inject constructor(
   private val repository: MedicalTherapyRepository,
-  savedStateHandle: SavedStateHandle,
-) : BaseViewModel(), IntentHandler<TherapyScheduleIntent> {
+) : NavigationViewModel<Destination.TherapySchedule>(), IntentHandler<TherapyScheduleIntent> {
 
-  private val destination: Destination.TherapySchedule = savedStateHandle.destination()
-  private val therapyId: Long = destination.therapyId
+  private val therapyId
+    get() = destination.therapyId
 
   var uiState by mutableStateOf<TherapyScheduleViewState>(TherapyScheduleViewState.Initial)
     private set

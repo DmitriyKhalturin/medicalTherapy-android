@@ -15,7 +15,8 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.launch
 import org.medicine.common.ui.setSystemUiColors
 import org.medicine.schedule.MedicalTherapySchedule
-import org.medicine.ui.screen.therapyschedule.composable.*
+import org.medicine.ui.screen.therapyschedule.composable.EditFormType
+import org.medicine.ui.screen.therapyschedule.composable.Toolbar
 import org.medicine.ui.screen.therapyschedule.model.TherapyScheduleIntent
 import org.medicine.ui.screen.therapyschedule.model.TherapyScheduleViewState
 
@@ -111,11 +112,11 @@ fun TherapyScheduleView(
     frontLayerBackgroundColor = MaterialTheme.colors.background,
     frontLayerContent = {
       Box(modifier = Modifier.padding(top = CUT_CORNER_SIZE)) {
-        when (editFormType.value) {
+        /*when (editFormType.value) {
           EditFormType.THERAPY -> TherapyEditForm(navController)
           EditFormType.MEDICINE -> MedicineEditForm()
           EditFormType.DEAL -> DealEditForm()
-        }
+        }*/
       }
     },
     frontLayerShape = CutCornerShape(topStart = CUT_CORNER_SIZE),

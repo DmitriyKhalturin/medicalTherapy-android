@@ -3,10 +3,10 @@ package org.medicine.ui.screen.overview
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.medicine.common.viewmodel.BaseViewModel
 import org.medicine.common.viewmodel.IntentHandler
+import org.medicine.navigation.Destination
+import org.medicine.navigation.viewmodel.NavigationViewModel
 import org.medicine.source.repository.MedicalTherapyRepository
 import org.medicine.ui.screen.overview.model.OverviewIntent
 import org.medicine.ui.screen.overview.model.OverviewModelMapper.map
@@ -20,8 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class OverviewViewModel @Inject constructor(
   private val repository: MedicalTherapyRepository,
-  savedStateHandle: SavedStateHandle,
-) : BaseViewModel(), IntentHandler<OverviewIntent> {
+) : NavigationViewModel<Destination.Overview>(), IntentHandler<OverviewIntent> {
 
   var uiState by mutableStateOf<OverviewViewState>(OverviewViewState.Initial)
     private set

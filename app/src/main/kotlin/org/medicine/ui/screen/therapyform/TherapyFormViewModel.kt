@@ -3,13 +3,11 @@ package org.medicine.ui.screen.therapyform
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.medicine.common.exception.UnimplementedViewStateException
-import org.medicine.common.viewmodel.BaseViewModel
 import org.medicine.common.viewmodel.IntentHandler
 import org.medicine.navigation.Destination
-import org.medicine.navigation.destination
+import org.medicine.navigation.viewmodel.NavigationViewModel
 import org.medicine.source.repository.MedicalTherapyRepository
 import org.medicine.tools.isEmptyOrBlank
 import org.medicine.ui.screen.therapyform.model.TherapyFormIntent
@@ -26,11 +24,10 @@ import javax.inject.Inject
 @HiltViewModel
 class TherapyFormViewModel @Inject constructor(
   private val repository: MedicalTherapyRepository,
-  savedStateHandle: SavedStateHandle,
-): BaseViewModel(), IntentHandler<TherapyFormIntent> {
+): NavigationViewModel<Destination.TherapyForm>(), IntentHandler<TherapyFormIntent> {
 
-  private val destination: Destination.TherapyForm = savedStateHandle.destination()
-  private val therapyId: Long? = destination.therapyId
+  private val therapyId: Long?
+    get() = destination.therapyId
 
   var uiState by mutableStateOf<TherapyFormViewState>(TherapyFormViewState.Initial)
     private set
@@ -53,6 +50,7 @@ class TherapyFormViewModel @Inject constructor(
   }
 
   private suspend fun fetchTherapy() {
+    val therapyId = this.therapyId
     val model = if (therapyId != null ) { map(repository.getTherapy(therapyId)) } else { buildEmptyModel() }
 
     uiState = TherapyFormViewState.Therapy(

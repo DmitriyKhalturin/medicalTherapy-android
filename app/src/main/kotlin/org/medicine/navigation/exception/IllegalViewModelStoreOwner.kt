@@ -2,6 +2,6 @@ package org.medicine.navigation.exception
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
- * for MedicalTherapy on 16.11.2021 20:52.
+ * for MedicalTherapy on 15.01.2022 19:36.
  */
-class IllegalDestination : Exception()
+class IllegalViewModelStoreOwner : Exception()
