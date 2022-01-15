@@ -1,26 +1,22 @@
 package org.medicine.ui.screen.therapyschedule
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import kotlinx.coroutines.launch
-import org.medicine.R
 import org.medicine.common.ui.setSystemUiColors
 import org.medicine.schedule.MedicalTherapySchedule
-import org.medicine.ui.screen.therapyschedule.composable.ToolButton
+import org.medicine.ui.screen.therapyschedule.composable.*
 import org.medicine.ui.screen.therapyschedule.model.TherapyScheduleIntent
 import org.medicine.ui.screen.therapyschedule.model.TherapyScheduleViewState
 
@@ -49,18 +45,21 @@ fun TherapyScheduleScreen(navController: NavController, viewModel: TherapySchedu
   }
 }
 
+internal val CUT_CORNER_SIZE = 32.dp
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TherapyScheduleView(
   navController: NavController,
   uiState: TherapyScheduleViewState,
 ) {
-  val coroutineScope = rememberCoroutineScope()
   val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Concealed)
 
   LaunchedEffect(scaffoldState) {
     scaffoldState.reveal()
   }
+
+  val editFormType = remember { mutableStateOf(EditFormType.THERAPY) }
 
   BackdropScaffold(
     scaffoldState = scaffoldState,
@@ -95,55 +94,7 @@ fun TherapyScheduleView(
                 dealsOnClick = {},
               )
 
-              Box(
-                modifier = Modifier
-                  .background(
-                    brush = Brush.verticalGradient(
-                      colors = listOf(
-                        MaterialTheme.colors.surface,
-                        MaterialTheme.colors.background,
-                      )
-                    )
-                  )
-                  .fillMaxWidth()
-                  .padding(16.dp),
-                contentAlignment = Alignment.Center,
-              ) {
-                Row {
-                  val toolButtonModifier = Modifier.padding(horizontal = 4.dp)
-
-                  ToolButton(
-                    modifier = toolButtonModifier,
-                    imageVector = Icons.Filled.Edit,
-                    text = "Редактировать",
-                  ) {
-                    // load therapy edit form
-                    coroutineScope.launch {
-                      scaffoldState.conceal()
-                    }
-                  }
-                  ToolButton(
-                    modifier = toolButtonModifier,
-                    painter = painterResource(id = R.drawable.ic_pills),
-                    text = "Медикаменты",
-                  ) {
-                    // load medication form
-                    coroutineScope.launch {
-                      scaffoldState.conceal()
-                    }
-                  }
-                  ToolButton(
-                    modifier = toolButtonModifier,
-                    painter = painterResource(id = R.drawable.ic_event),
-                    text = "События",
-                  ) {
-                    // load event form
-                    coroutineScope.launch {
-                      scaffoldState.conceal()
-                    }
-                  }
-                }
-              }
+              Toolbar(scaffoldState, editFormType)
             }
           }
         }
@@ -153,8 +104,18 @@ fun TherapyScheduleView(
     frontLayerElevation = 8.dp,
     frontLayerBackgroundColor = MaterialTheme.colors.background,
     frontLayerContent = {
-      //
+      Box(
+        modifier = Modifier
+          .padding(top = CUT_CORNER_SIZE)
+          .padding(16.dp)
+      ) {
+        when (editFormType.value) {
+          EditFormType.THERAPY -> TherapyEditForm()
+          EditFormType.MEDICINE -> MedicineEditForm()
+          EditFormType.DEAL -> DealEditForm()
+        }
+      }
     },
-    frontLayerShape = CutCornerShape(topStart = 32.dp),
+    frontLayerShape = CutCornerShape(topStart = CUT_CORNER_SIZE),
   )
 }
