@@ -23,9 +23,6 @@ class TherapyScheduleViewModel @Inject constructor(
   private val repository: MedicalTherapyRepository,
 ) : NavigationViewModel<Destination.TherapySchedule>(), IntentHandler<TherapyScheduleIntent> {
 
-  private val therapyId
-    get() = destination.therapyId
-
   var uiState by mutableStateOf<TherapyScheduleViewState>(TherapyScheduleViewState.Initial)
     private set
 
@@ -46,6 +43,7 @@ class TherapyScheduleViewModel @Inject constructor(
   }
 
   private suspend fun fetchTherapy() {
+    val therapyId = destination.therapyId
     val model = map(repository.getTherapySchedule(therapyId))
 
     uiState = TherapyScheduleViewState.Therapy(

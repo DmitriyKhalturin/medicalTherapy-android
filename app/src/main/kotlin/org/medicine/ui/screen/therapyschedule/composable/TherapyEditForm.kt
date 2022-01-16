@@ -3,6 +3,7 @@ package org.medicine.ui.screen.therapyschedule.composable
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import org.medicine.navigation.Destination
 import org.medicine.ui.screen.therapyform.TherapyFormView
 import org.medicine.ui.screen.therapyform.TherapyFormViewModel
 import org.medicine.ui.screen.therapyform.model.TherapyFormIntent
@@ -15,15 +16,21 @@ import org.medicine.ui.screen.therapyform.model.TherapyFormIntent
 @Composable
 fun TherapyEditForm(
   navController: NavController,
+  therapyId: Long,
 ) {
   val viewModel = hiltViewModel<TherapyFormViewModel>()
+
+  viewModel.destination = Destination.TherapyForm(therapyId)
+  viewModel.obtainIntent(TherapyFormIntent.EnterScreen)
+
   val uiState = viewModel.uiState
 
   TherapyFormView(
-    navController,
     uiState,
     { viewModel.obtainIntent(TherapyFormIntent.FillTherapy(it)) },
-    { therapyId, therapyForm -> viewModel.obtainIntent(TherapyFormIntent.CreateOrSaveTherapy(therapyId, therapyForm)) },
-    { therapyId -> viewModel.obtainIntent(TherapyFormIntent.DeleteTherapy(therapyId)) }
+    { _, therapyForm -> viewModel.obtainIntent(TherapyFormIntent.CreateOrSaveTherapy(therapyId, therapyForm)) },
+    { viewModel.obtainIntent(TherapyFormIntent.DeleteTherapy(therapyId)) },
+    {},
+    {},
   )
 }

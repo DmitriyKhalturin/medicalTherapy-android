@@ -15,8 +15,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.launch
 import org.medicine.common.ui.setSystemUiColors
 import org.medicine.schedule.MedicalTherapySchedule
-import org.medicine.ui.screen.therapyschedule.composable.EditFormType
-import org.medicine.ui.screen.therapyschedule.composable.Toolbar
+import org.medicine.ui.screen.therapyschedule.composable.*
 import org.medicine.ui.screen.therapyschedule.model.TherapyScheduleIntent
 import org.medicine.ui.screen.therapyschedule.model.TherapyScheduleViewState
 
@@ -38,6 +37,7 @@ fun TherapyScheduleScreen(navController: NavController, viewModel: TherapySchedu
   TherapyScheduleView(
     navController,
     uiState,
+    viewModel.destination.therapyId
   )
 
   LaunchedEffect(key1 = viewModel) {
@@ -52,6 +52,7 @@ internal val CUT_CORNER_SIZE = 32.dp
 fun TherapyScheduleView(
   navController: NavController,
   uiState: TherapyScheduleViewState,
+  therapyId: Long,
 ) {
   val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Concealed)
   val coroutineScope = rememberCoroutineScope()
@@ -111,12 +112,16 @@ fun TherapyScheduleView(
     frontLayerElevation = 8.dp,
     frontLayerBackgroundColor = MaterialTheme.colors.background,
     frontLayerContent = {
-      Box(modifier = Modifier.padding(top = CUT_CORNER_SIZE)) {
-        /*when (editFormType.value) {
-          EditFormType.THERAPY -> TherapyEditForm(navController)
+      Box(
+        modifier = Modifier
+          .fillMaxSize()
+          .padding(top = CUT_CORNER_SIZE)
+      ) {
+        when (editFormType.value) {
+          EditFormType.THERAPY -> TherapyEditForm(navController, therapyId)
           EditFormType.MEDICINE -> MedicineEditForm()
           EditFormType.DEAL -> DealEditForm()
-        }*/
+        }
       }
     },
     frontLayerShape = CutCornerShape(topStart = CUT_CORNER_SIZE),

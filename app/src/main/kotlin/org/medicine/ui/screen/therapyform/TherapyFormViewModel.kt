@@ -26,9 +26,6 @@ class TherapyFormViewModel @Inject constructor(
   private val repository: MedicalTherapyRepository,
 ): NavigationViewModel<Destination.TherapyForm>(), IntentHandler<TherapyFormIntent> {
 
-  private val therapyId: Long?
-    get() = destination.therapyId
-
   var uiState by mutableStateOf<TherapyFormViewState>(TherapyFormViewState.Initial)
     private set
 
@@ -50,7 +47,7 @@ class TherapyFormViewModel @Inject constructor(
   }
 
   private suspend fun fetchTherapy() {
-    val therapyId = this.therapyId
+    val therapyId = destination.therapyId
     val model = if (therapyId != null ) { map(repository.getTherapy(therapyId)) } else { buildEmptyModel() }
 
     uiState = TherapyFormViewState.Therapy(
@@ -70,7 +67,7 @@ class TherapyFormViewModel @Inject constructor(
   }
 
   private fun fillTherapy(therapy: TherapyFormModel) {
-    uiState = TherapyFormViewState.Therapy(therapyId, therapy)
+    uiState = TherapyFormViewState.Therapy(destination.therapyId, therapy)
   }
 
   private suspend fun createOrSaveTherapy(therapyId: Long?, therapy: TherapyFormModel) {

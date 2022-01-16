@@ -12,7 +12,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
-import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.android.material.datepicker.MaterialDatePicker
 import org.medicine.common.ui.setSystemUiColors
@@ -44,11 +43,12 @@ fun TherapyFormScreen(navController: NavController, viewModel: TherapyFormViewMo
     )
 
   TherapyFormView(
-    navController,
     uiState,
     { viewModel.obtainIntent(TherapyFormIntent.FillTherapy(it)) },
     { therapyId, therapyForm -> viewModel.obtainIntent(TherapyFormIntent.CreateOrSaveTherapy(therapyId, therapyForm)) },
-    { therapyId -> viewModel.obtainIntent(TherapyFormIntent.DeleteTherapy(therapyId)) }
+    { therapyId -> viewModel.obtainIntent(TherapyFormIntent.DeleteTherapy(therapyId)) },
+    { therapyId -> navController.navigate(Destination.TherapySchedule(therapyId)) },
+    { navController.navigate(Destination.Overview, NavOptions.Builder().setPopUpTo(route = null, inclusive = true).build()) },
   )
 
   LaunchedEffect(key1 = viewModel) {
@@ -60,11 +60,12 @@ private typealias TherapyDateOnChange = (LocalDate) -> Unit
 
 @Composable
 internal fun TherapyFormView(
-  navController: NavController,
   uiState: TherapyFormViewState,
   therapyFormOnChange: (TherapyFormModel) -> Unit,
   createOrSaveTherapy: (Long?, TherapyFormModel) -> Unit,
   deleteTherapy: (Long) -> Unit,
+  savingSuccessfulCallback: (Long) -> Unit,
+  deletingSuccessfulCallback: () -> Unit,
 ) {
   val activity = LocalContext.current as AppCompatActivity
 
@@ -98,15 +99,8 @@ internal fun TherapyFormView(
         )
       }
       // TODO: render (saving and deleting) successful UI.
-      is TherapyFormViewState.SavingSuccessful ->
-        navController.navigate(Destination.TherapySchedule(uiState.therapyId))
-      is TherapyFormViewState.DeletingSuccessful ->
-        navController.navigate(
-          Destination.Overview,
-          NavOptions.Builder()
-            .setPopUpTo(route = null, inclusive = true)
-            .build()
-        )
+      is TherapyFormViewState.SavingSuccessful -> savingSuccessfulCallback(uiState.therapyId)
+      is TherapyFormViewState.DeletingSuccessful -> deletingSuccessfulCallback()
     }
   }
 }
@@ -117,7 +111,6 @@ internal fun TherapyFormView(
 fun TherapyFormViewPreview() {
   MedicalTherapyTheme {
     TherapyFormView(
-      rememberNavController(),
       // TherapyFormViewState.Initial,
       TherapyFormViewState.Therapy(
         therapyId = null,
@@ -125,7 +118,7 @@ fun TherapyFormViewPreview() {
       ),
       // TherapyFormViewState.SavingSuccessful,
       // TherapyFormViewState.DeletingSuccessful,
-      {}, { _, _ -> }, {},
+      {}, { _, _ -> }, {}, {}, {},
     )
   }
 }
