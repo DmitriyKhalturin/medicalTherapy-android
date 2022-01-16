@@ -51,7 +51,7 @@ fun TherapyFormScreen(navController: NavController, viewModel: TherapyFormViewMo
     { navController.navigate(Destination.Overview, NavOptions.Builder().setPopUpTo(route = null, inclusive = true).build()) },
   )
 
-  LaunchedEffect(key1 = viewModel) {
+  LaunchedEffect(viewModel) {
     viewModel.obtainIntent(TherapyFormIntent.EnterScreen)
   }
 }

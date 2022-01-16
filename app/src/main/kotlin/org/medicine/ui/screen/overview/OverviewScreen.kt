@@ -50,7 +50,7 @@ fun OverviewScreen(navController: NavController, viewModel: OverviewViewModel) {
     uiState,
   )
 
-  LaunchedEffect(key1 = viewModel) {
+  LaunchedEffect(viewModel) {
     viewModel.obtainIntent(OverviewIntent.EnterScreen)
   }
 }

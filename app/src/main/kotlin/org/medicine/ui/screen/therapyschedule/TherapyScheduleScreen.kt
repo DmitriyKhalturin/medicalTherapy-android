@@ -37,10 +37,11 @@ fun TherapyScheduleScreen(navController: NavController, viewModel: TherapySchedu
   TherapyScheduleView(
     navController,
     uiState,
-    viewModel.destination.therapyId
+    viewModel.destination.therapyId,
+    refreshTherapyCallback = { viewModel.obtainIntent(TherapyScheduleIntent.RefreshTherapy) }
   )
 
-  LaunchedEffect(key1 = viewModel) {
+  LaunchedEffect(viewModel) {
     viewModel.obtainIntent(TherapyScheduleIntent.EnterScreen)
   }
 }
@@ -53,6 +54,7 @@ fun TherapyScheduleView(
   navController: NavController,
   uiState: TherapyScheduleViewState,
   therapyId: Long,
+  refreshTherapyCallback: () -> Unit,
 ) {
   val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Concealed)
   val coroutineScope = rememberCoroutineScope()
@@ -118,9 +120,22 @@ fun TherapyScheduleView(
           .padding(top = CUT_CORNER_SIZE)
       ) {
         when (editFormType.value) {
-          EditFormType.THERAPY -> TherapyEditForm(navController, therapyId)
-          EditFormType.MEDICINE -> MedicineEditForm()
-          EditFormType.DEAL -> DealEditForm()
+          EditFormType.THERAPY ->
+            TherapyEditForm(
+              therapyId = therapyId,
+              savingSuccessfulCallback = {
+                refreshTherapyCallback()
+
+                coroutineScope.launch {
+                  scaffoldState.reveal()
+                }
+              },
+              deletingSuccessfulCallback = {
+                navController.navigateUp()
+              },
+            )
+          EditFormType.MEDICINE -> MedicineEditForm(therapyId)
+          EditFormType.DEAL -> DealEditForm(therapyId)
         }
       }
     },

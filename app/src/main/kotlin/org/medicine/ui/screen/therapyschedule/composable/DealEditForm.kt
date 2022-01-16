@@ -1,6 +1,5 @@
 package org.medicine.ui.screen.therapyschedule.composable
 
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 
 /**
@@ -9,6 +8,7 @@ import androidx.compose.runtime.Composable
  */
 
 @Composable
-fun DealEditForm() {
-  Text(text = "Deal")
+fun DealEditForm(
+  therapyId: Long,
+) {
 }

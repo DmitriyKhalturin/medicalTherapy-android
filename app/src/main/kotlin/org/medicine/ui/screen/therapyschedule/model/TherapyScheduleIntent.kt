@@ -6,4 +6,5 @@ package org.medicine.ui.screen.therapyschedule.model
  */
 sealed class TherapyScheduleIntent {
   object EnterScreen : TherapyScheduleIntent()
+  object RefreshTherapy : TherapyScheduleIntent()
 }

@@ -1,8 +1,8 @@
 package org.medicine.ui.screen.therapyschedule.composable
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import org.medicine.navigation.Destination
 import org.medicine.ui.screen.therapyform.TherapyFormView
 import org.medicine.ui.screen.therapyform.TherapyFormViewModel
@@ -15,13 +15,17 @@ import org.medicine.ui.screen.therapyform.model.TherapyFormIntent
 
 @Composable
 fun TherapyEditForm(
-  navController: NavController,
   therapyId: Long,
+  savingSuccessfulCallback: (Long) -> Unit,
+  deletingSuccessfulCallback: () -> Unit,
 ) {
-  val viewModel = hiltViewModel<TherapyFormViewModel>()
+  val viewModel = hiltViewModel<TherapyFormViewModel>().apply {
+    destination = Destination.TherapyForm(therapyId)
+  }
 
-  viewModel.destination = Destination.TherapyForm(therapyId)
-  viewModel.obtainIntent(TherapyFormIntent.EnterScreen)
+  LaunchedEffect(viewModel) {
+    viewModel.obtainIntent(TherapyFormIntent.EnterScreen)
+  }
 
   val uiState = viewModel.uiState
 
@@ -30,7 +34,7 @@ fun TherapyEditForm(
     { viewModel.obtainIntent(TherapyFormIntent.FillTherapy(it)) },
     { _, therapyForm -> viewModel.obtainIntent(TherapyFormIntent.CreateOrSaveTherapy(therapyId, therapyForm)) },
     { viewModel.obtainIntent(TherapyFormIntent.DeleteTherapy(therapyId)) },
-    {},
-    {},
+    { savingSuccessfulCallback(therapyId) },
+    { deletingSuccessfulCallback() },
   )
 }
