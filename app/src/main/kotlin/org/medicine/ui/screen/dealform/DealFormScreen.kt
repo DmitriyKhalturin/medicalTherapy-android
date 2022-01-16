@@ -1,6 +1,7 @@
 package org.medicine.ui.screen.dealform
 
 import androidx.compose.runtime.Composable
+import org.medicine.ui.screen.dealform.model.DealFormViewState
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -9,4 +10,10 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun DealFormScreen(viewModel: DealFormViewModel) {
+}
+
+@Composable
+fun DealFormView(
+  uiState: DealFormViewState,
+) {
 }

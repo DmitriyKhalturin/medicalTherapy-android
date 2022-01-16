@@ -69,6 +69,14 @@ fun TherapyScheduleView(
     }
   }
 
+  fun refreshTherapy() {
+    refreshTherapyCallback()
+
+    coroutineScope.launch {
+      scaffoldState.reveal()
+    }
+  }
+
   val editFormType = remember { mutableStateOf(EditFormType.THERAPY) }
 
   BackdropScaffold(
@@ -124,18 +132,24 @@ fun TherapyScheduleView(
             TherapyEditForm(
               therapyId = therapyId,
               savingSuccessfulCallback = {
-                refreshTherapyCallback()
-
-                coroutineScope.launch {
-                  scaffoldState.reveal()
-                }
+                refreshTherapy()
               },
               deletingSuccessfulCallback = {
                 navController.navigateUp()
               },
             )
-          EditFormType.MEDICINE -> MedicineEditForm(therapyId)
-          EditFormType.DEAL -> DealEditForm(therapyId)
+          EditFormType.MEDICINE -> MedicineEditForm(
+            therapyId = therapyId,
+            refreshTherapyCallback = {
+              refreshTherapy()
+            },
+          )
+          EditFormType.DEAL -> DealEditForm(
+            therapyId = therapyId,
+            refreshTherapyCallback = {
+              refreshTherapy()
+            },
+          )
         }
       }
     },
