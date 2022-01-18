@@ -1,6 +1,12 @@
 package org.medicine.ui.screen.medicineform.model
 
+import org.medicine.model.scheduleToSource
+import org.medicine.model.sourceToSchedule
+import org.medicine.schedule.data.Medicine
 import org.medicine.source.database.entity.MedicineEntity
+import org.medicine.tools.EMPTY_STRING
+import org.medicine.tools.daysUntil
+import java.time.LocalDate
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -8,15 +14,44 @@ import org.medicine.source.database.entity.MedicineEntity
  */
 object MedicineFormModelMapper {
 
+  private const val BETWEEN_START_END_MEDICINE_DATE = 0L
+
   fun map(entity: MedicineEntity) = entity.run {
     MedicineFormModel(
-
+      name,
+      (description ?: EMPTY_STRING),
+      type.sourceToSchedule(),
+      (dosage ?: EMPTY_STRING),
+      startDate,
+      endDate,
+      admissionTimes,
+      MedicineFormModel.FailedFields(),
     )
   }
 
+  fun buildEmptyModel() =
+    MedicineFormModel(
+      EMPTY_STRING,
+      EMPTY_STRING,
+      Medicine.Type.PILLS,
+      EMPTY_STRING,
+      LocalDate.now(),
+      LocalDate.now().plusDays(BETWEEN_START_END_MEDICINE_DATE),
+      emptyList(),
+      MedicineFormModel.FailedFields(),
+    )
+
   fun map(id: Long?, model: MedicineFormModel, therapyId: Long) = model.run {
     MedicineEntity(
-
+      (id ?: 0L),
+      name,
+      description,
+      type.scheduleToSource(),
+      dosage,
+      startDate,
+      startDate.daysUntil(endDate),
+      times,
+      therapyId,
     )
   }
 }
