@@ -4,8 +4,6 @@ import org.medicine.schedule.data.Deal
 import org.medicine.schedule.data.Medicine
 import org.medicine.source.database.entity.DealEntity
 import org.medicine.source.database.entity.MedicineEntity
-import org.medicine.source.database.entity.MedicineType
-import org.medicine.source.database.entity.TherapyEntity
 import java.time.LocalDate
 
 /**
@@ -14,16 +12,12 @@ import java.time.LocalDate
  */
 object TherapyScheduleMapper {
 
-  fun mapMedicineToSchedule(therapy: TherapyEntity, medicines: List<MedicineEntity>): List<Medicine> = medicines.map {
+  fun mapMedicineToSchedule(medicines: List<MedicineEntity>): List<Medicine> = medicines.map {
     Medicine(
       it.id,
       it.name,
-      (therapy.startDate.plusDays(it.startDay.toLong())..therapy.startDate.plusDays(it.endDay.toLong())),
-      when (it.type) {
-        MedicineType.PILLS -> Medicine.Type.PILLS
-        MedicineType.INJECTION -> Medicine.Type.INJECTION
-        MedicineType.LIQUID -> Medicine.Type.LIQUID
-      }
+      (it.startDate..it.endDate),
+      it.type.sourceToSchedule(),
     )
   }
 

@@ -15,7 +15,7 @@ object TherapyScheduleModelMapper {
       therapy.name,
       therapy.startDate,
       therapy.endDate,
-      mapMedicineToSchedule(therapy, medicines),
+      mapMedicineToSchedule(medicines),
       mapDealToSchedule(deals),
     )
   }
