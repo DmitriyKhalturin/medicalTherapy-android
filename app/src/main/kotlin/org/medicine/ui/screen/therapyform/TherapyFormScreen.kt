@@ -11,9 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
-import androidx.navigation.NavOptions
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.android.material.datepicker.MaterialDatePicker
+import org.medicine.common.exception.UnimplementedCallbackException
 import org.medicine.common.ui.setSystemUiColors
 import org.medicine.navigation.Destination
 import org.medicine.navigation.navigate
@@ -50,13 +50,7 @@ fun TherapyFormScreen(navController: NavController, viewModel: TherapyFormViewMo
     { therapyId, therapyForm -> viewModel.obtainIntent(TherapyFormIntent.CreateOrSaveTherapy(therapyId, therapyForm)) },
     { therapyId -> viewModel.obtainIntent(TherapyFormIntent.DeleteTherapy(therapyId)) },
     { therapyId -> navController.navigate(Destination.TherapySchedule(therapyId)) },
-    {
-      val options = NavOptions.Builder()
-        .setPopUpTo(route = null, inclusive = true)
-        .build()
-
-      navController.navigate(Destination.Overview, options)
-    },
+    { throw UnimplementedCallbackException() },
   )
 
   LaunchedEffect(viewModel) {
