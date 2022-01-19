@@ -15,8 +15,8 @@ import org.medicine.ui.screen.therapyform.model.TherapyFormIntent
 @Composable
 fun TherapyEditForm(
   therapyId: Long,
-  savingSuccessfulCallback: (Long) -> Unit,
-  deletingSuccessfulCallback: () -> Unit,
+  saveOnSuccessful: (Long) -> Unit,
+  deleteOnSuccessful: () -> Unit,
 ) {
   val viewModel = hiltViewModel<TherapyFormViewModel>().apply {
     destination = Destination.TherapyForm(therapyId)
@@ -30,7 +30,7 @@ fun TherapyEditForm(
     { viewModel.obtainIntent(TherapyFormIntent.FillTherapy(it)) },
     { _, therapyForm -> viewModel.obtainIntent(TherapyFormIntent.CreateOrSaveTherapy(therapyId, therapyForm)) },
     { viewModel.obtainIntent(TherapyFormIntent.DeleteTherapy(therapyId)) },
-    { savingSuccessfulCallback(therapyId) },
-    { deletingSuccessfulCallback() },
+    { saveOnSuccessful(therapyId) },
+    { deleteOnSuccessful() },
   )
 }

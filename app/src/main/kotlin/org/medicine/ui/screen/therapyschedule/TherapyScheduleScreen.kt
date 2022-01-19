@@ -132,10 +132,10 @@ fun TherapyScheduleView(
           EditFormType.THERAPY ->
             TherapyEditForm(
               therapyId = therapyId,
-              savingSuccessfulCallback = {
+              saveOnSuccessful = {
                 refreshTherapy()
               },
-              deletingSuccessfulCallback = {
+              deleteOnSuccessful = {
                 navigateUp()
               },
             )

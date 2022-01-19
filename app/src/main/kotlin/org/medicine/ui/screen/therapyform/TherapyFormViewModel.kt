@@ -91,13 +91,13 @@ class TherapyFormViewModel @Inject constructor(
         repository.createTherapy(entity)
       }
 
-      uiState = TherapyFormViewState.SavingSuccessful(entityId)
+      uiState = TherapyFormViewState.SaveOnSuccessful(entityId)
     }
   }
 
   private suspend fun deleteTherapy(therapyId: Long) {
     repository.deleteTherapy(therapyId)
 
-    uiState = TherapyFormViewState.DeletingSuccessful
+    uiState = TherapyFormViewState.DeleteOnSuccessful
   }
 }

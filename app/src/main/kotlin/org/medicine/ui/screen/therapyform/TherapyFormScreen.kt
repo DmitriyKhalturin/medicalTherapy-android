@@ -44,16 +44,10 @@ fun TherapyFormScreen(navController: NavController, viewModel: TherapyFormViewMo
 
   TherapyFormView(
     uiState,
-    { viewModel.obtainIntent(TherapyFormIntent.FillTherapy(it)) },
-    { therapyId, therapyForm ->
-      viewModel.obtainIntent(TherapyFormIntent.CreateOrSaveTherapy(therapyId, therapyForm))
-    },
-    { therapyId ->
-      viewModel.obtainIntent(TherapyFormIntent.DeleteTherapy(therapyId))
-    },
-    { therapyId ->
-      navController.navigate(Destination.TherapySchedule(therapyId))
-    },
+    { model -> viewModel.obtainIntent(TherapyFormIntent.FillTherapy(model)) },
+    { therapyId, therapyForm -> viewModel.obtainIntent(TherapyFormIntent.CreateOrSaveTherapy(therapyId, therapyForm)) },
+    { therapyId -> viewModel.obtainIntent(TherapyFormIntent.DeleteTherapy(therapyId)) },
+    { therapyId -> navController.navigate(Destination.TherapySchedule(therapyId)) },
     {
       val options = NavOptions.Builder()
         .setPopUpTo(route = null, inclusive = true)
@@ -76,8 +70,8 @@ internal fun TherapyFormView(
   therapyFormOnChange: (TherapyFormModel) -> Unit,
   createOrSaveTherapy: (Long?, TherapyFormModel) -> Unit,
   deleteTherapy: (Long) -> Unit,
-  savingSuccessfulCallback: (Long) -> Unit,
-  deletingSuccessfulCallback: () -> Unit,
+  saveOnSuccessful: (Long) -> Unit,
+  deleteOnSuccessful: () -> Unit,
 ) {
   val activity = LocalContext.current as AppCompatActivity
 
@@ -111,8 +105,8 @@ internal fun TherapyFormView(
         )
       }
       // TODO: render (saving and deleting) successful UI.
-      is TherapyFormViewState.SavingSuccessful -> savingSuccessfulCallback(uiState.therapyId)
-      is TherapyFormViewState.DeletingSuccessful -> deletingSuccessfulCallback()
+      is TherapyFormViewState.SaveOnSuccessful -> saveOnSuccessful(uiState.therapyId)
+      is TherapyFormViewState.DeleteOnSuccessful -> deleteOnSuccessful()
     }
   }
 }

@@ -47,18 +47,14 @@ fun OverviewScreen(navController: NavController, viewModel: OverviewViewModel) {
 
   OverviewView(
     uiState,
-    {
-      navController.navigate(Destination.ApplicationInfo)
-    },
+    { navController.navigate(Destination.ApplicationInfo) },
     {
       val options = NavOptions.Builder()
         .build()
 
       navController.navigate(Destination.TherapyForm(), options)
     },
-    { therapyId ->
-      navController.navigate(Destination.TherapySchedule(therapyId))
-    },
+    { therapyId -> navController.navigate(Destination.TherapySchedule(therapyId)) },
   )
 
   LaunchedEffect(viewModel) {
