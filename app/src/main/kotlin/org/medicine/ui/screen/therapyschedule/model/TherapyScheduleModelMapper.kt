@@ -2,7 +2,7 @@ package org.medicine.ui.screen.therapyschedule.model
 
 import org.medicine.model.TherapyScheduleMapper.mapDealToSchedule
 import org.medicine.model.TherapyScheduleMapper.mapMedicineToSchedule
-import org.medicine.source.database.entity.relation.TherapyScheduleRelation
+import org.medicine.source.database.embedded.TherapyScheduleEmbedded
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -10,7 +10,7 @@ import org.medicine.source.database.entity.relation.TherapyScheduleRelation
  */
 object TherapyScheduleModelMapper {
 
-  fun map(relation: TherapyScheduleRelation): TherapyScheduleModel = relation.run {
+  fun map(embedded: TherapyScheduleEmbedded): TherapyScheduleModel = embedded.run {
     TherapyScheduleModel(
       therapy.name,
       therapy.startDate,
