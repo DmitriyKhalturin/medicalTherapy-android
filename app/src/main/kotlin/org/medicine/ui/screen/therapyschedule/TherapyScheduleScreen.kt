@@ -35,10 +35,10 @@ fun TherapyScheduleScreen(navController: NavController, viewModel: TherapySchedu
     )
 
   TherapyScheduleView(
-    navController,
     uiState,
     viewModel.destination.therapyId,
-    refreshTherapyCallback = { viewModel.obtainIntent(TherapyScheduleIntent.RefreshTherapy) }
+    { navController.navigateUp() },
+    { viewModel.obtainIntent(TherapyScheduleIntent.RefreshTherapy) }
   )
 
   LaunchedEffect(viewModel) {
@@ -51,9 +51,9 @@ internal val CUT_CORNER_SIZE = 32.dp
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TherapyScheduleView(
-  navController: NavController,
   uiState: TherapyScheduleViewState,
   therapyId: Long,
+  navigateUp: () -> Unit,
   refreshTherapyCallback: () -> Unit,
 ) {
   val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Concealed)
@@ -118,6 +118,7 @@ fun TherapyScheduleView(
         }
       }
     },
+    peekHeight = 8.dp,
     headerHeight = 0.dp,
     frontLayerElevation = 8.dp,
     frontLayerBackgroundColor = MaterialTheme.colors.background,
@@ -135,7 +136,7 @@ fun TherapyScheduleView(
                 refreshTherapy()
               },
               deletingSuccessfulCallback = {
-                navController.navigateUp()
+                navigateUp()
               },
             )
           EditFormType.MEDICINE -> MedicineEditForm(

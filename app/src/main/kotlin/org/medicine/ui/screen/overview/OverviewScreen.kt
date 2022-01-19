@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavOptions
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.medicine.common.ui.setSystemUiColors
 import org.medicine.navigation.Destination
@@ -46,8 +46,19 @@ fun OverviewScreen(navController: NavController, viewModel: OverviewViewModel) {
     )
 
   OverviewView(
-    navController,
     uiState,
+    {
+      navController.navigate(Destination.ApplicationInfo)
+    },
+    {
+      val options = NavOptions.Builder()
+        .build()
+
+      navController.navigate(Destination.TherapyForm(), options)
+    },
+    { therapyId ->
+      navController.navigate(Destination.TherapySchedule(therapyId))
+    },
   )
 
   LaunchedEffect(viewModel) {
@@ -57,8 +68,10 @@ fun OverviewScreen(navController: NavController, viewModel: OverviewViewModel) {
 
 @Composable
 private fun OverviewView(
-  navController: NavController,
   uiState: OverviewViewState,
+  openApplicationInfo: () -> Unit,
+  createNewTherapy: () -> Unit,
+  openTherapy: (Long) -> Unit,
 ) {
   Scaffold(
     topBar = {
@@ -66,7 +79,7 @@ private fun OverviewView(
         Spacer(modifier = Modifier.weight(weight = 1f, fill = true))
 
         IconButton(onClick = {
-          navController.navigate(Destination.ApplicationInfo)
+          openApplicationInfo()
         }) {
           Icon(Icons.Outlined.Info, EMPTY_STRING, tint = Color.White)
         }
@@ -75,7 +88,7 @@ private fun OverviewView(
     floatingActionButtonPosition = FabPosition.End,
     floatingActionButton = {
       FloatingActionButton(onClick = {
-        navController.navigate(Destination.TherapyForm())
+        createNewTherapy()
       }) {
         Icon(Icons.Filled.Add, EMPTY_STRING, modifier = Modifier.scale(scale = 1.25f))
       }
@@ -95,9 +108,7 @@ private fun OverviewView(
           Therapies(
             activeTherapies,
             archivedTherapies,
-            openTherapyOnClick = { therapyId ->
-              navController.navigate(Destination.TherapySchedule(therapyId))
-            }
+            openTherapyOnClick = { therapyId -> openTherapy(therapyId) }
           )
         }
       }
@@ -111,13 +122,13 @@ private fun OverviewView(
 fun OverviewPreview() {
   MedicalTherapyTheme {
     OverviewView(
-      rememberNavController(),
       // OverviewViewState.Initial,
       // OverviewViewState.NoOneTherapies,
       OverviewViewState.Therapies(
         activeTherapies = stubActiveTherapies(),
         archivedTherapies = emptyList(),
       ),
+      {}, {}, {},
     )
   }
 }

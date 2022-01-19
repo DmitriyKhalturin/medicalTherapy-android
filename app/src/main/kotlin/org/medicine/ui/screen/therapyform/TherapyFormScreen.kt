@@ -45,10 +45,22 @@ fun TherapyFormScreen(navController: NavController, viewModel: TherapyFormViewMo
   TherapyFormView(
     uiState,
     { viewModel.obtainIntent(TherapyFormIntent.FillTherapy(it)) },
-    { therapyId, therapyForm -> viewModel.obtainIntent(TherapyFormIntent.CreateOrSaveTherapy(therapyId, therapyForm)) },
-    { therapyId -> viewModel.obtainIntent(TherapyFormIntent.DeleteTherapy(therapyId)) },
-    { therapyId -> navController.navigate(Destination.TherapySchedule(therapyId)) },
-    { navController.navigate(Destination.Overview, NavOptions.Builder().setPopUpTo(route = null, inclusive = true).build()) },
+    { therapyId, therapyForm ->
+      viewModel.obtainIntent(TherapyFormIntent.CreateOrSaveTherapy(therapyId, therapyForm))
+    },
+    { therapyId ->
+      viewModel.obtainIntent(TherapyFormIntent.DeleteTherapy(therapyId))
+    },
+    { therapyId ->
+      navController.navigate(Destination.TherapySchedule(therapyId))
+    },
+    {
+      val options = NavOptions.Builder()
+        .setPopUpTo(route = null, inclusive = true)
+        .build()
+
+      navController.navigate(Destination.Overview, options)
+    },
   )
 
   LaunchedEffect(viewModel) {
