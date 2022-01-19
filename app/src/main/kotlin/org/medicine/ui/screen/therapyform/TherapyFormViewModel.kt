@@ -98,6 +98,6 @@ class TherapyFormViewModel @Inject constructor(
   private suspend fun deleteTherapy(therapyId: Long) {
     repository.deleteTherapy(therapyId)
 
-    uiState = TherapyFormViewState.DeleteOnSuccessful
+    uiState = TherapyFormViewState.DeleteOnSuccessful(therapyId)
   }
 }

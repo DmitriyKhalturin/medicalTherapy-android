@@ -19,7 +19,9 @@ import org.medicine.navigation.Destination
 import org.medicine.navigation.navigate
 import org.medicine.tools.time.toLocalDate
 import org.medicine.tools.time.toLong
+import org.medicine.ui.screen.therapyform.composable.TherapyDeleteSuccessful
 import org.medicine.ui.screen.therapyform.composable.TherapyForm
+import org.medicine.ui.screen.therapyform.composable.TherapySaveSuccessful
 import org.medicine.ui.screen.therapyform.model.TherapyFormIntent
 import org.medicine.ui.screen.therapyform.model.TherapyFormModel
 import org.medicine.ui.screen.therapyform.model.TherapyFormViewState
@@ -105,8 +107,8 @@ internal fun TherapyFormView(
         )
       }
       // TODO: render (saving and deleting) successful UI.
-      is TherapyFormViewState.SaveOnSuccessful -> saveOnSuccessful(uiState.therapyId)
-      is TherapyFormViewState.DeleteOnSuccessful -> deleteOnSuccessful()
+      is TherapyFormViewState.SaveOnSuccessful -> TherapySaveSuccessful(uiState.therapyId, callback = { saveOnSuccessful(it) })
+      is TherapyFormViewState.DeleteOnSuccessful -> TherapyDeleteSuccessful(uiState.therapyId, callback = { deleteOnSuccessful() })
     }
   }
 }
