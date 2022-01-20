@@ -139,18 +139,20 @@ fun TherapyScheduleView(
                 navigateUp()
               },
             )
-          EditFormType.MEDICINE -> MedicineEditForm(
-            therapyId = therapyId,
-            refreshTherapyCallback = {
-              refreshTherapy()
-            },
-          )
-          EditFormType.DEAL -> DealEditForm(
-            therapyId = therapyId,
-            refreshTherapyCallback = {
-              refreshTherapy()
-            },
-          )
+          EditFormType.MEDICINE ->
+            MedicineEditForm(
+              therapyId = therapyId,
+              refreshTherapyCallback = {
+                refreshTherapy()
+              },
+            )
+          EditFormType.DEAL ->
+            DealEditForm(
+              therapyId = therapyId,
+              refreshTherapyCallback = {
+                refreshTherapy()
+              },
+            )
         }
       }
     },

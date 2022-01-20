@@ -1,4 +1,4 @@
-package org.medicine.model
+package org.medicine.model.medicine
 
 import org.medicine.schedule.data.Medicine
 import org.medicine.source.database.entity.MedicineType

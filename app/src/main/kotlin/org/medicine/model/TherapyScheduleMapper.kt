@@ -1,5 +1,6 @@
 package org.medicine.model
 
+import org.medicine.model.medicine.sourceToSchedule
 import org.medicine.schedule.data.Deal
 import org.medicine.schedule.data.Medicine
 import org.medicine.source.database.entity.DealEntity

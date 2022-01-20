@@ -1,7 +1,7 @@
 package org.medicine.ui.screen.medicineform.model
 
-import org.medicine.model.scheduleToSource
-import org.medicine.model.sourceToSchedule
+import org.medicine.model.medicine.scheduleToSource
+import org.medicine.model.medicine.sourceToSchedule
 import org.medicine.schedule.data.Medicine
 import org.medicine.source.database.entity.MedicineEntity
 import org.medicine.tools.EMPTY_STRING
