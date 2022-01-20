@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.NavOptions
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.medicine.common.ui.setSystemUiColors
 import org.medicine.navigation.Destination
@@ -48,12 +47,7 @@ fun OverviewScreen(navController: NavController, viewModel: OverviewViewModel) {
   OverviewView(
     uiState,
     { navController.navigate(Destination.ApplicationInfo) },
-    {
-      val options = NavOptions.Builder()
-        .build()
-
-      navController.navigate(Destination.TherapyForm(), options)
-    },
+    { navController.navigate(Destination.TherapyForm()) },
     { therapyId -> navController.navigate(Destination.TherapySchedule(therapyId)) },
   )
 

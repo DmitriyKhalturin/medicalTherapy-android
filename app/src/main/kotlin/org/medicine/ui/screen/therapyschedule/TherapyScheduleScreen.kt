@@ -54,7 +54,7 @@ fun TherapyScheduleView(
   uiState: TherapyScheduleViewState,
   therapyId: Long,
   navigateUp: () -> Unit,
-  refreshTherapyCallback: () -> Unit,
+  therapyOnRefresh: () -> Unit,
 ) {
   val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Concealed)
   val coroutineScope = rememberCoroutineScope()
@@ -70,7 +70,7 @@ fun TherapyScheduleView(
   }
 
   fun refreshTherapy() {
-    refreshTherapyCallback()
+    therapyOnRefresh()
 
     coroutineScope.launch {
       scaffoldState.reveal()
