@@ -13,7 +13,7 @@ fun TherapyDeleteSuccessful(
   therapyId: Long,
   callback: () -> Unit,
 ) {
-  LaunchedEffect(therapyId) {
-    callback()
-  }
+  SuccessfulInfo(operation = SuccessfulOperation.Delete)
+
+  LaunchedEffect(therapyId) { callback() }
 }
