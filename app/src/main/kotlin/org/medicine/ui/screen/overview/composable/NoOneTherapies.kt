@@ -33,9 +33,12 @@ fun NoOneTherapies() {
         Icons.Outlined.Info,
         EMPTY_STRING,
         modifier = Modifier.size(48.dp),
-        tint = MaterialTheme.colors.primaryVariant
+        tint = MaterialTheme.colors.primaryVariant,
       )
-      Text(text = "Список протоколов лечения пуст.", modifier = Modifier.padding(16.dp))
+      Text(
+        text = "Список протоколов лечения пуст.",
+        modifier = Modifier.padding(16.dp),
+      )
     }
   }
 }

@@ -108,9 +108,12 @@ internal fun TherapyFormView(
           { therapyId?.let(deleteTherapy) },
         )
       }
-      // TODO: render (saving and deleting) successful UI.
-      is TherapyFormViewState.SaveOnSuccessful -> TherapySaveSuccessful(uiState.therapyId, callback = { saveOnSuccessful(it) })
-      is TherapyFormViewState.DeleteOnSuccessful -> TherapyDeleteSuccessful(uiState.therapyId, callback = { deleteOnSuccessful() })
+      is TherapyFormViewState.SaveOnSuccessful -> uiState.run {
+        TherapySaveSuccessful(therapyId, callback = { saveOnSuccessful(it) })
+      }
+      is TherapyFormViewState.DeleteOnSuccessful -> uiState.run {
+        TherapyDeleteSuccessful(therapyId, callback = { deleteOnSuccessful() })
+      }
     }
   }
 }
