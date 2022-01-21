@@ -1,24 +1,19 @@
 package org.medicine.ui.screen.therapyform.composable
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import org.medicine.R
 import org.medicine.tools.EMPTY_STRING
+import org.medicine.ui.composable.MedicalForm
 import org.medicine.ui.screen.therapyform.model.TherapyFormModel
 import org.medicine.ui.stub.data.stubTherapyForm
 import org.medicine.ui.theme.MedicalTherapyTheme
@@ -44,14 +39,8 @@ fun TherapyForm(
 ) {
   val formatter = DateTimeFormatter.ofPattern(stringResource(R.string.therapyDateFormat), Locale.getDefault())
 
-  Column(
-    modifier = Modifier.padding(16.dp),
-    horizontalAlignment = Alignment.CenterHorizontally
-  ) {
-    Column(modifier = Modifier.weight(weight = 1f)) {
-      val fieldModifier = Modifier
-        .fillMaxWidth()
-        .padding(vertical = 4.dp)
+  MedicalForm(
+    fieldsCallback = { fieldModifier ->
       val focusManager = LocalFocusManager.current
 
       OutlinedTextField(
@@ -88,13 +77,8 @@ fun TherapyForm(
         onValueChange = { },
         enabled = false
       )
-    }
-
-    Column {
-      val controlModifier = Modifier
-        .fillMaxWidth()
-        .padding(bottom = 16.dp)
-
+    },
+    controlsCallback = { controlModifier ->
       OutlinedButton(
         modifier = controlModifier,
         onClick = { createOrSaveTherapyOnClick() }
@@ -115,8 +99,8 @@ fun TherapyForm(
           Text(text = "Удалить протокол лечения")
         }
       }
-    }
-  }
+    },
+  )
 }
 
 
