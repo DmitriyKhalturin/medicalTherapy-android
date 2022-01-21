@@ -2,7 +2,9 @@ package org.medicine.ui.screen.dealform.model
 
 import org.medicine.source.database.entity.DealEntity
 import org.medicine.tools.EMPTY_STRING
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -14,7 +16,8 @@ object DealFormModelMapper {
     DealFormModel(
       name,
       (description ?: EMPTY_STRING),
-      dateTime,
+      dateTime.toLocalDate(),
+      dateTime.toLocalTime(),
       DealFormModel.FailedFields(),
     )
   }
@@ -23,7 +26,8 @@ object DealFormModelMapper {
     DealFormModel(
       EMPTY_STRING,
       EMPTY_STRING,
-      LocalDateTime.now(),
+      LocalDate.now(),
+      LocalTime.now(),
       DealFormModel.FailedFields(),
     )
 
@@ -32,7 +36,7 @@ object DealFormModelMapper {
       (id ?: 0L),
       name,
       description,
-      dateTime,
+      LocalDateTime.of(date, time),
       therapyId,
     )
   }

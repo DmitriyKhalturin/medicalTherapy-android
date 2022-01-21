@@ -1,6 +1,7 @@
 package org.medicine.ui.screen.dealform.model
 
-import java.time.LocalDateTime
+import java.time.LocalDate
+import java.time.LocalTime
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -9,7 +10,8 @@ import java.time.LocalDateTime
 data class DealFormModel(
   val name: String,
   val description: String,
-  val dateTime: LocalDateTime,
+  val date: LocalDate,
+  val time: LocalTime,
   val failedFields: FailedFields,
 ) {
 
