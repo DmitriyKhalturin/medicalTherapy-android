@@ -30,7 +30,9 @@ fun DealFormView(
       is DealFormViewState.Initial -> Unit
       is DealFormViewState.Deal -> uiState.run {
         DealFrom(
-
+          dealId,
+          deal,
+          {}, {}, {}, {}, {}, {},
         )
       }
     }

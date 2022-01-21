@@ -1,9 +1,11 @@
 package org.medicine.ui.stub.data
 
 import org.medicine.tools.EMPTY_STRING
+import org.medicine.ui.screen.dealform.model.DealFormModel
 import org.medicine.ui.screen.overview.model.TherapyModel
 import org.medicine.ui.screen.therapyform.model.TherapyFormModel
 import java.time.LocalDate
+import java.time.LocalTime
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -29,8 +31,9 @@ fun stubActiveTherapies(): List<TherapyModel> {
   return List(3) { therapy }
     .mapIndexed { index, item ->
       if (index == 0) item.copy(
-        description = "Composables should be side-effect free. However, when they're necessary to mutate the state of " +
-          "the app, they should be called from a controlled environment that is aware of the lifecycle of the composable."
+        description = "Подводя итог, хотелось бы отметить, что GraphQL — это концепция создания API, которая " +
+          "обеспечивает слабую связность клиента и сервера. Очевидно, что с появлением этой технологии совершенно " +
+          "не обязательно полностью отказываться от использования REST-архитектуры."
       ) else item
     }
 }
@@ -45,10 +48,21 @@ fun stubTherapyForm(): TherapyFormModel {
   val todayDate = LocalDate.now()
 
   return TherapyFormModel(
-    name = "My first therapy.",
+    name = "Первый протокол лечения.",
     EMPTY_STRING,
     todayDate,
     todayDate.plusDays(5),
-    TherapyFormModel.FailedFields(description = true)
+    TherapyFormModel.FailedFields(description = true),
+  )
+}
+
+fun stubDealForm(): DealFormModel {
+
+  return DealFormModel(
+    name = "Встреча с врачом.",
+    EMPTY_STRING,
+    LocalDate.now(),
+    LocalTime.now(),
+    DealFormModel.FailedFields(description = true)
   )
 }
