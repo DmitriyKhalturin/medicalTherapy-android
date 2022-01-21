@@ -2,6 +2,7 @@ package org.medicine.ui.screen.therapyform.composable
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import kotlinx.coroutines.CoroutineScope
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -11,9 +12,11 @@ import androidx.compose.runtime.LaunchedEffect
 @Composable
 fun TherapyDeleteSuccessful(
   therapyId: Long,
-  callback: () -> Unit,
+  callback: suspend CoroutineScope.() -> Unit,
 ) {
   SuccessfulInfo(operation = SuccessfulOperation.Delete)
 
-  LaunchedEffect(therapyId) { callback() }
+  LaunchedEffect(therapyId) {
+    callback()
+  }
 }

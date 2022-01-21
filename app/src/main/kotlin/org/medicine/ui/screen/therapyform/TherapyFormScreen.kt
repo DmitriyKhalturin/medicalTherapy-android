@@ -14,6 +14,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.android.material.datepicker.MaterialDatePicker
+import kotlinx.coroutines.delay
 import org.medicine.common.exception.UnimplementedCallbackException
 import org.medicine.common.ui.setSystemUiColors
 import org.medicine.navigation.Destination
@@ -68,6 +69,8 @@ fun TherapyFormScreen(navController: NavController, viewModel: TherapyFormViewMo
 
 private typealias TherapyDateOnChange = (LocalDate) -> Unit
 
+private const val SUCCESSFUL_INFO_TIMEOUT = 1000L
+
 @Composable
 internal fun TherapyFormView(
   uiState: TherapyFormViewState,
@@ -109,10 +112,22 @@ internal fun TherapyFormView(
         )
       }
       is TherapyFormViewState.SaveOnSuccessful -> uiState.run {
-        TherapySaveSuccessful(therapyId, callback = { saveOnSuccessful(it) })
+        TherapySaveSuccessful(
+          therapyId,
+          callback = {
+            delay(SUCCESSFUL_INFO_TIMEOUT)
+            saveOnSuccessful(it)
+          },
+        )
       }
       is TherapyFormViewState.DeleteOnSuccessful -> uiState.run {
-        TherapyDeleteSuccessful(therapyId, callback = { deleteOnSuccessful() })
+        TherapyDeleteSuccessful(
+          therapyId,
+          callback = {
+            delay(SUCCESSFUL_INFO_TIMEOUT)
+            deleteOnSuccessful()
+          },
+        )
       }
     }
   }
