@@ -20,6 +20,7 @@ import org.medicine.ui.theme.MedicalTherapyTheme
  */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
