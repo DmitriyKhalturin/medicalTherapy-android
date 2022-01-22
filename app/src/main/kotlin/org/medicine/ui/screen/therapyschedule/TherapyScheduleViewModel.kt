@@ -49,6 +49,7 @@ class TherapyScheduleViewModel @Inject constructor(
     }
   }
 
+
   private suspend fun fetchTherapy() {
     val therapyId = destination.therapyId
     val model = map(repository.getTherapySchedule(therapyId))

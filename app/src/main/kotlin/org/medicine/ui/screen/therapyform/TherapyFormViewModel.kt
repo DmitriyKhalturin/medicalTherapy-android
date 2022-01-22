@@ -46,16 +46,6 @@ class TherapyFormViewModel @Inject constructor(
     }
   }
 
-  private suspend fun fetchTherapy() {
-    val therapyId = destination.therapyId
-    val model = if (therapyId != null ) { map(repository.getTherapy(therapyId)) } else { buildEmptyModel() }
-
-    uiState = TherapyFormViewState.Therapy(
-      therapyId,
-      model,
-    )
-  }
-
   private suspend fun reduce(state: TherapyFormViewState.Therapy, intent: TherapyFormIntent) {
     when (intent) {
       is TherapyFormIntent.EnterScreen -> Unit
@@ -64,6 +54,16 @@ class TherapyFormViewModel @Inject constructor(
       is TherapyFormIntent.DeleteTherapy -> deleteTherapy(intent.therapyId)
       // else -> throw UnimplementedViewStateException(intent, state)
     }
+  }
+
+
+  private suspend fun fetchTherapy(therapyId: Long? = destination.therapyId) {
+    val model = if (therapyId != null ) { map(repository.getTherapy(therapyId)) } else { buildEmptyModel() }
+
+    uiState = TherapyFormViewState.Therapy(
+      therapyId,
+      model,
+    )
   }
 
   private fun fillTherapy(therapy: TherapyFormModel) {

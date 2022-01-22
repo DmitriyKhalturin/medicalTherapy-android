@@ -3,8 +3,6 @@ package org.medicine.navigation.viewmodel
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
-import android.widget.Toast.LENGTH_SHORT
 import dagger.hilt.android.qualifiers.ApplicationContext
 import org.medicine.common.viewmodel.BaseViewModel
 import org.medicine.navigation.Destination
@@ -29,8 +27,7 @@ open class NavigationViewModel<T: Destination> : BaseViewModel() {
 
   override fun onExceptionHandler(e: Throwable) {
     context?.also {
-      Toast.makeText(it, "Exception: ${e.javaClass.simpleName}", LENGTH_SHORT).show()
-      Log.e("CEH >>>", e.message, e)
+      Log.e("ViewModel Exception", "${e.javaClass.simpleName}\n${e.message}", e)
     }
   }
 }
