@@ -15,11 +15,11 @@ import org.medicine.ui.screen.dealform.DealFormViewModel
 @Composable
 fun DealScheduleEditor(
   therapyId: Long,
-  dealId: Long,
+  _dealId: Long? = null,
   therapyOnRefresh: () -> Unit,
 ) {
   val viewModel = hiltViewModel<DealFormViewModel>().apply {
-    destination = Destination.DealForm(therapyId, dealId)
+    destination = Destination.DealForm(therapyId, _dealId)
     obtainIntent(MedicalFormIntent.EnterScreen())
   }
 
@@ -28,8 +28,8 @@ fun DealScheduleEditor(
   DealFormView(
     uiState,
     { viewModel.obtainIntent(MedicalFormIntent.FillForm(it)) },
-    { _, _, dealForm -> viewModel.obtainIntent(MedicalFormIntent.CreateOrSaveObject(dealId, dealForm)) },
-    { viewModel.obtainIntent(MedicalFormIntent.DeleteObject(dealId)) },
+    { _, dealId, dealForm -> viewModel.obtainIntent(MedicalFormIntent.CreateOrSaveObject(dealId, dealForm)) },
+    { dealId -> viewModel.obtainIntent(MedicalFormIntent.DeleteObject(dealId)) },
     { therapyOnRefresh() },
     { therapyOnRefresh() },
   )

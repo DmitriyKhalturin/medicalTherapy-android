@@ -59,6 +59,7 @@ fun stubTherapyForm(): TherapyFormModel {
 fun stubDealForm(): DealFormModel {
 
   return DealFormModel(
+    therapyId = -1L,
     name = "Встреча с врачом.",
     EMPTY_STRING,
     LocalDate.now(),

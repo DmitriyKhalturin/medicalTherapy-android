@@ -15,7 +15,7 @@ import org.medicine.ui.screen.medicineform.MedicineFormViewModel
 @Composable
 fun MedicineScheduleEditor(
   therapyId: Long,
-  medicineId: Long,
+  medicineId: Long? = null,
   therapyOnRefresh: () -> Unit,
 ) {
   val viewModel = hiltViewModel<MedicineFormViewModel>().apply {
