@@ -1,18 +1,18 @@
 package org.medicine.ui.screen.dealform.composable
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.Icon
+import androidx.compose.material.OutlinedButton
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import org.medicine.R
 import org.medicine.tools.EMPTY_STRING
+import org.medicine.ui.common.composable.medicalform.MedicalClickableInput
+import org.medicine.ui.common.composable.medicalform.MedicalInput
 import org.medicine.ui.common.composable.medicalform.SkelMedicalForm
 import org.medicine.ui.screen.dealform.model.DealFormModel
 import org.medicine.ui.stub.data.stubDealForm
@@ -41,41 +41,36 @@ fun DealFrom(
 
   SkelMedicalForm(
     fieldsCallback = { fieldModifier ->
-      val focusManager = LocalFocusManager.current
+      MedicalInput(
+        fieldModifier,
+        "Наименование события",
+        deal.failedFields.name,
+        deal.name,
+        nameOnChange,
+      )
 
-      OutlinedTextField(
-        modifier = fieldModifier,
-        value = deal.name,
-        label = { Text("Deal name") },
-        isError = deal.failedFields.name,
-        onValueChange = nameOnChange,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-        keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+      MedicalInput(
+        fieldModifier,
+        "Информация",
+        deal.failedFields.description,
+        deal.description,
+        descriptionOnChange,
       )
-      OutlinedTextField(
-        modifier = fieldModifier,
-        value = deal.description,
-        label = { Text("Information") },
-        isError = deal.failedFields.description,
-        onValueChange = descriptionOnChange,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-        keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+
+      MedicalClickableInput(
+        fieldModifier,
+        "Дата",
+        deal.failedFields.date,
+        dateFormatter.format(deal.date),
+        dateOnClick,
       )
-      OutlinedTextField(
-        modifier = fieldModifier.clickable { focusManager.clearFocus(); dateOnClick() },
-        value = dateFormatter.format(deal.date),
-        label = { Text("Date") },
-        isError = deal.failedFields.date,
-        onValueChange = { },
-        enabled = false,
-      )
-      OutlinedTextField(
-        modifier = fieldModifier.clickable { focusManager.clearFocus(); timeOnClick() },
-        value = timeFormatter.format(deal.time),
-        label = { Text("Time") },
-        isError = deal.failedFields.time,
-        onValueChange = { },
-        enabled = false,
+
+      MedicalClickableInput(
+        fieldModifier,
+        "Время",
+        deal.failedFields.time,
+        timeFormatter.format(deal.time),
+        timeOnClick,
       )
     },
     controlsCallback = { controlModifier ->

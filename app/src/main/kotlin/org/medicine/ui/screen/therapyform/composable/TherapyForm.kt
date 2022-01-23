@@ -1,18 +1,18 @@
 package org.medicine.ui.screen.therapyform.composable
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.Icon
+import androidx.compose.material.OutlinedButton
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import org.medicine.R
 import org.medicine.tools.EMPTY_STRING
+import org.medicine.ui.common.composable.medicalform.MedicalClickableInput
+import org.medicine.ui.common.composable.medicalform.MedicalInput
 import org.medicine.ui.common.composable.medicalform.SkelMedicalForm
 import org.medicine.ui.screen.therapyform.model.TherapyFormModel
 import org.medicine.ui.stub.data.stubTherapyForm
@@ -41,41 +41,36 @@ fun TherapyForm(
 
   SkelMedicalForm(
     fieldsCallback = { fieldModifier ->
-      val focusManager = LocalFocusManager.current
+      MedicalInput(
+        fieldModifier,
+        "Наименования террапии",
+        therapy.failedFields.name,
+        therapy.name,
+        nameOnChange,
+      )
 
-      OutlinedTextField(
-        modifier = fieldModifier,
-        value = therapy.name,
-        label = { Text("Therapy name") },
-        isError = therapy.failedFields.name,
-        onValueChange = nameOnChange,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-        keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+      MedicalInput(
+        fieldModifier,
+        "Информация",
+        therapy.failedFields.description,
+        therapy.description,
+        descriptionOnChange,
       )
-      OutlinedTextField(
-        modifier = fieldModifier,
-        value = therapy.description,
-        label = { Text("Information")},
-        isError = therapy.failedFields.description,
-        onValueChange = descriptionOnChange,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-        keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+
+      MedicalClickableInput(
+        fieldModifier,
+        "Дата начала",
+        therapy.failedFields.date,
+        formatter.format(therapy.startDate),
+        startDateOnClick,
       )
-      OutlinedTextField(
-        modifier = fieldModifier.clickable { focusManager.clearFocus(); startDateOnClick() },
-        value = formatter.format(therapy.startDate),
-        label = { Text("Start date") },
-        isError = therapy.failedFields.date,
-        onValueChange = { },
-        enabled = false,
-      )
-      OutlinedTextField(
-        modifier = fieldModifier.clickable { focusManager.clearFocus(); endDateOnClick() },
-        value = formatter.format(therapy.endDate),
-        label = { Text("End date") },
-        isError = therapy.failedFields.date,
-        onValueChange = { },
-        enabled = false
+
+      MedicalClickableInput(
+        fieldModifier,
+        "Дата окончания",
+        therapy.failedFields.date,
+        formatter.format(therapy.endDate),
+        endDateOnClick,
       )
     },
     controlsCallback = { controlModifier ->
