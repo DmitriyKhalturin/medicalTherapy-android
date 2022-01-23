@@ -8,18 +8,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.coroutines.CoroutineScope
-import org.medicine.tools.time.toLocalDate
-import org.medicine.tools.time.toLong
 import org.medicine.ui.common.composable.successfulinfo.ObjectDeleteSuccessful
 import org.medicine.ui.common.composable.successfulinfo.ObjectSaveSuccessful
+import org.medicine.ui.common.dialog.showDatePickerDialog
 import org.medicine.ui.common.model.MedicalFormViewState
 import org.medicine.ui.screen.therapyform.composable.TherapyForm
 import org.medicine.ui.screen.therapyform.model.TherapyFormModel
 import org.medicine.ui.stub.data.stubTherapyForm
 import org.medicine.ui.theme.MedicalTherapyTheme
-import java.time.LocalDate
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -37,17 +34,6 @@ internal fun TherapyFormView(
 ) {
   val activity = LocalContext.current as AppCompatActivity
 
-  fun showDatePickerDialog(date: LocalDate, callback: (LocalDate) -> Unit) {
-    val fragmentManager = activity.supportFragmentManager
-    val builder = MaterialDatePicker.Builder.datePicker()
-    val datePicker = builder.setSelection(date.toLong()).build()
-
-    datePicker.addOnPositiveButtonClickListener {
-      callback(it.toLocalDate())
-    }
-    datePicker.show(fragmentManager, null)
-  }
-
   Box(
     modifier = Modifier.fillMaxSize(),
     contentAlignment = Alignment.TopCenter,
@@ -60,8 +46,8 @@ internal fun TherapyFormView(
           `object`,
           { therapyFormOnChange(`object`.copy(name = it)) },
           { therapyFormOnChange(`object`.copy(description = it)) },
-          { showDatePickerDialog(`object`.startDate) { therapyFormOnChange(`object`.copy(startDate = it)) } },
-          { showDatePickerDialog(`object`.endDate) { therapyFormOnChange(`object`.copy(endDate = it)) } },
+          { showDatePickerDialog(activity, `object`.startDate) { therapyFormOnChange(`object`.copy(startDate = it)) } },
+          { showDatePickerDialog(activity, `object`.endDate) { therapyFormOnChange(`object`.copy(endDate = it)) } },
           { createOrSaveTherapy(objectId, `object`) },
           { objectId?.let(deleteTherapy) },
         )
