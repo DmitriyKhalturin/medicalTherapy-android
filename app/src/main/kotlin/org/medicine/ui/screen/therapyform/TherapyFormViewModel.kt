@@ -13,7 +13,7 @@ import org.medicine.tools.isEmptyOrBlank
 import org.medicine.ui.common.model.MedicalFormIntent
 import org.medicine.ui.common.model.MedicalFormViewState
 import org.medicine.ui.screen.therapyform.model.TherapyFormModel
-import org.medicine.ui.screen.therapyform.model.TherapyFormModelMapper.buildEmptyModel
+import org.medicine.ui.screen.therapyform.model.TherapyFormModelMapper.emptyTherapyFormModel
 import org.medicine.ui.screen.therapyform.model.TherapyFormModelMapper.map
 import javax.inject.Inject
 
@@ -58,7 +58,7 @@ class TherapyFormViewModel @Inject constructor(
 
 
   private suspend fun fetchTherapy(therapyId: Long? = destination.therapyId) {
-    val model = if (therapyId != null ) { map(repository.getTherapy(therapyId)) } else { buildEmptyModel() }
+    val model = if (therapyId != null ) map(repository.getTherapy(therapyId)) else emptyTherapyFormModel()
 
     uiState = MedicalFormViewState.Object(
       therapyId,

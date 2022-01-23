@@ -46,15 +46,25 @@ internal fun DealFormView(
           { dealFormOnChange(`object`.copy(description = it)) },
           { showDatePickerDialog(activity, `object`.date) { dealFormOnChange(`object`.copy(date = it)) } },
           { showTimePickerDialog(activity, `object`.time) { dealFormOnChange(`object`.copy(time = it)) } },
-          { createOrSaveDeal(-1L, objectId, `object`) },
+          { createOrSaveDeal(`object`.therapyId, objectId, `object`) },
           { objectId?.let(deleteDeal) },
         )
       }
       is MedicalFormViewState.SaveOnSuccessful -> uiState.run {
-        ObjectSaveSuccessful(-1L) {}
+        ObjectSaveSuccessful(
+          objectId,
+          callback = {
+            saveOnSuccessful(it)
+          }
+        )
       }
       is MedicalFormViewState.DeleteOnSuccessful -> uiState.run {
-        ObjectDeleteSuccessful(-1L) {}
+        ObjectDeleteSuccessful(
+          objectId,
+          callback = {
+            deleteOnSuccessful()
+          }
+        )
       }
     }
   }

@@ -12,6 +12,7 @@ import org.medicine.source.repository.MedicalTherapyRepository
 import org.medicine.ui.common.model.MedicalFormIntent
 import org.medicine.ui.common.model.MedicalFormViewState
 import org.medicine.ui.screen.dealform.model.DealFormModel
+import org.medicine.ui.screen.dealform.model.DealFormModelMapper.emptyDealFormModel
 import javax.inject.Inject
 
 /**
@@ -24,16 +25,56 @@ class DealFormViewModel @Inject constructor(
 ) : NavigationViewModel<Destination.DealForm>(), IntentHandler<MedicalFormIntent<DealFormModel>> {
 
   var uiState by mutableStateOf<MedicalFormViewState<DealFormModel>>(MedicalFormViewState.Initial())
+    private set
 
   override fun obtainIntent(intent: MedicalFormIntent<DealFormModel>) {
     launch {
       when (val state = uiState) {
         is MedicalFormViewState.Initial -> reduce(state, intent)
+        is MedicalFormViewState.Object -> reduce(state, intent)
         else -> throw UnimplementedViewStateException(intent, state)
       }
     }
   }
 
   private suspend fun reduce(state: MedicalFormViewState.Initial<DealFormModel>, intent: MedicalFormIntent<DealFormModel>) {
+    when (intent) {
+      is MedicalFormIntent.EnterScreen -> fetchDeal()
+      else -> throw UnimplementedViewStateException(intent, state)
+    }
+  }
+
+  private suspend fun reduce(state: MedicalFormViewState.Object<DealFormModel>, intent: MedicalFormIntent<DealFormModel>) {
+    when (intent) {
+      is MedicalFormIntent.EnterScreen -> Unit
+      is MedicalFormIntent.FillForm -> fillDeal(intent.`object`)
+      is MedicalFormIntent.CreateOrSaveObject -> createOrSaveDeal(intent.objectId, intent.`object`)
+      is MedicalFormIntent.DeleteObject -> deleteDeal(intent.objectId)
+      // else -> throw UnimplementedViewStateException(intent, state)
+    }
+  }
+
+
+  private suspend fun fetchDeal(dealId: Long? = destination.dealId) {
+    val model = if (dealId != null) {
+      TODO("Unimplemented logic")
+    } else emptyDealFormModel(destination.therapyId)
+
+    uiState = MedicalFormViewState.Object(
+      dealId,
+      model,
+    )
+  }
+
+  private fun fillDeal(deal: DealFormModel) {
+    //
+  }
+
+  private suspend fun createOrSaveDeal(dalId: Long?, deal: DealFormModel) {
+    //
+  }
+
+  private suspend fun deleteDeal(dalId: Long) {
+    //
   }
 }
