@@ -90,7 +90,15 @@ internal fun TherapyScheduleView(
                 dealsOnClick = {},
               )
 
-              ScheduleEditorSelector(scaffoldState, scheduleEditorType)
+              ScheduleEditorSelector(
+                scheduleEditorOnSelect = {
+                  scheduleEditorType.value = it
+
+                  coroutineScope.launch {
+                    scaffoldState.conceal()
+                  }
+                }
+              )
             }
           }
         }
@@ -120,7 +128,6 @@ internal fun TherapyScheduleView(
           ScheduleEditorType.MEDICINE ->
             MedicineScheduleEditor(
               therapyId = therapyId,
-              medicineId = -1L,
               therapyOnRefresh = {
                 refreshTherapy()
               },
@@ -128,7 +135,6 @@ internal fun TherapyScheduleView(
           ScheduleEditorType.DEAL ->
             DealScheduleEditor(
               therapyId = therapyId,
-              dealId = -1L,
               therapyOnRefresh = {
                 refreshTherapy()
               },
