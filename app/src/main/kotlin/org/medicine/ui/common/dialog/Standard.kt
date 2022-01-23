@@ -3,6 +3,7 @@ package org.medicine.ui.common.dialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import org.medicine.tools.time.toLocalDate
 import org.medicine.tools.time.toLong
 import java.time.LocalDate
@@ -30,6 +31,7 @@ internal fun showTimePickerDialog(activity: AppCompatActivity, date: LocalTime, 
   val fragmentManager = activity.supportFragmentManager
   val builder = MaterialTimePicker.Builder()
   val timePicker = builder
+    .setTimeFormat(TimeFormat.CLOCK_24H)
     .setHour(date.hour)
     .setMinute(date.minute)
     .build()
