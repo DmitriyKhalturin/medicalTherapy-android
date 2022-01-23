@@ -24,7 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TherapyFormViewModel @Inject constructor(
   private val repository: MedicalTherapyRepository,
-): NavigationViewModel<Destination.TherapyForm>(), IntentHandler<MedicalFormIntent<TherapyFormModel>> {
+) : NavigationViewModel<Destination.TherapyForm>(), IntentHandler<MedicalFormIntent<TherapyFormModel>> {
 
   var uiState by mutableStateOf<MedicalFormViewState<TherapyFormModel>>(MedicalFormViewState.Initial())
     private set
@@ -58,7 +58,11 @@ class TherapyFormViewModel @Inject constructor(
 
 
   private suspend fun fetchTherapy(therapyId: Long? = destination.therapyId) {
-    val model = if (therapyId != null ) map(repository.getTherapy(therapyId)) else emptyTherapyFormModel()
+    val model =
+      if (therapyId != null)
+        map(repository.getTherapy(therapyId))
+      else
+        emptyTherapyFormModel()
 
     uiState = MedicalFormViewState.Object(
       therapyId,
