@@ -1,13 +1,12 @@
-package org.medicine.ui.screen.dealform.composable
+package org.medicine.ui.screen.medicineform.composable
 
 import androidx.compose.runtime.Composable
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
- * for MedicalTherapy on 23.01.2022 3:53.
+ * for MedicalTherapy on 23.01.2022 20:03.
  */
 
 @Composable
-fun DealDeleteSuccessful() {
-  //
+fun MedicineForm() {
 }

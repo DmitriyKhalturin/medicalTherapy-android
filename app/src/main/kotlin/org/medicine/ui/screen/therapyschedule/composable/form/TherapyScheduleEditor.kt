@@ -3,9 +3,9 @@ package org.medicine.ui.screen.therapyschedule.composable.form
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.medicine.navigation.Destination
+import org.medicine.ui.common.model.MedicalFormIntent
 import org.medicine.ui.screen.therapyform.TherapyFormView
 import org.medicine.ui.screen.therapyform.TherapyFormViewModel
-import org.medicine.ui.screen.therapyform.model.TherapyFormIntent
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -20,16 +20,16 @@ fun TherapyScheduleEditor(
 ) {
   val viewModel = hiltViewModel<TherapyFormViewModel>().apply {
     destination = Destination.TherapyForm(therapyId)
-    obtainIntent(TherapyFormIntent.EnterScreen)
+    obtainIntent(MedicalFormIntent.EnterScreen())
   }
 
   val uiState = viewModel.uiState
 
   TherapyFormView(
     uiState,
-    { viewModel.obtainIntent(TherapyFormIntent.FillTherapy(it)) },
-    { _, therapyForm -> viewModel.obtainIntent(TherapyFormIntent.CreateOrSaveTherapy(therapyId, therapyForm)) },
-    { viewModel.obtainIntent(TherapyFormIntent.DeleteTherapy(therapyId)) },
+    { viewModel.obtainIntent(MedicalFormIntent.FillForm(it)) },
+    { _, therapyForm -> viewModel.obtainIntent(MedicalFormIntent.CreateOrSaveObject(therapyId, therapyForm)) },
+    { viewModel.obtainIntent(MedicalFormIntent.DeleteObject(therapyId)) },
     { saveOnSuccessful(therapyId) },
     { deleteOnSuccessful() },
   )

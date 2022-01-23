@@ -1,7 +1,8 @@
 package org.medicine.ui.screen.medicineform
 
 import androidx.compose.runtime.Composable
-import org.medicine.ui.screen.medicineform.model.MedicineFormViewState
+import org.medicine.ui.common.model.MedicalFormViewState
+import org.medicine.ui.screen.medicineform.model.MedicineFormModel
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -10,6 +11,6 @@ import org.medicine.ui.screen.medicineform.model.MedicineFormViewState
 
 @Composable
 internal fun MedicineFormView(
-  uiState: MedicineFormViewState,
+  uiState: MedicalFormViewState<MedicineFormModel>,
 ) {
 }

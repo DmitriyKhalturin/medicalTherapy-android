@@ -1,4 +1,4 @@
-package org.medicine.ui.screen.therapyform.composable
+package org.medicine.ui.common.composable.successfulinfo
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon

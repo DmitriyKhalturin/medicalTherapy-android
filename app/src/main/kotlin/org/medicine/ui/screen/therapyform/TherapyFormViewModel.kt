@@ -10,11 +10,11 @@ import org.medicine.navigation.Destination
 import org.medicine.navigation.viewmodel.NavigationViewModel
 import org.medicine.source.repository.MedicalTherapyRepository
 import org.medicine.tools.isEmptyOrBlank
-import org.medicine.ui.screen.therapyform.model.TherapyFormIntent
+import org.medicine.ui.common.model.MedicalFormIntent
+import org.medicine.ui.common.model.MedicalFormViewState
 import org.medicine.ui.screen.therapyform.model.TherapyFormModel
 import org.medicine.ui.screen.therapyform.model.TherapyFormModelMapper.buildEmptyModel
 import org.medicine.ui.screen.therapyform.model.TherapyFormModelMapper.map
-import org.medicine.ui.screen.therapyform.model.TherapyFormViewState
 import javax.inject.Inject
 
 /**
@@ -24,34 +24,34 @@ import javax.inject.Inject
 @HiltViewModel
 class TherapyFormViewModel @Inject constructor(
   private val repository: MedicalTherapyRepository,
-): NavigationViewModel<Destination.TherapyForm>(), IntentHandler<TherapyFormIntent> {
+): NavigationViewModel<Destination.TherapyForm>(), IntentHandler<MedicalFormIntent<TherapyFormModel>> {
 
-  var uiState by mutableStateOf<TherapyFormViewState>(TherapyFormViewState.Initial)
+  var uiState by mutableStateOf<MedicalFormViewState<TherapyFormModel>>(MedicalFormViewState.Initial())
     private set
 
-  override fun obtainIntent(intent: TherapyFormIntent) {
+  override fun obtainIntent(intent: MedicalFormIntent<TherapyFormModel>) {
     launch {
       when (val state = uiState) {
-        is TherapyFormViewState.Initial -> reduce(state, intent)
-        is TherapyFormViewState.Therapy -> reduce(state, intent)
+        is MedicalFormViewState.Initial -> reduce(state, intent)
+        is MedicalFormViewState.Object -> reduce(state, intent)
         else -> throw UnimplementedViewStateException(intent, state)
       }
     }
   }
 
-  private suspend fun reduce(state: TherapyFormViewState.Initial, intent: TherapyFormIntent) {
+  private suspend fun reduce(state: MedicalFormViewState.Initial<TherapyFormModel>, intent: MedicalFormIntent<TherapyFormModel>) {
     when (intent) {
-      is TherapyFormIntent.EnterScreen -> fetchTherapy()
+      is MedicalFormIntent.EnterScreen -> fetchTherapy()
       else -> throw UnimplementedViewStateException(intent, state)
     }
   }
 
-  private suspend fun reduce(state: TherapyFormViewState.Therapy, intent: TherapyFormIntent) {
+  private suspend fun reduce(state: MedicalFormViewState.Object<TherapyFormModel>, intent: MedicalFormIntent<TherapyFormModel>) {
     when (intent) {
-      is TherapyFormIntent.EnterScreen -> Unit
-      is TherapyFormIntent.FillTherapy -> fillTherapy(intent.therapy)
-      is TherapyFormIntent.CreateOrSaveTherapy -> createOrSaveTherapy(intent.therapyId, intent.therapy)
-      is TherapyFormIntent.DeleteTherapy -> deleteTherapy(intent.therapyId)
+      is MedicalFormIntent.EnterScreen -> Unit
+      is MedicalFormIntent.FillForm -> fillTherapy(intent.`object`)
+      is MedicalFormIntent.CreateOrSaveObject -> createOrSaveTherapy(intent.objectId, intent.`object`)
+      is MedicalFormIntent.DeleteObject -> deleteTherapy(intent.objectId)
       // else -> throw UnimplementedViewStateException(intent, state)
     }
   }
@@ -60,14 +60,14 @@ class TherapyFormViewModel @Inject constructor(
   private suspend fun fetchTherapy(therapyId: Long? = destination.therapyId) {
     val model = if (therapyId != null ) { map(repository.getTherapy(therapyId)) } else { buildEmptyModel() }
 
-    uiState = TherapyFormViewState.Therapy(
+    uiState = MedicalFormViewState.Object(
       therapyId,
       model,
     )
   }
 
   private fun fillTherapy(therapy: TherapyFormModel) {
-    uiState = TherapyFormViewState.Therapy(destination.therapyId, therapy)
+    uiState = MedicalFormViewState.Object(destination.therapyId, therapy)
   }
 
   private suspend fun createOrSaveTherapy(therapyId: Long?, therapy: TherapyFormModel) {
@@ -78,7 +78,7 @@ class TherapyFormViewModel @Inject constructor(
     )
 
     if (failedFields.has) {
-      uiState = TherapyFormViewState.Therapy(
+      uiState = MedicalFormViewState.Object(
         therapyId,
         therapy.copy(failedFields = failedFields),
       )
@@ -91,13 +91,13 @@ class TherapyFormViewModel @Inject constructor(
         repository.createTherapy(entity)
       }
 
-      uiState = TherapyFormViewState.SaveOnSuccessful(entityId)
+      uiState = MedicalFormViewState.SaveOnSuccessful(entityId)
     }
   }
 
   private suspend fun deleteTherapy(therapyId: Long) {
     repository.deleteTherapy(therapyId)
 
-    uiState = TherapyFormViewState.DeleteOnSuccessful(therapyId)
+    uiState = MedicalFormViewState.DeleteOnSuccessful(therapyId)
   }
 }

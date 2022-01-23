@@ -12,11 +12,11 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.coroutines.CoroutineScope
 import org.medicine.tools.time.toLocalDate
 import org.medicine.tools.time.toLong
-import org.medicine.ui.screen.therapyform.composable.TherapyDeleteSuccessful
+import org.medicine.ui.common.composable.successfulinfo.ObjectDeleteSuccessful
+import org.medicine.ui.common.composable.successfulinfo.ObjectSaveSuccessful
+import org.medicine.ui.common.model.MedicalFormViewState
 import org.medicine.ui.screen.therapyform.composable.TherapyForm
-import org.medicine.ui.screen.therapyform.composable.TherapySaveSuccessful
 import org.medicine.ui.screen.therapyform.model.TherapyFormModel
-import org.medicine.ui.screen.therapyform.model.TherapyFormViewState
 import org.medicine.ui.stub.data.stubTherapyForm
 import org.medicine.ui.theme.MedicalTherapyTheme
 import java.time.LocalDate
@@ -28,7 +28,7 @@ import java.time.LocalDate
 
 @Composable
 internal fun TherapyFormView(
-  uiState: TherapyFormViewState,
+  uiState: MedicalFormViewState<TherapyFormModel>,
   therapyFormOnChange: (TherapyFormModel) -> Unit,
   createOrSaveTherapy: (Long?, TherapyFormModel) -> Unit,
   deleteTherapy: (Long) -> Unit,
@@ -53,30 +53,30 @@ internal fun TherapyFormView(
     contentAlignment = Alignment.TopCenter,
   ) {
     when (uiState) {
-      is TherapyFormViewState.Initial -> Unit
-      is TherapyFormViewState.Therapy -> uiState.run {
+      is MedicalFormViewState.Initial -> Unit
+      is MedicalFormViewState.Object -> uiState.run {
         TherapyForm(
-          therapyId,
-          therapy,
-          { therapyFormOnChange(therapy.copy(name = it)) },
-          { therapyFormOnChange(therapy.copy(description = it)) },
-          { showDatePickerDialog(therapy.startDate) { therapyFormOnChange(therapy.copy(startDate = it)) } },
-          { showDatePickerDialog(therapy.endDate) { therapyFormOnChange(therapy.copy(endDate = it)) } },
-          { createOrSaveTherapy(therapyId, therapy) },
-          { therapyId?.let(deleteTherapy) },
+          objectId,
+          `object`,
+          { therapyFormOnChange(`object`.copy(name = it)) },
+          { therapyFormOnChange(`object`.copy(description = it)) },
+          { showDatePickerDialog(`object`.startDate) { therapyFormOnChange(`object`.copy(startDate = it)) } },
+          { showDatePickerDialog(`object`.endDate) { therapyFormOnChange(`object`.copy(endDate = it)) } },
+          { createOrSaveTherapy(objectId, `object`) },
+          { objectId?.let(deleteTherapy) },
         )
       }
-      is TherapyFormViewState.SaveOnSuccessful -> uiState.run {
-        TherapySaveSuccessful(
-          therapyId,
+      is MedicalFormViewState.SaveOnSuccessful -> uiState.run {
+        ObjectSaveSuccessful(
+          objectId,
           callback = {
             saveOnSuccessful(it)
           },
         )
       }
-      is TherapyFormViewState.DeleteOnSuccessful -> uiState.run {
-        TherapyDeleteSuccessful(
-          therapyId,
+      is MedicalFormViewState.DeleteOnSuccessful -> uiState.run {
+        ObjectDeleteSuccessful(
+          objectId,
           callback = {
             deleteOnSuccessful()
           },
@@ -93,9 +93,9 @@ fun TherapyFormViewPreview() {
   MedicalTherapyTheme {
     TherapyFormView(
       // TherapyFormViewState.Initial,
-      TherapyFormViewState.Therapy(
-        therapyId = null,
-        therapy = stubTherapyForm(),
+      MedicalFormViewState.Object(
+        objectId = null,
+        `object` = stubTherapyForm(),
       ),
       // TherapyFormViewState.SavingSuccessful,
       // TherapyFormViewState.DeletingSuccessful,

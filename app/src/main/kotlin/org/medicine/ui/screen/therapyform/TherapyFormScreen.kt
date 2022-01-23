@@ -12,7 +12,7 @@ import org.medicine.common.ui.setSystemUiColors
 import org.medicine.navigation.Destination
 import org.medicine.navigation.Route
 import org.medicine.navigation.navigate
-import org.medicine.ui.screen.therapyform.model.TherapyFormIntent
+import org.medicine.ui.common.model.MedicalFormIntent
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -33,9 +33,9 @@ fun TherapyFormScreen(navController: NavController, viewModel: TherapyFormViewMo
 
   TherapyFormView(
     uiState,
-    { model -> viewModel.obtainIntent(TherapyFormIntent.FillTherapy(model)) },
-    { therapyId, therapyForm -> viewModel.obtainIntent(TherapyFormIntent.CreateOrSaveTherapy(therapyId, therapyForm)) },
-    { therapyId -> viewModel.obtainIntent(TherapyFormIntent.DeleteTherapy(therapyId)) },
+    { model -> viewModel.obtainIntent(MedicalFormIntent.FillForm(model)) },
+    { therapyId, therapyForm -> viewModel.obtainIntent(MedicalFormIntent.CreateOrSaveObject(therapyId, therapyForm)) },
+    { therapyId -> viewModel.obtainIntent(MedicalFormIntent.DeleteObject(therapyId)) },
     { therapyId ->
       val options = NavOptions.Builder()
         .setPopUpTo(Route.TherapyForm.name, inclusive = true)
@@ -48,6 +48,6 @@ fun TherapyFormScreen(navController: NavController, viewModel: TherapyFormViewMo
   )
 
   LaunchedEffect(viewModel) {
-    viewModel.obtainIntent(TherapyFormIntent.EnterScreen)
+    viewModel.obtainIntent(MedicalFormIntent.EnterScreen())
   }
 }

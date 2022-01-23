@@ -13,7 +13,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import org.medicine.R
 import org.medicine.tools.EMPTY_STRING
-import org.medicine.ui.common.composable.MedicalForm
+import org.medicine.ui.common.composable.medicalform.SkelMedicalForm
 import org.medicine.ui.screen.therapyform.model.TherapyFormModel
 import org.medicine.ui.stub.data.stubTherapyForm
 import org.medicine.ui.theme.MedicalTherapyTheme
@@ -39,7 +39,7 @@ fun TherapyForm(
 ) {
   val formatter = DateTimeFormatter.ofPattern(stringResource(R.string.therapyDateFormat), Locale.getDefault())
 
-  MedicalForm(
+  SkelMedicalForm(
     fieldsCallback = { fieldModifier ->
       val focusManager = LocalFocusManager.current
 

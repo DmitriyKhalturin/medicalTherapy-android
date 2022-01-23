@@ -3,9 +3,9 @@ package org.medicine.ui.screen.therapyschedule.composable.form
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.medicine.navigation.Destination
+import org.medicine.ui.common.model.MedicalFormIntent
 import org.medicine.ui.screen.medicineform.MedicineFormView
 import org.medicine.ui.screen.medicineform.MedicineFormViewModel
-import org.medicine.ui.screen.medicineform.model.MedicineFormIntent
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -20,7 +20,7 @@ fun MedicineScheduleEditor(
 ) {
   val viewModel = hiltViewModel<MedicineFormViewModel>().apply {
     destination = Destination.MedicineForm(therapyId, medicineId)
-    obtainIntent(MedicineFormIntent.EnterScreen)
+    obtainIntent(MedicalFormIntent.EnterScreen())
   }
 
   val uiState = viewModel.uiState

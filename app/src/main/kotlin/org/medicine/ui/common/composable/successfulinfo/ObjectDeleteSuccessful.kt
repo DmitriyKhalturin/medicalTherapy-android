@@ -1,4 +1,4 @@
-package org.medicine.ui.screen.therapyform.composable
+package org.medicine.ui.common.composable.successfulinfo
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -10,13 +10,13 @@ import kotlinx.coroutines.CoroutineScope
  */
 
 @Composable
-fun TherapySaveSuccessful(
-  therapyId: Long,
-  callback: suspend CoroutineScope.(Long) -> Unit,
+fun ObjectDeleteSuccessful(
+  objectId: Long,
+  callback: suspend CoroutineScope.() -> Unit,
 ) {
-  SuccessfulInfo(operation = SuccessfulOperation.Save)
+  SuccessfulInfo(operation = SuccessfulOperation.Delete)
 
-  LaunchedEffect(therapyId) {
-    callback(therapyId)
+  LaunchedEffect(objectId) {
+    callback()
   }
 }

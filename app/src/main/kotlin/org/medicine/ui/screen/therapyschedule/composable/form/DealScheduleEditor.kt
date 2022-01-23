@@ -3,9 +3,9 @@ package org.medicine.ui.screen.therapyschedule.composable.form
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.medicine.navigation.Destination
+import org.medicine.ui.common.model.MedicalFormIntent
 import org.medicine.ui.screen.dealform.DealFormView
 import org.medicine.ui.screen.dealform.DealFormViewModel
-import org.medicine.ui.screen.dealform.model.DealFormIntent
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -20,16 +20,16 @@ fun DealScheduleEditor(
 ) {
   val viewModel = hiltViewModel<DealFormViewModel>().apply {
     destination = Destination.DealForm(therapyId, dealId)
-    obtainIntent(DealFormIntent.EnterScreen)
+    obtainIntent(MedicalFormIntent.EnterScreen())
   }
 
   val uiState = viewModel.uiState
 
   DealFormView(
     uiState,
-    { viewModel.obtainIntent(DealFormIntent.FillDeal(it)) },
-    { _, _, dealForm -> viewModel.obtainIntent(DealFormIntent.CreateOrSaveDeal(therapyId, dealId, dealForm)) },
-    { viewModel.obtainIntent(DealFormIntent.DeleteDeal(dealId)) },
+    { viewModel.obtainIntent(MedicalFormIntent.FillForm(it)) },
+    { _, _, dealForm -> viewModel.obtainIntent(MedicalFormIntent.CreateOrSaveObject(dealId, dealForm)) },
+    { viewModel.obtainIntent(MedicalFormIntent.DeleteObject(dealId)) },
     { therapyOnRefresh() },
     { therapyOnRefresh() },
   )

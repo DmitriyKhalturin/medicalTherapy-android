@@ -6,11 +6,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.CoroutineScope
-import org.medicine.ui.screen.dealform.composable.DealDeleteSuccessful
+import org.medicine.ui.common.composable.successfulinfo.ObjectDeleteSuccessful
+import org.medicine.ui.common.composable.successfulinfo.ObjectSaveSuccessful
+import org.medicine.ui.common.model.MedicalFormViewState
 import org.medicine.ui.screen.dealform.composable.DealFrom
-import org.medicine.ui.screen.dealform.composable.DealSaveSuccessful
 import org.medicine.ui.screen.dealform.model.DealFormModel
-import org.medicine.ui.screen.dealform.model.DealFormViewState
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -19,7 +19,7 @@ import org.medicine.ui.screen.dealform.model.DealFormViewState
 
 @Composable
 internal fun DealFormView(
-  uiState: DealFormViewState,
+  uiState: MedicalFormViewState<DealFormModel>,
   dealFormOnChange: (DealFormModel) -> Unit,
   createOrSaveDeal: (Long, Long?, DealFormModel) -> Unit,
   deleteDeal: (Long) -> Unit,
@@ -32,24 +32,24 @@ internal fun DealFormView(
     contentAlignment = Alignment.TopCenter,
   ) {
     when (uiState) {
-      is DealFormViewState.Initial -> Unit
-      is DealFormViewState.Deal -> uiState.run {
+      is MedicalFormViewState.Initial -> Unit
+      is MedicalFormViewState.Object -> uiState.run {
         DealFrom(
-          dealId,
-          deal,
-          { dealFormOnChange(deal.copy(name = it)) },
-          { dealFormOnChange(deal.copy(description = it)) },
+          objectId,
+          `object`,
+          { dealFormOnChange(`object`.copy(name = it)) },
+          { dealFormOnChange(`object`.copy(description = it)) },
           {  },
           {  },
-          { createOrSaveDeal(therapyId, dealId, deal) },
-          { dealId?.let(deleteDeal) },
+          { createOrSaveDeal(-1L, objectId, `object`) },
+          { objectId?.let(deleteDeal) },
         )
       }
-      is DealFormViewState.SaveOnSuccessful -> uiState.run {
-        DealSaveSuccessful()
+      is MedicalFormViewState.SaveOnSuccessful -> uiState.run {
+        ObjectSaveSuccessful(-1L) {}
       }
-      is DealFormViewState.DeleteOnSuccessful -> uiState.run {
-        DealDeleteSuccessful()
+      is MedicalFormViewState.DeleteOnSuccessful -> uiState.run {
+        ObjectDeleteSuccessful(-1L) {}
       }
     }
   }

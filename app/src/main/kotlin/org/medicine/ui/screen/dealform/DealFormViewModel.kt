@@ -9,8 +9,9 @@ import org.medicine.common.viewmodel.IntentHandler
 import org.medicine.navigation.Destination
 import org.medicine.navigation.viewmodel.NavigationViewModel
 import org.medicine.source.repository.MedicalTherapyRepository
-import org.medicine.ui.screen.dealform.model.DealFormIntent
-import org.medicine.ui.screen.dealform.model.DealFormViewState
+import org.medicine.ui.common.model.MedicalFormIntent
+import org.medicine.ui.common.model.MedicalFormViewState
+import org.medicine.ui.screen.dealform.model.DealFormModel
 import javax.inject.Inject
 
 /**
@@ -20,19 +21,19 @@ import javax.inject.Inject
 @HiltViewModel
 class DealFormViewModel @Inject constructor(
   private val repository: MedicalTherapyRepository,
-) : NavigationViewModel<Destination.DealForm>(), IntentHandler<DealFormIntent> {
+) : NavigationViewModel<Destination.DealForm>(), IntentHandler<MedicalFormIntent<DealFormModel>> {
 
-  var uiState by mutableStateOf<DealFormViewState>(DealFormViewState.Initial)
+  var uiState by mutableStateOf<MedicalFormViewState<DealFormModel>>(MedicalFormViewState.Initial())
 
-  override fun obtainIntent(intent: DealFormIntent) {
+  override fun obtainIntent(intent: MedicalFormIntent<DealFormModel>) {
     launch {
       when (val state = uiState) {
-        is DealFormViewState.Initial -> reduce(state, intent)
+        is MedicalFormViewState.Initial -> reduce(state, intent)
         else -> throw UnimplementedViewStateException(intent, state)
       }
     }
   }
 
-  private suspend fun reduce(state: DealFormViewState.Initial, intent: DealFormIntent) {
+  private suspend fun reduce(state: MedicalFormViewState.Initial<DealFormModel>, intent: MedicalFormIntent<DealFormModel>) {
   }
 }
