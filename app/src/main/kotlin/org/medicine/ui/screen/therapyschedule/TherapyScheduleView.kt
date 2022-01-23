@@ -12,7 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import org.medicine.schedule.MedicalTherapySchedule
-import org.medicine.ui.screen.therapyschedule.composable.*
+import org.medicine.ui.screen.therapyschedule.composable.ScheduleEditorSelector
+import org.medicine.ui.screen.therapyschedule.composable.form.DealScheduleEditor
+import org.medicine.ui.screen.therapyschedule.composable.form.MedicineScheduleEditor
+import org.medicine.ui.screen.therapyschedule.composable.form.ScheduleEditorType
+import org.medicine.ui.screen.therapyschedule.composable.form.TherapyScheduleEditor
 import org.medicine.ui.screen.therapyschedule.model.TherapyScheduleViewState
 
 /**
@@ -51,7 +55,7 @@ internal fun TherapyScheduleView(
     }
   }
 
-  val editFormType = remember { mutableStateOf(EditFormType.THERAPY) }
+  val scheduleEditorType = remember { mutableStateOf(ScheduleEditorType.THERAPY) }
 
   BackdropScaffold(
     scaffoldState = scaffoldState,
@@ -86,7 +90,7 @@ internal fun TherapyScheduleView(
                 dealsOnClick = {},
               )
 
-              Toolbar(scaffoldState, editFormType)
+              ScheduleEditorSelector(scaffoldState, scheduleEditorType)
             }
           }
         }
@@ -102,9 +106,9 @@ internal fun TherapyScheduleView(
           .fillMaxSize()
           .padding(top = CUT_CORNER_SIZE)
       ) {
-        when (editFormType.value) {
-          EditFormType.THERAPY ->
-            TherapyEditForm(
+        when (scheduleEditorType.value) {
+          ScheduleEditorType.THERAPY ->
+            TherapyScheduleEditor(
               therapyId = therapyId,
               saveOnSuccessful = {
                 refreshTherapy()
@@ -113,16 +117,16 @@ internal fun TherapyScheduleView(
                 navigateUp()
               },
             )
-          EditFormType.MEDICINE ->
-            MedicineEditForm(
+          ScheduleEditorType.MEDICINE ->
+            MedicineScheduleEditor(
               therapyId = therapyId,
               medicineId = -1L,
-              refreshTherapyCallback = {
+              therapyOnRefresh = {
                 refreshTherapy()
               },
             )
-          EditFormType.DEAL ->
-            DealEditForm(
+          ScheduleEditorType.DEAL ->
+            DealScheduleEditor(
               therapyId = therapyId,
               dealId = -1L,
               therapyOnRefresh = {

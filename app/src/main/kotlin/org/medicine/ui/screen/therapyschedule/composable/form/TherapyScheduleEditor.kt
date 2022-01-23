@@ -1,4 +1,4 @@
-package org.medicine.ui.screen.therapyschedule.composable
+package org.medicine.ui.screen.therapyschedule.composable.form
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -13,7 +13,7 @@ import org.medicine.ui.screen.therapyform.model.TherapyFormIntent
  */
 
 @Composable
-fun TherapyEditForm(
+fun TherapyScheduleEditor(
   therapyId: Long,
   saveOnSuccessful: (Long) -> Unit,
   deleteOnSuccessful: () -> Unit,

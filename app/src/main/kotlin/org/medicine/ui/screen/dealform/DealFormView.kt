@@ -18,7 +18,7 @@ import org.medicine.ui.screen.dealform.model.DealFormViewState
  */
 
 @Composable
-fun DealFormView(
+internal fun DealFormView(
   uiState: DealFormViewState,
   dealFormOnChange: (DealFormModel) -> Unit,
   createOrSaveDeal: (Long, Long?, DealFormModel) -> Unit,

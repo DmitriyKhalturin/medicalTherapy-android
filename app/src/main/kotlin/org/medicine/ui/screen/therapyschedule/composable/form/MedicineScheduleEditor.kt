@@ -1,4 +1,4 @@
-package org.medicine.ui.screen.therapyschedule.composable
+package org.medicine.ui.screen.therapyschedule.composable.form
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -13,10 +13,10 @@ import org.medicine.ui.screen.medicineform.model.MedicineFormIntent
  */
 
 @Composable
-fun MedicineEditForm(
+fun MedicineScheduleEditor(
   therapyId: Long,
   medicineId: Long,
-  refreshTherapyCallback: () -> Unit,
+  therapyOnRefresh: () -> Unit,
 ) {
   val viewModel = hiltViewModel<MedicineFormViewModel>().apply {
     destination = Destination.MedicineForm(therapyId, medicineId)

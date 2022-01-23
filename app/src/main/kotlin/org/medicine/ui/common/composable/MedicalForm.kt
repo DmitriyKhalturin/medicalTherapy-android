@@ -1,4 +1,4 @@
-package org.medicine.ui.composable
+package org.medicine.ui.common.composable
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
  */
 
 @Composable
-fun MedicalForm(
+internal fun MedicalForm(
   fieldsCallback: @Composable ColumnScope.(Modifier) -> Unit,
   controlsCallback: @Composable ColumnScope.(Modifier) -> Unit,
 ) {

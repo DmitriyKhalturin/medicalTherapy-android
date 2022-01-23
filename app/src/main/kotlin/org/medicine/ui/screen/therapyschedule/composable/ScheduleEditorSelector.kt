@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import org.medicine.R
+import org.medicine.ui.screen.therapyschedule.composable.form.ScheduleEditorType
 import org.medicine.ui.theme.MedicalTherapyTheme
 
 /**
@@ -26,9 +27,9 @@ import org.medicine.ui.theme.MedicalTherapyTheme
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun Toolbar(
+fun ScheduleEditorSelector(
   scaffoldState: BackdropScaffoldState,
-  editFormType: MutableState<EditFormType>,
+  scheduleEditorType: MutableState<ScheduleEditorType>,
 ) {
   val coroutineScope = rememberCoroutineScope()
 
@@ -54,7 +55,7 @@ fun Toolbar(
         imageVector = Icons.Filled.Edit,
         text = "Редактировать",
       ) {
-        editFormType.value = EditFormType.THERAPY
+        scheduleEditorType.value = ScheduleEditorType.THERAPY
 
         coroutineScope.launch {
           scaffoldState.conceal()
@@ -65,7 +66,7 @@ fun Toolbar(
         painter = painterResource(id = R.drawable.ic_pills),
         text = "Медикаменты",
       ) {
-        editFormType.value = EditFormType.MEDICINE
+        scheduleEditorType.value = ScheduleEditorType.MEDICINE
 
         coroutineScope.launch {
           scaffoldState.conceal()
@@ -76,7 +77,7 @@ fun Toolbar(
         painter = painterResource(id = R.drawable.ic_event),
         text = "События",
       ) {
-        editFormType.value = EditFormType.DEAL
+        scheduleEditorType.value = ScheduleEditorType.DEAL
 
         coroutineScope.launch {
           scaffoldState.conceal()
@@ -90,11 +91,11 @@ fun Toolbar(
 @ExperimentalMaterialApi
 @Preview(showBackground = true)
 @Composable
-fun ToolbarPreview() {
+fun ScheduleEditorSelectorPreview() {
   MedicalTherapyTheme {
-    Toolbar(
+    ScheduleEditorSelector(
       scaffoldState = rememberBackdropScaffoldState(initialValue = BackdropValue.Revealed),
-      editFormType = remember { mutableStateOf(EditFormType.THERAPY) },
+      scheduleEditorType = remember { mutableStateOf(ScheduleEditorType.THERAPY) },
     )
   }
 }

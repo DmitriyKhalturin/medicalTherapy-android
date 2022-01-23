@@ -13,7 +13,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import org.medicine.R
 import org.medicine.tools.EMPTY_STRING
-import org.medicine.ui.composable.MedicalForm
+import org.medicine.ui.common.composable.MedicalForm
 import org.medicine.ui.screen.dealform.model.DealFormModel
 import org.medicine.ui.stub.data.stubDealForm
 import org.medicine.ui.theme.MedicalTherapyTheme
