@@ -15,10 +15,11 @@ import org.medicine.ui.screen.medicineform.model.MedicineFormIntent
 @Composable
 fun MedicineEditForm(
   therapyId: Long,
+  medicineId: Long,
   refreshTherapyCallback: () -> Unit,
 ) {
   val viewModel = hiltViewModel<MedicineFormViewModel>().apply {
-    destination = Destination.MedicineForm(therapyId)
+    destination = Destination.MedicineForm(therapyId, medicineId)
     obtainIntent(MedicineFormIntent.EnterScreen)
   }
 

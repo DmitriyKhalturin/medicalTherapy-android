@@ -14,6 +14,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.android.material.datepicker.MaterialDatePicker
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import org.medicine.common.exception.UnimplementedCallbackException
 import org.medicine.common.ui.setSystemUiColors
@@ -37,6 +38,11 @@ import java.time.LocalDate
  * for Medicine on 13.11.2021 6:03.
  */
 
+private typealias TherapyDateOnChange = (LocalDate) -> Unit
+
+private const val SUCCESSFUL_INFO_TIMEOUT = 1000L
+
+
 @Composable
 fun TherapyFormScreen(navController: NavController, viewModel: TherapyFormViewModel) {
   val uiState = viewModel.uiState
@@ -57,6 +63,7 @@ fun TherapyFormScreen(navController: NavController, viewModel: TherapyFormViewMo
         .setPopUpTo(Route.TherapyForm.name, inclusive = true)
         .build()
 
+      delay(SUCCESSFUL_INFO_TIMEOUT)
       navController.navigate(Destination.TherapySchedule(therapyId), options)
     },
     { throw UnimplementedCallbackException() },
@@ -67,18 +74,14 @@ fun TherapyFormScreen(navController: NavController, viewModel: TherapyFormViewMo
   }
 }
 
-private typealias TherapyDateOnChange = (LocalDate) -> Unit
-
-private const val SUCCESSFUL_INFO_TIMEOUT = 1000L
-
 @Composable
 internal fun TherapyFormView(
   uiState: TherapyFormViewState,
   therapyFormOnChange: (TherapyFormModel) -> Unit,
   createOrSaveTherapy: (Long?, TherapyFormModel) -> Unit,
   deleteTherapy: (Long) -> Unit,
-  saveOnSuccessful: (Long) -> Unit,
-  deleteOnSuccessful: () -> Unit,
+  saveOnSuccessful: suspend CoroutineScope.(Long) -> Unit,
+  deleteOnSuccessful: suspend CoroutineScope.() -> Unit,
 ) {
   val activity = LocalContext.current as AppCompatActivity
 
@@ -115,7 +118,6 @@ internal fun TherapyFormView(
         TherapySaveSuccessful(
           therapyId,
           callback = {
-            delay(SUCCESSFUL_INFO_TIMEOUT)
             saveOnSuccessful(it)
           },
         )
@@ -124,7 +126,6 @@ internal fun TherapyFormView(
         TherapyDeleteSuccessful(
           therapyId,
           callback = {
-            delay(SUCCESSFUL_INFO_TIMEOUT)
             deleteOnSuccessful()
           },
         )

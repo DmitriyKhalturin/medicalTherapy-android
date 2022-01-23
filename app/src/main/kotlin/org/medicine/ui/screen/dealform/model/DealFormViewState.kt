@@ -7,4 +7,6 @@ package org.medicine.ui.screen.dealform.model
 sealed class DealFormViewState {
   object Initial : DealFormViewState()
   data class Deal(val therapyId: Long, val dealId: Long?, val deal: DealFormModel) : DealFormViewState()
+  object SaveOnSuccessful : DealFormViewState()
+  object DeleteOnSuccessful : DealFormViewState()
 }

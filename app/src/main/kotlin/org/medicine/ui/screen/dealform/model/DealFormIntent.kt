@@ -6,4 +6,7 @@ package org.medicine.ui.screen.dealform.model
  */
 sealed class DealFormIntent {
   object EnterScreen : DealFormIntent()
+  data class FillDeal(val deal: DealFormModel) : DealFormIntent()
+  data class CreateOrSaveDeal(val therapyId: Long, val dealId: Long?, val deal: DealFormModel) : DealFormIntent()
+  data class DeleteDeal(val dealId: Long) : DealFormIntent()
 }

@@ -6,4 +6,7 @@ package org.medicine.ui.screen.medicineform.model
  */
 sealed class MedicineFormViewState {
   object Initial : MedicineFormViewState()
+  data class Medicine(val therapyId: Long, val medicineId: Long?, val medicine: MedicineFormModel) : MedicineFormViewState()
+  object SaveOnSuccessful : MedicineFormViewState()
+  object DeleteOnSuccessful : MedicineFormViewState()
 }

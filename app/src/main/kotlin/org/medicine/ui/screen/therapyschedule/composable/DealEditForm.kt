@@ -15,10 +15,11 @@ import org.medicine.ui.screen.dealform.model.DealFormIntent
 @Composable
 fun DealEditForm(
   therapyId: Long,
-  refreshTherapyCallback: () -> Unit,
+  dealId: Long,
+  therapyOnRefresh: () -> Unit,
 ) {
   val viewModel = hiltViewModel<DealFormViewModel>().apply {
-    destination = Destination.DealForm(therapyId)
+    destination = Destination.DealForm(therapyId, dealId)
     obtainIntent(DealFormIntent.EnterScreen)
   }
 
@@ -26,5 +27,10 @@ fun DealEditForm(
 
   DealFormView(
     uiState,
+    { viewModel.obtainIntent(DealFormIntent.FillDeal(it)) },
+    { _, _, dealForm -> viewModel.obtainIntent(DealFormIntent.CreateOrSaveDeal(therapyId, dealId, dealForm)) },
+    { viewModel.obtainIntent(DealFormIntent.DeleteDeal(dealId)) },
+    { therapyOnRefresh() },
+    { therapyOnRefresh() },
   )
 }

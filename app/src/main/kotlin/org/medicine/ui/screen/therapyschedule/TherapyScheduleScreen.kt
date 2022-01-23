@@ -142,6 +142,7 @@ fun TherapyScheduleView(
           EditFormType.MEDICINE ->
             MedicineEditForm(
               therapyId = therapyId,
+              medicineId = null,
               refreshTherapyCallback = {
                 refreshTherapy()
               },
@@ -149,7 +150,8 @@ fun TherapyScheduleView(
           EditFormType.DEAL ->
             DealEditForm(
               therapyId = therapyId,
-              refreshTherapyCallback = {
+              dealId = null,
+              therapyOnRefresh = {
                 refreshTherapy()
               },
             )
