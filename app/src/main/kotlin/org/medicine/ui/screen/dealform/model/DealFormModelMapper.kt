@@ -14,6 +14,7 @@ object DealFormModelMapper {
 
   fun map(entity: DealEntity) = entity.run {
     DealFormModel(
+      therapyId,
       name,
       (description ?: EMPTY_STRING),
       dateTime.toLocalDate(),
@@ -22,8 +23,9 @@ object DealFormModelMapper {
     )
   }
 
-  fun buildEmptyModel() =
+  fun emptyDealFormModel(therapyId: Long) =
     DealFormModel(
+      therapyId,
       EMPTY_STRING,
       EMPTY_STRING,
       LocalDate.now(),

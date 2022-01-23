@@ -8,6 +8,7 @@ import java.time.LocalTime
  * for MedicalTherapy on 18.01.2022 22:11.
  */
 data class DealFormModel(
+  val therapyId: Long,
   val name: String,
   val description: String,
   val date: LocalDate,

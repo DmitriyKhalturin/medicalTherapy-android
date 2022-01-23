@@ -18,7 +18,7 @@ object TherapyFormModelMapper {
     )
   }
 
-  fun buildEmptyModel() =
+  fun emptyTherapyFormModel() =
     TherapyFormModel(
       EMPTY_STRING,
       EMPTY_STRING,

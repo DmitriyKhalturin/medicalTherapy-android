@@ -18,6 +18,7 @@ object MedicineFormModelMapper {
 
   fun map(entity: MedicineEntity) = entity.run {
     MedicineFormModel(
+      therapyId,
       name,
       (description ?: EMPTY_STRING),
       type.sourceToSchedule(),
@@ -29,8 +30,9 @@ object MedicineFormModelMapper {
     )
   }
 
-  fun buildEmptyModel() =
+  fun buildEmptyModel(therapyId: Long) =
     MedicineFormModel(
+      therapyId,
       EMPTY_STRING,
       EMPTY_STRING,
       Medicine.Type.PILLS,

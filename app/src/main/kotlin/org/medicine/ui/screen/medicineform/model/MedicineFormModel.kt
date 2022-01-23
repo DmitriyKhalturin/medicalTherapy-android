@@ -9,6 +9,7 @@ import java.time.LocalTime
  * for MedicalTherapy on 18.01.2022 22:20.
  */
 data class MedicineFormModel(
+  val therapyId: Long,
   val name: String,
   val description: String,
   val type: Medicine.Type,
