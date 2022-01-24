@@ -1,4 +1,4 @@
-package org.medicine.ui.screen.therapyschedule.composable.form
+package org.medicine.ui.screen.therapyschedule.composable.editor
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>

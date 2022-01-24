@@ -1,10 +1,9 @@
-package org.medicine.ui.screen.therapyschedule.composable.form
+package org.medicine.ui.screen.therapyschedule.composable.editor
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.medicine.navigation.Destination
 import org.medicine.ui.common.model.MedicalFormIntent
-import org.medicine.ui.screen.medicineform.MedicineFormView
 import org.medicine.ui.screen.medicineform.MedicineFormViewModel
 
 /**
@@ -25,7 +24,7 @@ fun MedicineScheduleEditor(
 
   val uiState = viewModel.uiState
 
-  MedicineFormView(
+  /*MedicineFormView(
     uiState,
-  )
+  )*/
 }

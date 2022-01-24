@@ -17,7 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.medicine.R
-import org.medicine.ui.screen.therapyschedule.composable.form.ScheduleEditorType
+import org.medicine.ui.screen.therapyschedule.composable.editor.ScheduleEditorType
 import org.medicine.ui.theme.MedicalTherapyTheme
 
 /**

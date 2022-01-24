@@ -1,4 +1,4 @@
-package org.medicine.ui.screen.therapyschedule.composable.form
+package org.medicine.ui.screen.therapyschedule.composable.editor
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel

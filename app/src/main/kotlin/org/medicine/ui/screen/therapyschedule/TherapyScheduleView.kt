@@ -13,10 +13,10 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import org.medicine.schedule.MedicalTherapySchedule
 import org.medicine.ui.screen.therapyschedule.composable.ScheduleEditorSelector
-import org.medicine.ui.screen.therapyschedule.composable.form.DealScheduleEditor
-import org.medicine.ui.screen.therapyschedule.composable.form.MedicineScheduleEditor
-import org.medicine.ui.screen.therapyschedule.composable.form.ScheduleEditorType
-import org.medicine.ui.screen.therapyschedule.composable.form.TherapyScheduleEditor
+import org.medicine.ui.screen.therapyschedule.composable.editor.DealScheduleEditor
+import org.medicine.ui.screen.therapyschedule.composable.editor.MedicineScheduleEditor
+import org.medicine.ui.screen.therapyschedule.composable.editor.ScheduleEditorType
+import org.medicine.ui.screen.therapyschedule.composable.editor.TherapyScheduleEditor
 import org.medicine.ui.screen.therapyschedule.model.TherapyScheduleViewState
 
 /**
