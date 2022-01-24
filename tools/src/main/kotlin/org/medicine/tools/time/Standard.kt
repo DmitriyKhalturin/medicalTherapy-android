@@ -14,9 +14,13 @@ fun Long.toLocalDate(): LocalDate =
     .atZone(ZoneId.systemDefault())
     .toLocalDate()
 
-// TODO: refactoring this hack!
-fun LocalDate.toLong(): Long =
-  this.plusDays(1)
-    .atStartOfDay(ZoneId.systemDefault())
+fun LocalDate.toMilliseconds(): Long =
+  this.atStartOfDay(ZoneId.systemDefault())
     .toInstant()
     .toEpochMilli()
+
+private const val MILLISECONDS_IN_DAY =  24 * 60 * 60 * 1_000
+
+fun Long.plusDay(): Long = this + MILLISECONDS_IN_DAY
+
+fun Long.minusDay(): Long = this - MILLISECONDS_IN_DAY
