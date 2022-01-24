@@ -1,16 +1,9 @@
 package org.medicine.ui.screen.dealform.composable
 
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import org.medicine.R
-import org.medicine.tools.EMPTY_STRING
 import org.medicine.ui.common.composable.medicalform.MedicalClickableInput
 import org.medicine.ui.common.composable.medicalform.MedicalInput
 import org.medicine.ui.common.composable.medicalform.SkelMedicalForm
@@ -26,76 +19,56 @@ import java.util.*
  */
 
 @Composable
-fun DealFrom(
+internal fun DealFrom(
   dealId: Long?,
   deal: DealFormModel,
   nameOnChange: (String) -> Unit,
   descriptionOnChange: (String) -> Unit,
-  dateOnClick: () -> Unit,
-  timeOnClick: () -> Unit,
-  createOrSaveDealOnClick: () -> Unit,
-  deleteDealOnClick: () -> Unit,
+  dateOnChange: () -> Unit,
+  timeOnChange: () -> Unit,
+  createOrSaveDeal: () -> Unit,
+  deleteDeal: () -> Unit,
 ) {
   val dateFormatter = DateTimeFormatter.ofPattern(stringResource(R.string.dealDateFormat), Locale.getDefault())
   val timeFormatter = DateTimeFormatter.ofPattern(stringResource(R.string.timeDateFormat), Locale.getDefault())
 
   SkelMedicalForm(
-    fieldsCallback = { fieldModifier ->
-      MedicalInput(
-        fieldModifier,
-        "Наименование события",
-        deal.failedFields.name,
-        deal.name,
-        nameOnChange,
-      )
+    dealId,
+    createOrSaveDeal,
+    deleteDeal,
+  ) { fieldModifier ->
+    MedicalInput(
+      fieldModifier,
+      "Наименование события",
+      deal.failedFields.name,
+      deal.name,
+      nameOnChange,
+    )
 
-      MedicalInput(
-        fieldModifier,
-        "Информация",
-        deal.failedFields.description,
-        deal.description,
-        descriptionOnChange,
-      )
+    MedicalInput(
+      fieldModifier,
+      "Информация",
+      deal.failedFields.description,
+      deal.description,
+      descriptionOnChange,
+    )
 
-      MedicalClickableInput(
-        fieldModifier,
-        "Дата",
-        deal.failedFields.date,
-        dateFormatter.format(deal.date),
-        dateOnClick,
-      )
+    MedicalClickableInput(
+      fieldModifier,
+      "Дата",
+      deal.failedFields.date,
+      dateFormatter.format(deal.date),
+      dateOnChange,
+    )
 
-      MedicalClickableInput(
-        fieldModifier,
-        "Время",
-        deal.failedFields.time,
-        timeFormatter.format(deal.time),
-        timeOnClick,
-      )
-    },
-    controlsCallback = { controlModifier ->
-      OutlinedButton(
-        modifier = controlModifier,
-        onClick = { createOrSaveDealOnClick() }
-      ) {
-        if (dealId != null) {
-          Text(text = "Сохранить событие")
-        } else {
-          Text(text = "Создать событие")
-        }
-      }
-
-      if (dealId != null) {
-        Button(
-          modifier = controlModifier,
-          onClick = { deleteDealOnClick() }
-        ) {
-          Icon(Icons.Filled.Delete, EMPTY_STRING)
-          Text(text = "Удалить событие ")
-        }
-      }
-    },
-  )
+    MedicalClickableInput(
+      fieldModifier,
+      "Время",
+      deal.failedFields.time,
+      timeFormatter.format(deal.time),
+      timeOnChange,
+    )
+  }
 }
 
 
@@ -106,7 +79,7 @@ fun DealFormPreview() {
     DealFrom(
       dealId = null,
       deal = stubDealForm(),
-      {},{},{},{},{},{},
+      {}, {}, {}, {}, {}, {},
     )
   }
 }

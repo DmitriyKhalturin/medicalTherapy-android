@@ -4,10 +4,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
+import androidx.compose.material.Icon
+import androidx.compose.material.OutlinedButton
+import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.medicine.tools.EMPTY_STRING
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -16,8 +23,10 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 internal fun SkelMedicalForm(
+  objectId: Long?,
+  createOrSaveObject: () -> Unit,
+  deleteObject: () -> Unit,
   fieldsCallback: @Composable ColumnScope.(Modifier) -> Unit,
-  controlsCallback: @Composable ColumnScope.(Modifier) -> Unit,
 ) {
   Column(
     modifier = Modifier.padding(16.dp),
@@ -36,7 +45,30 @@ internal fun SkelMedicalForm(
         .fillMaxWidth()
         .padding(bottom = 16.dp)
 
-      controlsCallback(controlModifier)
+      OutlinedButton(
+        modifier = controlModifier,
+        onClick = {
+          createOrSaveObject()
+        }
+      ) {
+        if (objectId != null) {
+          Text(text = "Сохранить")
+        } else {
+          Text(text = "Создать")
+        }
+      }
+
+      if (objectId != null) {
+        Button(
+          modifier = controlModifier,
+          onClick = {
+            deleteObject()
+          }
+        ) {
+          Icon(Icons.Filled.Delete, EMPTY_STRING)
+          Text(text = "Удалить ")
+        }
+      }
     }
   }
 }

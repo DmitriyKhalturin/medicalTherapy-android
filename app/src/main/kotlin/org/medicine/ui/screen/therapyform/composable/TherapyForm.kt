@@ -1,16 +1,9 @@
 package org.medicine.ui.screen.therapyform.composable
 
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import org.medicine.R
-import org.medicine.tools.EMPTY_STRING
 import org.medicine.ui.common.composable.medicalform.MedicalClickableInput
 import org.medicine.ui.common.composable.medicalform.MedicalInput
 import org.medicine.ui.common.composable.medicalform.SkelMedicalForm
@@ -32,70 +25,50 @@ fun TherapyForm(
   therapy: TherapyFormModel,
   nameOnChange: (String) -> Unit,
   descriptionOnChange: (String) -> Unit,
-  startDateOnClick: () -> Unit,
-  endDateOnClick: () -> Unit,
-  createOrSaveTherapyOnClick: () -> Unit,
-  deleteTherapyOnClick: () -> Unit,
+  startDateOnChange: () -> Unit,
+  endDateOnChange: () -> Unit,
+  createOrSaveTherapy: () -> Unit,
+  deleteTherapy: () -> Unit,
 ) {
   val formatter = DateTimeFormatter.ofPattern(stringResource(R.string.therapyDateFormat), Locale.getDefault())
 
   SkelMedicalForm(
-    fieldsCallback = { fieldModifier ->
-      MedicalInput(
-        fieldModifier,
-        "Наименования террапии",
-        therapy.failedFields.name,
-        therapy.name,
-        nameOnChange,
-      )
+    therapyId,
+    createOrSaveTherapy,
+    deleteTherapy,
+  ) { fieldModifier ->
+    MedicalInput(
+      fieldModifier,
+      "Наименования террапии",
+      therapy.failedFields.name,
+      therapy.name,
+      nameOnChange,
+    )
 
-      MedicalInput(
-        fieldModifier,
-        "Информация",
-        therapy.failedFields.description,
-        therapy.description,
-        descriptionOnChange,
-      )
+    MedicalInput(
+      fieldModifier,
+      "Информация",
+      therapy.failedFields.description,
+      therapy.description,
+      descriptionOnChange,
+    )
 
-      MedicalClickableInput(
-        fieldModifier,
-        "Дата начала",
-        therapy.failedFields.date,
-        formatter.format(therapy.startDate),
-        startDateOnClick,
-      )
+    MedicalClickableInput(
+      fieldModifier,
+      "Дата начала",
+      therapy.failedFields.date,
+      formatter.format(therapy.startDate),
+      startDateOnChange,
+    )
 
-      MedicalClickableInput(
-        fieldModifier,
-        "Дата окончания",
-        therapy.failedFields.date,
-        formatter.format(therapy.endDate),
-        endDateOnClick,
-      )
-    },
-    controlsCallback = { controlModifier ->
-      OutlinedButton(
-        modifier = controlModifier,
-        onClick = { createOrSaveTherapyOnClick() }
-      ) {
-        if (therapyId != null) {
-          Text(text = "Сохранить протокол лечения")
-        } else {
-          Text(text = "Создать протокол лечения")
-        }
-      }
-
-      if (therapyId != null) {
-        Button(
-          modifier = controlModifier,
-          onClick = { deleteTherapyOnClick() }
-        ) {
-          Icon(Icons.Filled.Delete, EMPTY_STRING)
-          Text(text = "Удалить протокол лечения")
-        }
-      }
-    },
-  )
+    MedicalClickableInput(
+      fieldModifier,
+      "Дата окончания",
+      therapy.failedFields.date,
+      formatter.format(therapy.endDate),
+      endDateOnChange,
+    )
+  }
 }
 
 
