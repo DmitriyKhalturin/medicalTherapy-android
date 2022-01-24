@@ -59,7 +59,11 @@ class DealFormViewModel @Inject constructor(
   private suspend fun fetchDeal(dealId: Long? = destination.dealId) {
     val model = if (dealId != null) {
       TODO("Unimplemented repository call")
-    } else emptyDealFormModel(destination.therapyId)
+    } else {
+      val therapy = repository.getTherapy(destination.therapyId)
+
+      emptyDealFormModel(therapy)
+    }
 
     uiState = MedicalFormViewState.Object(
       dealId,

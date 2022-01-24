@@ -13,6 +13,8 @@ data class DealFormModel(
   val description: String,
   val date: LocalDate,
   val time: LocalTime,
+  val minValidDate: LocalDate,
+  val maxValidDate: LocalDate,
   val failedFields: FailedFields,
 ) {
 

@@ -4,6 +4,7 @@ import org.medicine.model.medicine.scheduleToSource
 import org.medicine.model.medicine.sourceToSchedule
 import org.medicine.schedule.data.Medicine
 import org.medicine.source.database.entity.MedicineEntity
+import org.medicine.source.database.entity.TherapyEntity
 import org.medicine.tools.EMPTY_STRING
 import org.medicine.tools.daysUntil
 import java.time.LocalDate
@@ -16,7 +17,7 @@ object MedicineFormModelMapper {
 
   private const val BETWEEN_START_END_MEDICINE_DATE = 0L
 
-  fun map(entity: MedicineEntity) = entity.run {
+  fun map(therapy: TherapyEntity, medicine: MedicineEntity) = medicine.run {
     MedicineFormModel(
       therapyId,
       name,
@@ -26,13 +27,15 @@ object MedicineFormModelMapper {
       startDate,
       endDate,
       admissionTimes,
+      therapy.startDate,
+      therapy.endDate,
       MedicineFormModel.FailedFields(),
     )
   }
 
-  fun buildEmptyModel(therapyId: Long) =
+  fun emptyMedicineFormModel(therapy: TherapyEntity) = therapy.run {
     MedicineFormModel(
-      therapyId,
+      id,
       EMPTY_STRING,
       EMPTY_STRING,
       Medicine.Type.PILLS,
@@ -40,10 +43,13 @@ object MedicineFormModelMapper {
       LocalDate.now(),
       LocalDate.now().plusDays(BETWEEN_START_END_MEDICINE_DATE),
       emptyList(),
+      startDate,
+      endDate,
       MedicineFormModel.FailedFields(),
     )
+  }
 
-  fun map(id: Long?, model: MedicineFormModel, therapyId: Long) = model.run {
+  fun map(id: Long?, medicine: MedicineFormModel, therapyId: Long) = medicine.run {
     MedicineEntity(
       (id ?: 0L),
       name,

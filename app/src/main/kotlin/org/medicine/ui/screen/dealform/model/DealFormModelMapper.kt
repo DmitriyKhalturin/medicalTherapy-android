@@ -1,6 +1,7 @@
 package org.medicine.ui.screen.dealform.model
 
 import org.medicine.source.database.entity.DealEntity
+import org.medicine.source.database.entity.TherapyEntity
 import org.medicine.tools.EMPTY_STRING
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -12,28 +13,33 @@ import java.time.LocalTime
  */
 object DealFormModelMapper {
 
-  fun map(entity: DealEntity) = entity.run {
+  fun map(therapy: TherapyEntity, deal: DealEntity) = deal.run {
     DealFormModel(
       therapyId,
       name,
       (description ?: EMPTY_STRING),
       dateTime.toLocalDate(),
       dateTime.toLocalTime(),
+      therapy.startDate,
+      therapy.endDate,
       DealFormModel.FailedFields(),
     )
   }
 
-  fun emptyDealFormModel(therapyId: Long) =
+  fun emptyDealFormModel(therapy: TherapyEntity) = therapy.run {
     DealFormModel(
-      therapyId,
+      id,
       EMPTY_STRING,
       EMPTY_STRING,
       LocalDate.now(),
       LocalTime.now(),
+      startDate,
+      endDate,
       DealFormModel.FailedFields(),
     )
+  }
 
-  fun map(id: Long?, model: DealFormModel, therapyId: Long) = model.run {
+  fun map(id: Long?, deal: DealFormModel, therapyId: Long) = deal.run {
     DealEntity(
       (id ?: 0L),
       name,

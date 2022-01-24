@@ -40,20 +40,22 @@ internal fun MedicineFormView(
     when (uiState) {
       is MedicalFormViewState.Initial -> Unit
       is MedicalFormViewState.Object -> uiState.run {
-        MedicineForm(
-          objectId,
-          `object`,
-          { medicineFormOnChange(`object`.copy(name = it)) },
-          { medicineFormOnChange(`object`.copy(description = it)) },
-          { medicineFormOnChange(`object`.copy(type = it)) },
-          { medicineFormOnChange(`object`.copy(dosage = it)) },
-          { showDatePickerDialog(activity, `object`.startDate) { medicineFormOnChange(`object`.copy(startDate = it)) } },
-          { showDatePickerDialog(activity, `object`.endDate) { medicineFormOnChange(`object`.copy(endDate = it)) } },
-          { showTimePickerDialog(activity, LocalTime.now()) { medicineFormOnChange(`object`.copy(times = `object`.times + it)) } },
-          { medicineFormOnChange(`object`.copy(times = `object`.times.exclude(it))) },
-          { createOrSaveMedicine(`object`.therapyId, objectId, `object`) },
-          { objectId?.let(deleteMedicine) },
-        )
+        `object`.run {
+          MedicineForm(
+            objectId,
+            medicine = this,
+            { medicineFormOnChange(this.copy(name = it)) },
+            { medicineFormOnChange(this.copy(description = it)) },
+            { medicineFormOnChange(this.copy(type = it)) },
+            { medicineFormOnChange(this.copy(dosage = it)) },
+            { showDatePickerDialog(activity, startDate) { medicineFormOnChange(this.copy(startDate = it)) } },
+            { showDatePickerDialog(activity, endDate) { medicineFormOnChange(this.copy(endDate = it)) } },
+            { showTimePickerDialog(activity, LocalTime.now()) { medicineFormOnChange(this.copy(times = times + it)) } },
+            { medicineFormOnChange(this.copy(times = times.exclude(it))) },
+            { createOrSaveMedicine(therapyId, objectId, this) },
+            { objectId?.let(deleteMedicine) },
+          )
+        }
       }
       is MedicalFormViewState.SaveOnSuccessful -> uiState.run {
         ObjectSaveSuccessful(

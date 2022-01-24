@@ -57,13 +57,16 @@ fun stubTherapyForm(): TherapyFormModel {
 }
 
 fun stubDealForm(): DealFormModel {
+  val today = LocalDate.now()
 
   return DealFormModel(
     therapyId = -1L,
     name = "Встреча с врачом.",
     EMPTY_STRING,
-    LocalDate.now(),
+    today,
     LocalTime.now(),
+    today,
+    today,
     DealFormModel.FailedFields(description = true)
   )
 }
