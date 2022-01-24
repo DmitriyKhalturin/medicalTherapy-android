@@ -45,7 +45,7 @@ internal fun DealFormView(
             deal = this,
             { dealFormOnChange(this.copy(name = it)) },
             { dealFormOnChange(this.copy(description = it)) },
-            { showDatePickerDialog(activity, date, minValidDate, maxValidDate) { dealFormOnChange(this.copy(date = it)) } },
+            { showDatePickerDialog(activity, date, minValidInclusiveDate, maxValidInclusiveDate) { dealFormOnChange(this.copy(date = it)) } },
             { showTimePickerDialog(activity, time) { dealFormOnChange(this.copy(time = it)) } },
             { createOrSaveDeal(therapyId, objectId, this) },
             { objectId?.let(deleteDeal) },

@@ -15,15 +15,15 @@ import java.time.LocalTime
  * for MedicalTherapy on 23.01.2022 21:52.
  */
 
-internal fun showDatePickerDialog(activity: AppCompatActivity, date: LocalDate, minValidDate: LocalDate? = null, maxValidDate: LocalDate? = null, callback: (LocalDate) -> Unit) {
+internal fun showDatePickerDialog(activity: AppCompatActivity, date: LocalDate, minValidInclusiveDate: LocalDate? = null, maxValidInclusiveDate: LocalDate? = null, callback: (LocalDate) -> Unit) {
   val constraints = CalendarConstraints.Builder()
   val validators = mutableListOf<CalendarConstraints.DateValidator>()
 
-  minValidDate?.let {
+  minValidInclusiveDate?.let {
     validators.add(DateValidatorPointForward.from(it.toMilliseconds()))
   }
 
-  maxValidDate?.let {
+  maxValidInclusiveDate?.let {
     validators.add( DateValidatorPointBackward.before(it.toMilliseconds()))
   }
 

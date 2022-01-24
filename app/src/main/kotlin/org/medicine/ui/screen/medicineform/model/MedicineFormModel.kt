@@ -17,8 +17,8 @@ data class MedicineFormModel(
   val startDate: LocalDate,
   val endDate: LocalDate,
   val times: List<LocalTime>,
-  val minValidDate: LocalDate,
-  val maxValidDate: LocalDate,
+  val minValidInclusiveDate: LocalDate,
+  val maxValidInclusiveDate: LocalDate,
   val failedFields: FailedFields,
 ) {
 
