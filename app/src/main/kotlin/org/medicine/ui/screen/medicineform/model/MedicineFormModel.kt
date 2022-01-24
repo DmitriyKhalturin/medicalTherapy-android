@@ -25,13 +25,11 @@ data class MedicineFormModel(
   data class FailedFields(
     val name: Boolean = false,
     val description: Boolean = false,
-    val dosage: Boolean = false,
-    val startDate: Boolean = false,
-    val endDate: Boolean = false,
+    val date: Boolean = false,
     val times: Boolean = false,
   ) {
 
     val has: Boolean
-      get() = name || description || dosage || startDate || endDate || times
+      get() = name || description || date || times
   }
 }

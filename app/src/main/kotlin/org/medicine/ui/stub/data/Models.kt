@@ -1,7 +1,9 @@
 package org.medicine.ui.stub.data
 
+import org.medicine.schedule.data.Medicine
 import org.medicine.tools.EMPTY_STRING
 import org.medicine.ui.screen.dealform.model.DealFormModel
+import org.medicine.ui.screen.medicineform.model.MedicineFormModel
 import org.medicine.ui.screen.overview.model.TherapyModel
 import org.medicine.ui.screen.therapyform.model.TherapyFormModel
 import java.time.LocalDate
@@ -68,5 +70,25 @@ fun stubDealForm(): DealFormModel {
     today,
     today,
     DealFormModel.FailedFields(description = true)
+  )
+}
+
+fun stubMedicineForm(): MedicineFormModel {
+  val today = LocalDate.now()
+  val afterThreeDays = today.plusDays(3)
+  val now = LocalTime.now()
+
+  return MedicineFormModel(
+    therapyId = -1L,
+    name = "Лекарство",
+    EMPTY_STRING,
+    Medicine.Type.PILLS,
+    EMPTY_STRING,
+    today,
+    afterThreeDays,
+    listOf(now, now.plusHours(3), now.minusHours(2)),
+    today,
+    afterThreeDays,
+    MedicineFormModel.FailedFields(description = true)
   )
 }
