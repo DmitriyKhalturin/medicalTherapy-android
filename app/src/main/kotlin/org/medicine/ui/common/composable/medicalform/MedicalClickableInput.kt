@@ -29,7 +29,7 @@ internal fun MedicalClickableInput(
         onClick()
       },
     value = value,
-    label = { Text(label) },
+    label = { Text(text = label) },
     isError = isError,
     onValueChange = {},
     enabled = false,

@@ -22,7 +22,7 @@ fun ApplicationInfoScreen(viewModel: ApplicationInfoViewModel) {
     )
 
   Text(
-    modifier = Modifier.fillMaxSize(),
     text = "Описание программы. Далее вставим фич-реквестре.",
+    modifier = Modifier.fillMaxSize(),
   )
 }

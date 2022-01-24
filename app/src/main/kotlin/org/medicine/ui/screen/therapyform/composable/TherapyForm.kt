@@ -30,7 +30,7 @@ fun TherapyForm(
   createOrSaveTherapy: () -> Unit,
   deleteTherapy: () -> Unit,
 ) {
-  val formatter = DateTimeFormatter.ofPattern(stringResource(R.string.therapyDateFormat), Locale.getDefault())
+  val dateFormatter = DateTimeFormatter.ofPattern(stringResource(R.string.therapyDateFormat), Locale.getDefault())
 
   SkelMedicalForm(
     therapyId,
@@ -57,7 +57,7 @@ fun TherapyForm(
       fieldModifier,
       "Дата начала",
       therapy.failedFields.date,
-      formatter.format(therapy.startDate),
+      dateFormatter.format(therapy.startDate),
       startDateOnChange,
     )
 
@@ -65,7 +65,7 @@ fun TherapyForm(
       fieldModifier,
       "Дата окончания",
       therapy.failedFields.date,
-      formatter.format(therapy.endDate),
+      dateFormatter.format(therapy.endDate),
       endDateOnChange,
     )
   }
