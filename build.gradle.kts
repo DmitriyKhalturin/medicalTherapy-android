@@ -25,6 +25,13 @@ subprojects {
     mavenCentral()
   }
 
+  tasks {
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>{
+      kotlinOptions {
+        jvmTarget = "1.8" }
+    }
+  }
+
   afterEvaluate {
     val android = properties["android"]
     val dependencies = properties["dependencies"]
@@ -43,7 +50,9 @@ subprojects {
       buildTypes {
         getByName("release") {
           isMinifyEnabled = true
-          // isShrinkResources = true
+          if (android is com.android.build.gradle.AppExtension) {
+            isShrinkResources = true
+          }
           proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
       }
@@ -54,8 +63,6 @@ subprojects {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
       }
-
-      // kotlinOptions.jvmTarget = "1.8"
     }
 
     (dependencies as DependencyHandler).apply {
