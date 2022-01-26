@@ -8,13 +8,13 @@ buildscript {
   }
 
   dependencies {
-    classpath("com.android.tools.build:gradle:7.1.0")
-    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
+    classpath("com.android.tools.build:gradle:${Version.gradle}")
+    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Version.kotlin}")
 
     // NOTE: Do not place your application dependencies here; they belong
     // in the individual module build.gradle files
 
-    classpath("com.google.dagger:hilt-android-gradle-plugin:2.40.2")
+    classpath("com.google.dagger:hilt-android-gradle-plugin:${Version.hilt}")
   }
 }
 
@@ -29,7 +29,7 @@ subprojects {
     val android = properties["android"]
     val dependencies = properties["dependencies"]
 
-    (android as? com.android.build.gradle.BaseExtension)?.apply {
+    (android as com.android.build.gradle.BaseExtension).apply {
       setCompileSdkVersion(Version.compileSdk)
       buildToolsVersion = Version.buildTools
 

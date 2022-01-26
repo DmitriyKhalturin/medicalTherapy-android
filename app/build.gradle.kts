@@ -31,8 +31,6 @@ android {
 dependencies {
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:${Version.desugarJdk}")
 
-  implementation("org.jetbrains.kotlin:kotlin-stdlib:${Version.kotlin}")
-  implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Version.kotlin}")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutines}")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.coroutines}")
 
@@ -45,7 +43,7 @@ dependencies {
 
   implementation("androidx.activity:activity-compose:${Version.activityCompose}")
   implementation("androidx.navigation:navigation-compose:${Version.navigationCompose}")
-  implementation("androidx.constraintlayout:constraintlayout-compose:${Version.constraintlayoutCompose}")
+   implementation("androidx.constraintlayout:constraintlayout-compose:${Version.constraintlayoutCompose}")
   implementation("androidx.compose.material:material:${Version.compose}")
   implementation("androidx.compose.material:material-icons-extended:${Version.compose}")
   implementation("androidx.compose.ui:ui:${Version.compose}")
