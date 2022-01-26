@@ -9,8 +9,8 @@ plugins {
 android {
 
   defaultConfig {
-    versionCode = 1
-    versionName = "1.0.0"
+    versionCode = Version.versionCode
+    versionName = Version.versionName
   }
 
   buildFeatures {
@@ -24,34 +24,27 @@ android {
   packagingOptions {
     resources.excludes.add("/META-INF/{AL2.0,LGPL2.1}")
   }
-
-  kotlinOptions.jvmTarget = "1.8"
 }
 
 dependencies {
-  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:${Version.desugarJdk}")
-
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutines}")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.coroutines}")
-
   implementation("androidx.core:core-ktx:${Version.coreKtx}")
+
+  inject(Dependency.coroutine)
 
   implementation("androidx.appcompat:appcompat:${Version.appCompat}")
   implementation("com.google.android.material:material:${Version.material}")
   implementation("com.google.accompanist:accompanist-systemuicontroller:${Version.systemUIController}")
   implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Version.lifecycle}")
 
-  implementation("androidx.activity:activity-compose:${Version.activityCompose}")
-  implementation("androidx.navigation:navigation-compose:${Version.navigationCompose}")
-   implementation("androidx.constraintlayout:constraintlayout-compose:${Version.constraintlayoutCompose}")
-  implementation("androidx.compose.material:material:${Version.compose}")
-  implementation("androidx.compose.material:material-icons-extended:${Version.compose}")
-  implementation("androidx.compose.ui:ui:${Version.compose}")
-  implementation("androidx.compose.ui:ui-tooling-preview:${Version.compose}")
-  debugImplementation("androidx.compose.ui:ui-tooling:${Version.compose}")
+  inject(Dependency.compose)
 
-  implementation("com.google.dagger:hilt-android:${Version.hilt}")
-  kapt("com.google.dagger:hilt-compiler:${Version.hilt}")
+  implementation("androidx.activity:activity-compose:${Version.activityCompose}")
+  implementation("androidx.constraintlayout:constraintlayout-compose:${Version.constraintlayoutCompose}")
+  implementation("androidx.compose.material:material-icons-extended:${Version.compose}")
+
+  inject(Dependency.hilt)
+
+  implementation("androidx.navigation:navigation-compose:${Version.navigationCompose}")
   implementation("androidx.hilt:hilt-navigation-compose:${Version.hiltNavigationCompose}")
 
   implementation(project(":schedule"))
