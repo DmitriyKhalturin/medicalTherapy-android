@@ -30,11 +30,11 @@ object Version {
   const val systemUIController = "0.17.0"
   const val lifecycle = "2.4.0"
 
+  const val compose = "1.1.0-rc01"
   const val activityCompose = "1.4.0"
+  const val constraintlayoutCompose = "1.0.0"
   const val navigationCompose = "2.4.0-rc01"
   const val hiltNavigationCompose = "1.0.0-rc01"
-  const val constraintlayoutCompose = "1.0.0"
-  const val compose = "1.1.0-rc01"
 
   const val persistentRoom = "2.4.1"
 

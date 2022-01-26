@@ -37,6 +37,8 @@ subprojects {
     val dependencies = properties["dependencies"]
 
     (android as com.android.build.gradle.BaseExtension).apply {
+      val isApplicationModule = android is com.android.build.gradle.AppExtension
+
       setCompileSdkVersion(Version.compileSdk)
       buildToolsVersion = Version.buildTools
 
@@ -44,13 +46,18 @@ subprojects {
         minSdk = Version.minSdk
         targetSdk = Version.targetSdk
 
+        if (isApplicationModule) {
+          versionCode = Version.versionCode
+          versionName = Version.versionName
+        }
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
       }
 
       buildTypes {
         getByName("release") {
           isMinifyEnabled = true
-          if (android is com.android.build.gradle.AppExtension) {
+          if (isApplicationModule) {
             isShrinkResources = true
           }
           proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")

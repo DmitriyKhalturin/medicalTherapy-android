@@ -8,11 +8,6 @@ plugins {
 
 android {
 
-  defaultConfig {
-    versionCode = Version.versionCode
-    versionName = Version.versionName
-  }
-
   buildFeatures {
     compose = true
   }
