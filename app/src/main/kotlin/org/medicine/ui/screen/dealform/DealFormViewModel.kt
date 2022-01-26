@@ -1,17 +1,13 @@
 package org.medicine.ui.screen.dealform
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.medicine.common.exception.UnimplementedViewStateException
-import org.medicine.common.viewmodel.IntentHandler
 import org.medicine.navigation.Destination
-import org.medicine.navigation.viewmodel.NavigationViewModel
 import org.medicine.source.repository.MedicalTherapyRepository
 import org.medicine.tools.isEmptyOrBlank
 import org.medicine.ui.common.model.MedicalFormIntent
 import org.medicine.ui.common.model.MedicalFormViewState
+import org.medicine.ui.common.viewmodel.MedicalFormViewModel
 import org.medicine.ui.screen.dealform.model.DealFormModel
 import org.medicine.ui.screen.dealform.model.DealFormModelMapper.emptyDealFormModel
 import javax.inject.Inject
@@ -23,20 +19,21 @@ import javax.inject.Inject
 @HiltViewModel
 class DealFormViewModel @Inject constructor(
   private val repository: MedicalTherapyRepository,
-) : NavigationViewModel<Destination.DealForm>(), IntentHandler<MedicalFormIntent<DealFormModel>> {
+) : MedicalFormViewModel<Destination.DealForm, DealFormModel>() {
 
-  var uiState by mutableStateOf<MedicalFormViewState<DealFormModel>>(MedicalFormViewState.Initial())
-    private set
-
-  override fun obtainIntent(intent: MedicalFormIntent<DealFormModel>) {
-    launch {
-      when (val state = uiState) {
-        is MedicalFormViewState.Initial -> reduce(state, intent)
-        is MedicalFormViewState.Object -> reduce(state, intent)
-        else -> throw UnimplementedViewStateException(intent, state)
-      }
-    }
+  override suspend fun enterScreen(state: MedicalFormViewState<DealFormModel>) {
+    fetchDeal()
   }
+
+  override suspend fun fillForm(state: MedicalFormViewState<DealFormModel>, intent: MedicalFormIntent<DealFormModel>) {
+  }
+
+  override suspend fun createOrSaveObject(state: MedicalFormViewState<DealFormModel>, intent: MedicalFormIntent<DealFormModel>) {
+  }
+
+  override suspend fun deleteObject(state: MedicalFormViewState<DealFormModel>, intent: MedicalFormIntent<DealFormModel>) {
+  }
+
 
   private suspend fun reduce(state: MedicalFormViewState.Initial<DealFormModel>, intent: MedicalFormIntent<DealFormModel>) {
     when (intent) {
