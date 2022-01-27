@@ -46,6 +46,5 @@ dependencies {
   implementation(project(":source"))
   implementation(project(":tools"))
 
-  testImplementation("junit:junit:4.13.2")
-  testImplementation("androidx.test:core:1.4.0")
+  inject(Dependency.junitTest)
 }
