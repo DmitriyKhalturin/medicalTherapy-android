@@ -4,10 +4,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.medicine.common.viewmodel.IntentHandler
 import org.medicine.navigation.Destination
 import org.medicine.navigation.viewmodel.NavigationViewModel
 import org.medicine.source.repository.MedicalTherapyRepository
+import org.medicine.tools.viewmodel.IntentHandler
 import org.medicine.ui.screen.overview.model.OverviewIntent
 import org.medicine.ui.screen.overview.model.OverviewModelMapper.map
 import org.medicine.ui.screen.overview.model.OverviewViewState

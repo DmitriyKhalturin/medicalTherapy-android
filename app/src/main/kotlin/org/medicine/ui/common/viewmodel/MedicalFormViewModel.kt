@@ -3,9 +3,9 @@ package org.medicine.ui.common.viewmodel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import org.medicine.common.viewmodel.IntentHandler
 import org.medicine.navigation.Destination
 import org.medicine.navigation.viewmodel.NavigationViewModel
+import org.medicine.tools.viewmodel.IntentHandler
 import org.medicine.ui.common.model.MedicalFormIntent
 import org.medicine.ui.common.model.MedicalFormViewState
 

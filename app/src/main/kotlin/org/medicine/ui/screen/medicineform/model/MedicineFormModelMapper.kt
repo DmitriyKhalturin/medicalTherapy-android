@@ -6,7 +6,7 @@ import org.medicine.schedule.data.Medicine
 import org.medicine.source.database.entity.MedicineEntity
 import org.medicine.source.database.entity.TherapyEntity
 import org.medicine.tools.EMPTY_STRING
-import org.medicine.tools.daysUntil
+import org.medicine.tools.time.daysUntil
 import java.time.LocalDate
 
 /**

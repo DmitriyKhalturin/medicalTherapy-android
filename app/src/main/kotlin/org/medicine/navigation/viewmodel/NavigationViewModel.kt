@@ -4,9 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import dagger.hilt.android.qualifiers.ApplicationContext
-import org.medicine.common.viewmodel.BaseViewModel
 import org.medicine.navigation.Destination
 import org.medicine.navigation.properties.DestinationProperty
+import org.medicine.tools.viewmodel.BaseViewModel
 import javax.inject.Inject
 
 /**
