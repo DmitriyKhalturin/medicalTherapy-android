@@ -1,0 +1,15 @@
+[submodule "buildSrc"]
+	path = buildSrc
+	url = dmitriykhalturin.github.com:DmitriyKhalturin/buildSrc.git
+
+[submodule "WearTools"]
+	path = WearTools
+	url = dmitriykhalturin.github.com:DmitriyKhalturin/WearTools.git
+
+[submodule "MedicalTherapy-Schedule"]
+	path = MedicalTherapy-Schedule
+	url = dmitriykhalturin.github.com:DmitriyKhalturin/MedicalTherapy-Schedule.git
+
+[submodule "MedicalTherapy-Source"]
+	path = MedicalTherapy-Source
+	url = dmitriykhalturin.github.com:DmitriyKhalturin/MedicalTherapy-Source.git
