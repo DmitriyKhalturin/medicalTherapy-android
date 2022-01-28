@@ -1,15 +1,12 @@
 package org.medicine.ui.screen.medicineform
 
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.medicine.common.exception.UnimplementedViewStateException
 import org.medicine.navigation.Destination
 import org.medicine.source.repository.MedicalTherapyRepository
 import org.medicine.tools.isEmptyOrBlank
-import org.medicine.ui.common.model.MedicalFormIntent
 import org.medicine.ui.common.model.MedicalFormViewState
 import org.medicine.ui.common.viewmodel.MedicalFormViewModel
 import org.medicine.ui.screen.medicineform.model.MedicineFormModel
-import org.medicine.ui.screen.medicineform.model.MedicineFormModelMapper
 import javax.inject.Inject
 
 /**
@@ -28,7 +25,7 @@ class MedicineFormViewModel @Inject constructor(
     } else {
       val therapy = repository.getTherapy(destination.therapyId)
 
-      MedicineFormModelMapper.emptyMedicineFormModel(therapy)
+      MedicineFormModel.empty(therapy)
     }
 
     uiState = MedicalFormViewState.Object(

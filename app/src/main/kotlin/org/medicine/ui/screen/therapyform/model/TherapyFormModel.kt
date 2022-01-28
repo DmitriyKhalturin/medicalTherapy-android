@@ -1,5 +1,6 @@
 package org.medicine.ui.screen.therapyform.model
 
+import org.medicine.tools.EMPTY_STRING
 import java.time.LocalDate
 
 /**
@@ -13,6 +14,20 @@ data class TherapyFormModel(
   val endDate: LocalDate,
   val failedFields: FailedFields,
 ) {
+
+  companion object {
+
+    private const val BETWEEN_START_END_THERAPY_DATE = 7L
+
+    fun empty() =
+      TherapyFormModel(
+        EMPTY_STRING,
+        EMPTY_STRING,
+        LocalDate.now(),
+        LocalDate.now().plusDays(BETWEEN_START_END_THERAPY_DATE),
+        FailedFields(),
+      )
+  }
 
   data class FailedFields(
     val name: Boolean = false,

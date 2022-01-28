@@ -1,5 +1,7 @@
 package org.medicine.ui.screen.dealform.model
 
+import org.medicine.source.database.entity.TherapyEntity
+import org.medicine.tools.EMPTY_STRING
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -17,6 +19,22 @@ data class DealFormModel(
   val maxValidInclusiveDate: LocalDate,
   val failedFields: FailedFields,
 ) {
+
+  companion object {
+
+    fun empty(therapy: TherapyEntity) = therapy.run {
+      DealFormModel(
+        id,
+        EMPTY_STRING,
+        EMPTY_STRING,
+        LocalDate.now(),
+        LocalTime.now(),
+        startDate,
+        endDate,
+        FailedFields(),
+      )
+    }
+  }
 
   data class FailedFields(
     val name: Boolean = false,

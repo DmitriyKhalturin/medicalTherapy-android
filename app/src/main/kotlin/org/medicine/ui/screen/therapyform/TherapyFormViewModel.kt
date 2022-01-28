@@ -1,15 +1,12 @@
 package org.medicine.ui.screen.therapyform
 
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.medicine.common.exception.UnimplementedViewStateException
 import org.medicine.navigation.Destination
 import org.medicine.source.repository.MedicalTherapyRepository
 import org.medicine.tools.isEmptyOrBlank
-import org.medicine.ui.common.model.MedicalFormIntent
 import org.medicine.ui.common.model.MedicalFormViewState
 import org.medicine.ui.common.viewmodel.MedicalFormViewModel
 import org.medicine.ui.screen.therapyform.model.TherapyFormModel
-import org.medicine.ui.screen.therapyform.model.TherapyFormModelMapper.emptyTherapyFormModel
 import org.medicine.ui.screen.therapyform.model.TherapyFormModelMapper.map
 import javax.inject.Inject
 
@@ -24,11 +21,11 @@ class TherapyFormViewModel @Inject constructor(
 
   override suspend fun fetchObject() {
     val therapyId: Long? = destination.therapyId
-    val model =
-      if (therapyId != null)
-        map(repository.getTherapy(therapyId))
-      else
-        emptyTherapyFormModel()
+    val model = if (therapyId != null) {
+      map(repository.getTherapy(therapyId))
+    } else {
+      TherapyFormModel.empty()
+    }
 
     uiState = MedicalFormViewState.Object(
       therapyId,

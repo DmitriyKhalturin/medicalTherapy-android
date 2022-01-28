@@ -3,9 +3,7 @@ package org.medicine.ui.screen.dealform.model
 import org.medicine.source.database.entity.DealEntity
 import org.medicine.source.database.entity.TherapyEntity
 import org.medicine.tools.EMPTY_STRING
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -22,19 +20,6 @@ object DealFormModelMapper {
       dateTime.toLocalTime(),
       therapy.startDate,
       therapy.endDate,
-      DealFormModel.FailedFields(),
-    )
-  }
-
-  fun emptyDealFormModel(therapy: TherapyEntity) = therapy.run {
-    DealFormModel(
-      id,
-      EMPTY_STRING,
-      EMPTY_STRING,
-      LocalDate.now(),
-      LocalTime.now(),
-      startDate,
-      endDate,
       DealFormModel.FailedFields(),
     )
   }

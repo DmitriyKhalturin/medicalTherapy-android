@@ -1,6 +1,8 @@
 package org.medicine.ui.screen.medicineform.model
 
 import org.medicine.schedule.data.Medicine
+import org.medicine.source.database.entity.TherapyEntity
+import org.medicine.tools.EMPTY_STRING
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -21,6 +23,27 @@ data class MedicineFormModel(
   val maxValidInclusiveDate: LocalDate,
   val failedFields: FailedFields,
 ) {
+
+  companion object {
+
+    private const val BETWEEN_START_END_MEDICINE_DATE = 0L
+
+    fun empty(therapy: TherapyEntity) = therapy.run {
+      MedicineFormModel(
+        id,
+        EMPTY_STRING,
+        EMPTY_STRING,
+        Medicine.Type.PILLS,
+        EMPTY_STRING,
+        LocalDate.now(),
+        LocalDate.now().plusDays(BETWEEN_START_END_MEDICINE_DATE),
+        emptyList(),
+        startDate,
+        endDate,
+        FailedFields(),
+      )
+    }
+  }
 
   data class FailedFields(
     val name: Boolean = false,
