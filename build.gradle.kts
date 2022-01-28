@@ -50,8 +50,6 @@ subprojects {
           versionCode = Version.versionCode
           versionName = Version.versionName
         }
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
       }
 
       buildTypes {
