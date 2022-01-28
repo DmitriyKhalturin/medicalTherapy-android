@@ -24,9 +24,9 @@ object DealFormModelMapper {
     )
   }
 
-  fun map(id: Long?, deal: DealFormModel, therapyId: Long) = deal.run {
+  fun map(dealId: Long?, deal: DealFormModel) = deal.run {
     DealEntity(
-      (id ?: 0L),
+      (dealId ?: 0L),
       name,
       description,
       LocalDateTime.of(date, time),

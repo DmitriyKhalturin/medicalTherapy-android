@@ -29,7 +29,7 @@ object MedicineFormModelMapper {
     )
   }
 
-  fun map(id: Long?, medicine: MedicineFormModel, therapyId: Long) = medicine.run {
+  fun map(id: Long?, medicine: MedicineFormModel) = medicine.run {
     MedicineEntity(
       (id ?: 0L),
       name,

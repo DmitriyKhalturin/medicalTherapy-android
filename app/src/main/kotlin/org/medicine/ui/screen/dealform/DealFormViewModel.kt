@@ -7,6 +7,7 @@ import org.medicine.tools.isEmptyOrBlank
 import org.medicine.ui.common.model.MedicalFormViewState
 import org.medicine.ui.common.viewmodel.MedicalFormViewModel
 import org.medicine.ui.screen.dealform.model.DealFormModel
+import org.medicine.ui.screen.dealform.model.DealFormModelMapper.map
 import javax.inject.Inject
 
 /**
@@ -20,17 +21,16 @@ class DealFormViewModel @Inject constructor(
 
   override suspend fun fetchObject() {
     val dealId: Long? = destination.dealId
-    val model = if (dealId != null) {
-      TODO("Unimplemented repository call")
+    val therapyEntity = repository.getTherapy(destination.therapyId)
+    val dealFormModel = if (dealId != null) {
+      map(therapyEntity, repository.getDeal(dealId))
     } else {
-      val therapy = repository.getTherapy(destination.therapyId)
-
-      DealFormModel.empty(therapy)
+      DealFormModel.empty(therapyEntity)
     }
 
     uiState = MedicalFormViewState.Object(
       dealId,
-      model,
+      dealFormModel,
     )
   }
 
@@ -50,15 +50,20 @@ class DealFormViewModel @Inject constructor(
         model.copy(failedFields = failedFields),
       )
     } else {
-      TODO("Unimplemented repository call")
-      val entityId = -1L
+      val dealEntity = map(id, model)
+      val dealEntityId = if (id != null) {
+        repository.updateDeal(dealEntity)
+          id
+        } else {
+          repository.createDeal(dealEntity)
+      }
 
-      uiState = MedicalFormViewState.SaveOnSuccessful(entityId)
+      uiState = MedicalFormViewState.SaveOnSuccessful(dealEntityId)
     }
   }
 
   override suspend fun deleteObject(id: Long) {
-    TODO("Unimplemented repository call")
+    repository.deleteDeal(id)
 
     uiState = MedicalFormViewState.DeleteOnSuccessful(id)
   }

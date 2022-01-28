@@ -21,7 +21,7 @@ class TherapyFormViewModel @Inject constructor(
 
   override suspend fun fetchObject() {
     val therapyId: Long? = destination.therapyId
-    val model = if (therapyId != null) {
+    val therapyFormModel = if (therapyId != null) {
       map(repository.getTherapy(therapyId))
     } else {
       TherapyFormModel.empty()
@@ -29,7 +29,7 @@ class TherapyFormViewModel @Inject constructor(
 
     uiState = MedicalFormViewState.Object(
       therapyId,
-      model,
+      therapyFormModel,
     )
   }
 
@@ -50,15 +50,15 @@ class TherapyFormViewModel @Inject constructor(
         model.copy(failedFields = failedFields),
       )
     } else {
-      val entity = map(id, model)
-      val entityId = if (id != null) {
-        repository.updateTherapy(entity)
+      val therapyEntity = map(id, model)
+      val therapyEntityId = if (id != null) {
+        repository.updateTherapy(therapyEntity)
         id
       } else {
-        repository.createTherapy(entity)
+        repository.createTherapy(therapyEntity)
       }
 
-      uiState = MedicalFormViewState.SaveOnSuccessful(entityId)
+      uiState = MedicalFormViewState.SaveOnSuccessful(therapyEntityId)
     }
   }
 
