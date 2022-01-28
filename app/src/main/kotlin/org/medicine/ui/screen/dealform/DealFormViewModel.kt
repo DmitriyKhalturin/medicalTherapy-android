@@ -21,39 +21,8 @@ class DealFormViewModel @Inject constructor(
   private val repository: MedicalTherapyRepository,
 ) : MedicalFormViewModel<Destination.DealForm, DealFormModel>() {
 
-  override suspend fun enterScreen(state: MedicalFormViewState<DealFormModel>) {
-    fetchDeal()
-  }
-
-  override suspend fun fillForm(state: MedicalFormViewState<DealFormModel>, intent: MedicalFormIntent<DealFormModel>) {
-  }
-
-  override suspend fun createOrSaveObject(state: MedicalFormViewState<DealFormModel>, intent: MedicalFormIntent<DealFormModel>) {
-  }
-
-  override suspend fun deleteObject(state: MedicalFormViewState<DealFormModel>, intent: MedicalFormIntent<DealFormModel>) {
-  }
-
-
-  private suspend fun reduce(state: MedicalFormViewState.Initial<DealFormModel>, intent: MedicalFormIntent<DealFormModel>) {
-    when (intent) {
-      is MedicalFormIntent.EnterScreen -> fetchDeal()
-      else -> throw UnimplementedViewStateException(intent, state)
-    }
-  }
-
-  private suspend fun reduce(state: MedicalFormViewState.Object<DealFormModel>, intent: MedicalFormIntent<DealFormModel>) {
-    when (intent) {
-      is MedicalFormIntent.EnterScreen -> Unit
-      is MedicalFormIntent.FillForm -> fillDeal(intent.`object`)
-      is MedicalFormIntent.CreateOrSaveObject -> createOrSaveDeal(intent.objectId, intent.`object`)
-      is MedicalFormIntent.DeleteObject -> deleteDeal(intent.objectId)
-      // else -> throw UnimplementedViewStateException(intent, state)
-    }
-  }
-
-
-  private suspend fun fetchDeal(dealId: Long? = destination.dealId) {
+  override suspend fun fetchObject() {
+    val dealId: Long? = destination.dealId
     val model = if (dealId != null) {
       TODO("Unimplemented repository call")
     } else {
@@ -68,20 +37,20 @@ class DealFormViewModel @Inject constructor(
     )
   }
 
-  private fun fillDeal(deal: DealFormModel) {
-    uiState = MedicalFormViewState.Object(destination.dealId, deal)
+  override suspend fun fillFormModel(model: DealFormModel) {
+    uiState = MedicalFormViewState.Object(destination.dealId, model)
   }
 
-  private suspend fun createOrSaveDeal(dealId: Long?, deal: DealFormModel) {
+  override suspend fun createOrSaveObject(id: Long?, model: DealFormModel) {
     val failedFields = DealFormModel.FailedFields(
-      deal.name.isEmptyOrBlank(),
-      deal.description.isEmptyOrBlank(),
+      model.name.isEmptyOrBlank(),
+      model.description.isEmptyOrBlank(),
     )
 
     if (failedFields.has) {
       uiState = MedicalFormViewState.Object(
-        dealId,
-        deal.copy(failedFields = failedFields),
+        id,
+        model.copy(failedFields = failedFields),
       )
     } else {
       TODO("Unimplemented repository call")
@@ -91,9 +60,9 @@ class DealFormViewModel @Inject constructor(
     }
   }
 
-  private suspend fun deleteDeal(dealId: Long) {
+  override suspend fun deleteObject(id: Long) {
     TODO("Unimplemented repository call")
 
-    uiState = MedicalFormViewState.DeleteOnSuccessful(dealId)
+    uiState = MedicalFormViewState.DeleteOnSuccessful(id)
   }
 }

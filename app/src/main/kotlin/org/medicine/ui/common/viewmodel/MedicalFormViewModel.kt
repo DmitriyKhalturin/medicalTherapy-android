@@ -3,6 +3,7 @@ package org.medicine.ui.common.viewmodel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import org.medicine.common.exception.UnimplementedViewStateException
 import org.medicine.navigation.Destination
 import org.medicine.navigation.viewmodel.NavigationViewModel
 import org.medicine.tools.viewmodel.IntentHandler
@@ -23,19 +24,41 @@ abstract class MedicalFormViewModel<D: Destination, M: Any> : NavigationViewMode
       val state = uiState
 
       when (intent) {
-        is MedicalFormIntent.EnterScreen -> enterScreen(state)
-        is MedicalFormIntent.FillForm -> fillForm(state, intent)
-        is MedicalFormIntent.CreateOrSaveObject -> createOrSaveObject(state, intent)
-        is MedicalFormIntent.DeleteObject -> deleteObject(state, intent)
+        is MedicalFormIntent.EnterScreen -> handleEnterScreen(state)
+        is MedicalFormIntent.FillForm -> handleFillForm(state, intent)
+        is MedicalFormIntent.CreateOrSaveObject -> handleCreateOrSaveObject(state, intent)
+        is MedicalFormIntent.DeleteObject -> handleDeleteObject(state, intent)
       }
     }
   }
 
-  abstract suspend fun enterScreen(state: MedicalFormViewState<M>)
+  protected suspend fun handleEnterScreen(state: MedicalFormViewState<M>) {
+    fetchObject()
+  }
 
-  abstract suspend fun fillForm(state: MedicalFormViewState<M>, intent: MedicalFormIntent<M>)
+  protected suspend fun handleFillForm(state: MedicalFormViewState<M>, intent: MedicalFormIntent.FillForm<M>) {
+    when (state) {
+      is MedicalFormViewState.Object -> fillFormModel(intent.`object`)
+      else -> throw UnimplementedViewStateException(intent, state)
+    }
+  }
 
-  abstract suspend fun createOrSaveObject(state: MedicalFormViewState<M>, intent: MedicalFormIntent<M>)
+  protected suspend fun handleCreateOrSaveObject(state: MedicalFormViewState<M>, intent: MedicalFormIntent.CreateOrSaveObject<M>) {
+    when (state) {
+      is MedicalFormViewState.Object -> createOrSaveObject(intent.objectId, intent.`object`)
+      else -> throw UnimplementedViewStateException(intent, state)
+    }
+  }
 
-  abstract suspend fun deleteObject(state: MedicalFormViewState<M>, intent: MedicalFormIntent<M>)
+  protected suspend fun handleDeleteObject(state: MedicalFormViewState<M>, intent: MedicalFormIntent.DeleteObject<M>) {
+    when (state) {
+      is MedicalFormViewState.Object -> deleteObject(intent.objectId)
+      else -> throw UnimplementedViewStateException(intent, state)
+    }
+  }
+
+  protected abstract suspend fun fetchObject()
+  protected abstract suspend fun fillFormModel(model: M)
+  protected abstract suspend fun createOrSaveObject(id: Long?, model: M)
+  protected abstract suspend fun deleteObject(id: Long)
 }

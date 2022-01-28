@@ -22,39 +22,8 @@ class TherapyFormViewModel @Inject constructor(
   private val repository: MedicalTherapyRepository,
 ) : MedicalFormViewModel<Destination.TherapyForm, TherapyFormModel>() {
 
-  override suspend fun enterScreen(state: MedicalFormViewState<TherapyFormModel>) {
-    fetchTherapy()
-  }
-
-  override suspend fun fillForm(state: MedicalFormViewState<TherapyFormModel>, intent: MedicalFormIntent<TherapyFormModel>) {
-  }
-
-  override suspend fun createOrSaveObject(state: MedicalFormViewState<TherapyFormModel>, intent: MedicalFormIntent<TherapyFormModel>) {
-  }
-
-  override suspend fun deleteObject(state: MedicalFormViewState<TherapyFormModel>, intent: MedicalFormIntent<TherapyFormModel>) {
-  }
-
-
-  private suspend fun reduce(state: MedicalFormViewState.Initial<TherapyFormModel>, intent: MedicalFormIntent<TherapyFormModel>) {
-    when (intent) {
-      is MedicalFormIntent.EnterScreen -> fetchTherapy()
-      else -> throw UnimplementedViewStateException(intent, state)
-    }
-  }
-
-  private suspend fun reduce(state: MedicalFormViewState.Object<TherapyFormModel>, intent: MedicalFormIntent<TherapyFormModel>) {
-    when (intent) {
-      is MedicalFormIntent.EnterScreen -> Unit
-      is MedicalFormIntent.FillForm -> fillTherapy(intent.`object`)
-      is MedicalFormIntent.CreateOrSaveObject -> createOrSaveTherapy(intent.objectId, intent.`object`)
-      is MedicalFormIntent.DeleteObject -> deleteTherapy(intent.objectId)
-      // else -> throw UnimplementedViewStateException(intent, state)
-    }
-  }
-
-
-  private suspend fun fetchTherapy(therapyId: Long? = destination.therapyId) {
+  override suspend fun fetchObject() {
+    val therapyId: Long? = destination.therapyId
     val model =
       if (therapyId != null)
         map(repository.getTherapy(therapyId))
@@ -67,27 +36,27 @@ class TherapyFormViewModel @Inject constructor(
     )
   }
 
-  private fun fillTherapy(therapy: TherapyFormModel) {
-    uiState = MedicalFormViewState.Object(destination.therapyId, therapy)
+  override suspend fun fillFormModel(model: TherapyFormModel) {
+    uiState = MedicalFormViewState.Object(destination.therapyId, model)
   }
 
-  private suspend fun createOrSaveTherapy(therapyId: Long?, therapy: TherapyFormModel) {
+  override suspend fun createOrSaveObject(id: Long?, model: TherapyFormModel) {
     val failedFields = TherapyFormModel.FailedFields(
-      therapy.name.isEmptyOrBlank(),
-      therapy.description.isEmptyOrBlank(),
-      therapy.startDate.isAfter(therapy.endDate),
+      model.name.isEmptyOrBlank(),
+      model.description.isEmptyOrBlank(),
+      model.startDate.isAfter(model.endDate),
     )
 
     if (failedFields.has) {
       uiState = MedicalFormViewState.Object(
-        therapyId,
-        therapy.copy(failedFields = failedFields),
+        id,
+        model.copy(failedFields = failedFields),
       )
     } else {
-      val entity = map(therapyId, therapy)
-      val entityId = if (therapyId != null) {
+      val entity = map(id, model)
+      val entityId = if (id != null) {
         repository.updateTherapy(entity)
-        therapyId
+        id
       } else {
         repository.createTherapy(entity)
       }
@@ -96,9 +65,9 @@ class TherapyFormViewModel @Inject constructor(
     }
   }
 
-  private suspend fun deleteTherapy(therapyId: Long) {
-    repository.deleteTherapy(therapyId)
+  override suspend fun deleteObject(id: Long) {
+    repository.deleteTherapy(id)
 
-    uiState = MedicalFormViewState.DeleteOnSuccessful(therapyId)
+    uiState = MedicalFormViewState.DeleteOnSuccessful(id)
   }
 }
