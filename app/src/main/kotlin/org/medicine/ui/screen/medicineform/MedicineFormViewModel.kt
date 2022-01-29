@@ -42,7 +42,7 @@ class MedicineFormViewModel @Inject constructor(
     val failedFields = MedicineFormModel.FailedFields(
       model.name.isEmptyOrBlank(),
       model.description.isEmptyOrBlank(),
-      model.startDate.isAfter(model.endDate),
+      (model.startDate <= model.endDate),
       model.times.isEmpty()
     )
 
