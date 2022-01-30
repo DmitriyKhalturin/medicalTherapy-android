@@ -21,6 +21,7 @@ import org.medicine.ui.screen.therapyschedule.composable.editor.MedicineSchedule
 import org.medicine.ui.screen.therapyschedule.composable.editor.ScheduleEditorType
 import org.medicine.ui.screen.therapyschedule.composable.editor.TherapyScheduleEditor
 import org.medicine.ui.screen.therapyschedule.model.TherapyScheduleViewState
+import java.time.LocalDate
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -35,6 +36,7 @@ internal fun TherapyScheduleView(
   uiState: TherapyScheduleViewState,
   therapyId: Long,
   navigateUp: () -> Unit,
+  openDaySchedule: (LocalDate) -> Unit,
   therapyOnRefresh: () -> Unit,
 ) {
   val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Revealed)
@@ -82,7 +84,9 @@ internal fun TherapyScheduleView(
                 endDate = therapy.endDate,
                 medicines = therapy.medicines,
                 deals = therapy.deals,
-                dateOnClick = {},
+                dateOnClick = {
+                  openDaySchedule(it)
+                },
                 medicineOnClick = {},
                 dealOnClick = {},
                 dealsOnClick = {},

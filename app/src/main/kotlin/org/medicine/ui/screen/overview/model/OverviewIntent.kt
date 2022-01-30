@@ -5,5 +5,5 @@ package org.medicine.ui.screen.overview.model
  * for Medicine on 13.11.2021 7:21.
  */
 sealed class OverviewIntent {
-  object EnterScreen: OverviewIntent()
+  object EnterScreen : OverviewIntent()
 }
