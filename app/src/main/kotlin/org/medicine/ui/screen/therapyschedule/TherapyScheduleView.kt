@@ -63,7 +63,7 @@ internal fun TherapyScheduleView(
       TopAppBar(
         navigationIcon = {},
         title = {
-          if (uiState is TherapyScheduleViewState.Therapy) {
+          if (uiState is TherapyScheduleViewState.TherapySchedule) {
             Text(text = uiState.therapy.name)
           }
         },
@@ -76,7 +76,7 @@ internal fun TherapyScheduleView(
       Box(modifier = Modifier.fillMaxSize()) {
         when (uiState) {
           is TherapyScheduleViewState.Initial -> Unit
-          is TherapyScheduleViewState.Therapy -> uiState.run {
+          is TherapyScheduleViewState.TherapySchedule -> uiState.run {
             Column {
               MedicalTherapySchedule(
                 modifier = Modifier.weight(weight = 1f, fill = true),

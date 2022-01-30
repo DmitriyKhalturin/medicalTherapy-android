@@ -30,7 +30,7 @@ fun TherapyScheduleScreen(navController: NavController, viewModel: TherapySchedu
     viewModel.destination.therapyId,
     { navController.navigateUp() },
     { therapyId, date -> navController.navigate(Destination.DaySchedule(therapyId, date)) },
-    { viewModel.obtainIntent(TherapyScheduleIntent.RefreshTherapy) }
+    { viewModel.obtainIntent(TherapyScheduleIntent.RefreshTherapySchedule) }
   )
 
   LaunchedEffect(viewModel) {

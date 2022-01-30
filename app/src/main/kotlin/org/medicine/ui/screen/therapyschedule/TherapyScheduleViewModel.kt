@@ -30,31 +30,31 @@ class TherapyScheduleViewModel @Inject constructor(
     launch {
       when (val state = uiState) {
         is TherapyScheduleViewState.Initial -> reduce(state, intent)
-        is TherapyScheduleViewState.Therapy -> reduce(state, intent)
+        is TherapyScheduleViewState.TherapySchedule -> reduce(state, intent)
       }
     }
   }
 
   private suspend fun reduce(state: TherapyScheduleViewState.Initial, intent: TherapyScheduleIntent) {
     when (intent) {
-      is TherapyScheduleIntent.EnterScreen -> fetchTherapy()
+      is TherapyScheduleIntent.EnterScreen -> fetchTherapySchedule()
       else -> throw UnimplementedViewStateException(intent, state)
     }
   }
 
-  private suspend fun reduce(state: TherapyScheduleViewState.Therapy, intent: TherapyScheduleIntent) {
+  private suspend fun reduce(state: TherapyScheduleViewState.TherapySchedule, intent: TherapyScheduleIntent) {
     when (intent) {
-      is TherapyScheduleIntent.RefreshTherapy -> fetchTherapy()
+      is TherapyScheduleIntent.RefreshTherapySchedule -> fetchTherapySchedule()
       else -> throw UnimplementedViewStateException(intent, state)
     }
   }
 
 
-  private suspend fun fetchTherapy() {
+  private suspend fun fetchTherapySchedule() {
     val therapyId = destination.therapyId
     val model = map(repository.getTherapySchedule(therapyId))
 
-    uiState = TherapyScheduleViewState.Therapy(
+    uiState = TherapyScheduleViewState.TherapySchedule(
       therapyId,
       model,
     )
