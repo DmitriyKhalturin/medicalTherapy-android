@@ -36,7 +36,7 @@ internal fun TherapyScheduleView(
   uiState: TherapyScheduleViewState,
   therapyId: Long,
   navigateUp: () -> Unit,
-  openDaySchedule: (LocalDate) -> Unit,
+  openDaySchedule: (Long, LocalDate) -> Unit,
   therapyOnRefresh: () -> Unit,
 ) {
   val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Revealed)
@@ -85,7 +85,7 @@ internal fun TherapyScheduleView(
                 medicines = therapy.medicines,
                 deals = therapy.deals,
                 dateOnClick = {
-                  openDaySchedule(it)
+                  openDaySchedule(therapy.id, it)
                 },
                 medicineOnClick = {},
                 dealOnClick = {},
