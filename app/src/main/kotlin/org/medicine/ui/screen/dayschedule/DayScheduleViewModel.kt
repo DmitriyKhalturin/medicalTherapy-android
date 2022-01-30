@@ -9,8 +9,8 @@ import org.medicine.navigation.viewmodel.NavigationViewModel
 import org.medicine.source.repository.MedicalTherapyRepository
 import org.medicine.tools.viewmodel.IntentHandler
 import org.medicine.ui.screen.dayschedule.model.DayScheduleIntent
+import org.medicine.ui.screen.dayschedule.model.DayScheduleModelMapper.map
 import org.medicine.ui.screen.dayschedule.model.DayScheduleViewState
-import org.medicine.ui.screen.therapyschedule.model.TherapyScheduleModelMapper.map
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -41,7 +41,7 @@ class DayScheduleViewModel @Inject constructor(
   }
 
   private suspend fun fetchDaySchedule(therapyId: Long = destination.therapyId, date: LocalDate = destination.date) {
-    val therapyFormModel = map(repository.getTherapyScheduleByDay(therapyId, date))
+    val therapyFormModel = map(repository.getTherapyScheduleByDay(therapyId, date), date)
 
     uiState = DayScheduleViewState.TherapySchedule(
       therapyId,
