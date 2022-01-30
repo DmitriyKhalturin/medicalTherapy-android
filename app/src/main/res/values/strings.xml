@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">Therapy</string>
+  <string name="app_name">Medical Therapy</string>
 
   <string name="therapyDateFormat">dd MMM YYYY</string>
   <string name="dealDateFormat">dd MMMM</string>

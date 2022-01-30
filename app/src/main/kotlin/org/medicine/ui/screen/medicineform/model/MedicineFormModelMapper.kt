@@ -6,6 +6,7 @@ import org.medicine.source.database.entity.MedicineEntity
 import org.medicine.source.database.entity.TherapyEntity
 import org.medicine.tools.EMPTY_STRING
 import org.medicine.tools.time.daysUntil
+import org.medicine.tools.time.plusDay
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -37,7 +38,7 @@ object MedicineFormModelMapper {
       type.scheduleToSource(),
       dosage,
       startDate,
-      startDate.daysUntil(endDate),
+      startDate.daysUntil(endDate).plusDay(),
       times,
       therapyId,
     )

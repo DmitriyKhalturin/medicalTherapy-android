@@ -54,7 +54,7 @@ fun stubTherapyForm(): TherapyFormModel {
     EMPTY_STRING,
     todayDate,
     todayDate.plusDays(5),
-    TherapyFormModel.FailedFields(description = true),
+    TherapyFormModel.FailedFields(description = true, date = true),
   )
 }
 

@@ -7,7 +7,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
@@ -34,12 +37,9 @@ internal fun TherapyScheduleView(
   navigateUp: () -> Unit,
   therapyOnRefresh: () -> Unit,
 ) {
-  val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Concealed)
+  val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Revealed)
   val coroutineScope = rememberCoroutineScope()
-
-  LaunchedEffect(scaffoldState) {
-    scaffoldState.reveal()
-  }
+  val scheduleEditorType = remember { mutableStateOf(ScheduleEditorType.NONE) }
 
   BackHandler(enabled = scaffoldState.isConcealed) {
     coroutineScope.launch {
@@ -54,8 +54,6 @@ internal fun TherapyScheduleView(
       scaffoldState.reveal()
     }
   }
-
-  val scheduleEditorType = remember { mutableStateOf(ScheduleEditorType.THERAPY) }
 
   BackdropScaffold(
     scaffoldState = scaffoldState,
@@ -139,6 +137,7 @@ internal fun TherapyScheduleView(
                 refreshTherapy()
               },
             )
+          else -> Unit
         }
       }
     },

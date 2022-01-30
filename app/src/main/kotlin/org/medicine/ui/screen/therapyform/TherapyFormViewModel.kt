@@ -41,7 +41,7 @@ class TherapyFormViewModel @Inject constructor(
     val failedFields = TherapyFormModel.FailedFields(
       model.name.isEmptyOrBlank(),
       model.description.isEmptyOrBlank(),
-      (model.startDate <= model.endDate),
+      (model.startDate > model.endDate),
     )
 
     if (failedFields.has) {
