@@ -29,7 +29,11 @@ import java.util.*
 
 @Composable
 fun DaySchedule(daySchedule: DayScheduleModel) {
-  Column(modifier = Modifier.fillMaxSize()) {
+  Column(
+    modifier = Modifier
+      .fillMaxSize()
+      .padding(16.dp)
+  ) {
     Text(
       text = daySchedule.name,
       modifier = Modifier.fillMaxWidth(),
@@ -48,7 +52,7 @@ fun DaySchedule(daySchedule: DayScheduleModel) {
       modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
     )
 
-    Box(modifier = Modifier.padding(start = 16.dp)) {
+    Column(modifier = Modifier.padding(start = 16.dp)) {
       daySchedule.medicines.forEach {
         Row {
           Icon(
@@ -68,7 +72,7 @@ fun DaySchedule(daySchedule: DayScheduleModel) {
       modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
     )
 
-    Box(modifier = Modifier.padding(start = 16.dp)) {
+    Column(modifier = Modifier.padding(start = 16.dp)) {
       daySchedule.deals.forEach {
         Text(text = "${it.name} в ${timeFormatter.format(it.time)}")
       }

@@ -111,6 +111,16 @@ fun stubDaySchedule(): DayScheduleModel {
         times = listOf(
           LocalTime.now()
         ),
+      ),
+      DayScheduleModel.Medicine(
+        id = -1L,
+        name = "Спрей",
+        description = EMPTY_STRING,
+        type = MedicineType.PILLS,
+        dosage = EMPTY_STRING,
+        times = listOf(
+          LocalTime.now()
+        ),
       )
     ),
     listOf(
