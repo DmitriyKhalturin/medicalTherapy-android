@@ -25,7 +25,6 @@ fun DayScheduleScreen(navController: NavController, viewModel: DayScheduleViewMo
 
   DayScheduleView(
     uiState,
-    { navController.navigateUp() }
   )
 
   LaunchedEffect(viewModel) {

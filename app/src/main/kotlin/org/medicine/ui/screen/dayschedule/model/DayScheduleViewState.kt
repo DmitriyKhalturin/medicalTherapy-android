@@ -6,5 +6,5 @@ package org.medicine.ui.screen.dayschedule.model
  */
 sealed class DayScheduleViewState {
   object Initial : DayScheduleViewState()
-  data class TherapySchedule(val therapyId: Long, val therapy: DayScheduleModel) : DayScheduleViewState()
+  data class TherapySchedule(val therapyId: Long, val daySchedule: DayScheduleModel) : DayScheduleViewState()
 }

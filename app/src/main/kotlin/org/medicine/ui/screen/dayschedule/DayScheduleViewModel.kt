@@ -41,11 +41,11 @@ class DayScheduleViewModel @Inject constructor(
   }
 
   private suspend fun fetchDaySchedule(therapyId: Long = destination.therapyId, date: LocalDate = destination.date) {
-    val therapyFormModel = map(repository.getTherapyScheduleByDay(therapyId, date), date)
+    val dayScheduleModel = map(repository.getTherapyScheduleByDay(therapyId, date), date)
 
     uiState = DayScheduleViewState.TherapySchedule(
       therapyId,
-      therapyFormModel,
+      dayScheduleModel,
     )
   }
 }
