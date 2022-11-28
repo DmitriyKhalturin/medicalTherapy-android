@@ -22,29 +22,24 @@ android {
 }
 
 dependencies {
+
   implementation("androidx.core:core-ktx:${Version.coreKtx}")
-
-  inject(Dependency.coroutine)
-
   implementation("androidx.appcompat:appcompat:${Version.appCompat}")
   implementation("com.google.android.material:material:${Version.material}")
-  implementation("com.google.accompanist:accompanist-systemuicontroller:${Version.systemUIController}")
   implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Version.lifecycle}")
 
+  inject(Dependency.coroutine)
   inject(Dependency.compose)
-
-  implementation("androidx.activity:activity-compose:${Version.activityCompose}")
-  implementation("androidx.constraintlayout:constraintlayout-compose:${Version.constraintlayoutCompose}")
-  implementation("androidx.compose.material:material-icons-extended:${Version.compose}")
-
   inject(Dependency.hilt)
-
-  implementation("androidx.navigation:navigation-compose:${Version.navigationCompose}")
-  implementation("androidx.hilt:hilt-navigation-compose:${Version.hiltNavigationCompose}")
+  inject(Dependency.accompanist)
+  inject(Dependency.navigation)
 
   implementation(project(":schedule"))
   implementation(project(":source"))
   implementation(project(":tools"))
 
   inject(Dependency.junitTest)
+
+  // https://stackoverflow.com/questions/72807725/noclassdeffounderror-could-not-initialize-class-androidx-customview-poolingcont
+  debugImplementation("androidx.customview:customview-poolingcontainer:1.0.0")
 }

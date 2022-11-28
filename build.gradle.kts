@@ -26,9 +26,10 @@ subprojects {
   }
 
   tasks {
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>{
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
       kotlinOptions {
-        jvmTarget = "1.8" }
+        jvmTarget = "1.8"
+      }
     }
   }
 
@@ -39,8 +40,7 @@ subprojects {
     (android as com.android.build.gradle.BaseExtension).apply {
       val isApplicationModule = android is com.android.build.gradle.AppExtension
 
-      setCompileSdkVersion(Version.compileSdk)
-      buildToolsVersion = Version.buildTools
+      setCompileSdkVersion(Version.targetSdk)
 
       defaultConfig {
         minSdk = Version.minSdk
