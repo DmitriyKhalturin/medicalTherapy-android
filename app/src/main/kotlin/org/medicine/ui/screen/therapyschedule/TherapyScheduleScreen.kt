@@ -6,6 +6,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.medicine.common.ui.setSystemUiColors
+import org.medicine.navigation.Destination
+import org.medicine.navigation.navigate
 import org.medicine.ui.screen.therapyschedule.model.TherapyScheduleIntent
 
 /**
@@ -27,7 +29,8 @@ fun TherapyScheduleScreen(navController: NavController, viewModel: TherapySchedu
     uiState,
     viewModel.destination.therapyId,
     { navController.navigateUp() },
-    { viewModel.obtainIntent(TherapyScheduleIntent.RefreshTherapy) }
+    { therapyId, date -> navController.navigate(Destination.DaySchedule(therapyId, date)) },
+    { viewModel.obtainIntent(TherapyScheduleIntent.RefreshTherapySchedule) }
   )
 
   LaunchedEffect(viewModel) {

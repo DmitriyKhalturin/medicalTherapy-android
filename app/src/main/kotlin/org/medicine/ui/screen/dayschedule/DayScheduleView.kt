@@ -1,0 +1,20 @@
+package org.medicine.ui.screen.dayschedule
+
+import androidx.compose.runtime.Composable
+import org.medicine.ui.screen.dayschedule.composable.DaySchedule
+import org.medicine.ui.screen.dayschedule.model.DayScheduleViewState
+
+/**
+ * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
+ * for MedicalTherapy on 30.01.2022 21:22.
+ */
+
+@Composable
+fun DayScheduleView(
+  uiState: DayScheduleViewState,
+) {
+  when (uiState) {
+    is DayScheduleViewState.Initial -> Unit
+    is DayScheduleViewState.TherapySchedule -> DaySchedule(uiState.daySchedule)
+  }
+}

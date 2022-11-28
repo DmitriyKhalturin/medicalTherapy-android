@@ -7,7 +7,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
@@ -18,6 +21,7 @@ import org.medicine.ui.screen.therapyschedule.composable.editor.MedicineSchedule
 import org.medicine.ui.screen.therapyschedule.composable.editor.ScheduleEditorType
 import org.medicine.ui.screen.therapyschedule.composable.editor.TherapyScheduleEditor
 import org.medicine.ui.screen.therapyschedule.model.TherapyScheduleViewState
+import java.time.LocalDate
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -32,14 +36,12 @@ internal fun TherapyScheduleView(
   uiState: TherapyScheduleViewState,
   therapyId: Long,
   navigateUp: () -> Unit,
+  openDaySchedule: (Long, LocalDate) -> Unit,
   therapyOnRefresh: () -> Unit,
 ) {
-  val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Concealed)
+  val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Revealed)
   val coroutineScope = rememberCoroutineScope()
-
-  LaunchedEffect(scaffoldState) {
-    scaffoldState.reveal()
-  }
+  val scheduleEditorType = remember { mutableStateOf(ScheduleEditorType.NONE) }
 
   BackHandler(enabled = scaffoldState.isConcealed) {
     coroutineScope.launch {
@@ -55,15 +57,13 @@ internal fun TherapyScheduleView(
     }
   }
 
-  val scheduleEditorType = remember { mutableStateOf(ScheduleEditorType.THERAPY) }
-
   BackdropScaffold(
     scaffoldState = scaffoldState,
     appBar = {
       TopAppBar(
         navigationIcon = {},
         title = {
-          if (uiState is TherapyScheduleViewState.Therapy) {
+          if (uiState is TherapyScheduleViewState.TherapySchedule) {
             Text(text = uiState.therapy.name)
           }
         },
@@ -76,7 +76,7 @@ internal fun TherapyScheduleView(
       Box(modifier = Modifier.fillMaxSize()) {
         when (uiState) {
           is TherapyScheduleViewState.Initial -> Unit
-          is TherapyScheduleViewState.Therapy -> uiState.run {
+          is TherapyScheduleViewState.TherapySchedule -> uiState.run {
             Column {
               MedicalTherapySchedule(
                 modifier = Modifier.weight(weight = 1f, fill = true),
@@ -84,7 +84,9 @@ internal fun TherapyScheduleView(
                 endDate = therapy.endDate,
                 medicines = therapy.medicines,
                 deals = therapy.deals,
-                dateOnClick = {},
+                dateOnClick = {
+                  openDaySchedule(therapy.id, it)
+                },
                 medicineOnClick = {},
                 dealOnClick = {},
                 dealsOnClick = {},
@@ -139,6 +141,7 @@ internal fun TherapyScheduleView(
                 refreshTherapy()
               },
             )
+          else -> Unit
         }
       }
     },

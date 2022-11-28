@@ -5,7 +5,6 @@ import org.medicine.model.medicine.sourceToSchedule
 import org.medicine.source.database.entity.MedicineEntity
 import org.medicine.source.database.entity.TherapyEntity
 import org.medicine.tools.EMPTY_STRING
-import org.medicine.tools.time.daysUntil
 
 /**
  * Created by Dmitriy Khalturin <dmitry.halturin.86@gmail.com>
@@ -29,7 +28,7 @@ object MedicineFormModelMapper {
     )
   }
 
-  fun map(id: Long?, medicine: MedicineFormModel, therapyId: Long) = medicine.run {
+  fun map(id: Long?, medicine: MedicineFormModel) = medicine.run {
     MedicineEntity(
       (id ?: 0L),
       name,
@@ -37,7 +36,7 @@ object MedicineFormModelMapper {
       type.scheduleToSource(),
       dosage,
       startDate,
-      startDate.daysUntil(endDate),
+      endDate,
       times,
       therapyId,
     )

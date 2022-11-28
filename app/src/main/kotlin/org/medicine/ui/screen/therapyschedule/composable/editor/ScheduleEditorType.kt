@@ -5,6 +5,7 @@ package org.medicine.ui.screen.therapyschedule.composable.editor
  * for MedicalTherapy on 15.01.2022 10:29.
  */
 enum class ScheduleEditorType {
+  NONE,
   THERAPY,
   MEDICINE,
   DEAL,

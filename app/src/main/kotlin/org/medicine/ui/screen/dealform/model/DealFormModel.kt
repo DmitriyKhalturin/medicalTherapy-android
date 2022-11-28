@@ -44,6 +44,6 @@ data class DealFormModel(
   ) {
 
     val has:Boolean
-      get() = name || description || date || time
+      get() = name || date || time
   }
 }

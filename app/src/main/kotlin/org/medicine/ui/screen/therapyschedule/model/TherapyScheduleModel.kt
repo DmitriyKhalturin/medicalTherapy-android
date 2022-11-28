@@ -9,6 +9,7 @@ import java.time.LocalDate
  * for MedicalTherapy on 11.01.2022 20:43.
  */
 data class TherapyScheduleModel(
+  val id: Long,
   val name: String,
   val startDate: LocalDate,
   val endDate: LocalDate,

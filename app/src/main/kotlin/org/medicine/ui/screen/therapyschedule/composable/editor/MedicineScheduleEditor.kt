@@ -1,6 +1,7 @@
 package org.medicine.ui.screen.therapyschedule.composable.editor
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.medicine.navigation.Destination
 import org.medicine.ui.common.model.MedicalFormIntent
@@ -18,9 +19,13 @@ fun MedicineScheduleEditor(
   _medicineId: Long? = null,
   therapyOnRefresh: () -> Unit,
 ) {
-  val viewModel = hiltViewModel<MedicineFormViewModel>().apply {
-    destination = Destination.MedicineForm(therapyId, _medicineId)
-    obtainIntent(MedicalFormIntent.EnterScreen())
+  val viewModel = hiltViewModel<MedicineFormViewModel>()
+
+  LaunchedEffect(viewModel) {
+    viewModel.run {
+      destination = Destination.MedicineForm(therapyId, _medicineId)
+      obtainIntent(MedicalFormIntent.EnterScreen())
+    }
   }
 
   val uiState = viewModel.uiState

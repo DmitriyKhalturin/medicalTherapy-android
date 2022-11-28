@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.datepicker.*
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat.CLOCK_24H
-import org.medicine.tools.time.plusDay
+import org.medicine.tools.time.plusDayInMilliseconds
 import org.medicine.tools.time.toLocalDate
 import org.medicine.tools.time.toMilliseconds
 import java.time.LocalDate
@@ -34,7 +34,7 @@ internal fun showDatePickerDialog(activity: AppCompatActivity, date: LocalDate, 
   val fragmentManager = activity.supportFragmentManager
   val builder = MaterialDatePicker.Builder
     .datePicker()
-  val datePicker = builder.setSelection(date.toMilliseconds().plusDay())
+  val datePicker = builder.setSelection(date.toMilliseconds().plusDayInMilliseconds())
     .setCalendarConstraints(constraints.build())
     .build()
 

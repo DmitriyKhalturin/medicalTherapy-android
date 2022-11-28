@@ -14,6 +14,6 @@ sealed class Destination(val route: Route) : Parcelable {
   @Parcelize data class TherapyForm(val therapyId: Long? = null) : Destination(Route.TherapyForm)
   @Parcelize data class MedicineForm(val therapyId: Long, val medicineId: Long? = null) : Destination(Route.MedicineForm)
   @Parcelize data class DealForm(val therapyId: Long, val dealId: Long? = null) : Destination(Route.DealForm)
-  @Parcelize data class DaySchedule(val date: LocalDate) : Destination(Route.DaySchedule)
+  @Parcelize data class DaySchedule(val therapyId: Long, val date: LocalDate) : Destination(Route.DaySchedule)
   @Parcelize object ApplicationInfo : Destination(Route.ApplicationInfo)
 }

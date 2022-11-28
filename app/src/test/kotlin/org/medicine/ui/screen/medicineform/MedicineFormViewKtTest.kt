@@ -4,7 +4,7 @@ import org.junit.Test
 import java.time.LocalTime
 
 /**
- * Created by Dmitriy Khalturin <dmitry.halturin.86></dmitry.halturin.86>@gmail.com>
+ * Created by Dmitriy Khalturin <dmitry.halturin.86>
  * for MedicalTherapy on 24.01.2022 4:31.
  */
 class MedicineFormViewKtTest {

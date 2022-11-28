@@ -53,6 +53,6 @@ data class MedicineFormModel(
   ) {
 
     val has: Boolean
-      get() = name || description || date || times
+      get() = name || date || times
   }
 }

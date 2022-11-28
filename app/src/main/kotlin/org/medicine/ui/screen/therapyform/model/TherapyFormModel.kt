@@ -36,6 +36,6 @@ data class TherapyFormModel(
   ) {
 
     val has: Boolean
-      get() = name || description || date
+      get() = name || date
   }
 }

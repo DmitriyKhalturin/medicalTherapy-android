@@ -46,7 +46,7 @@ fun buildNavGraph(navController: NavController): NavGraph = remember {
     }
 
     composable(Route.DaySchedule) {
-      DayScheduleScreen(viewModel = navigationViewModel())
+      DayScheduleScreen(navController = navController, viewModel = navigationViewModel())
     }
 
     composable(Route.ApplicationInfo) {

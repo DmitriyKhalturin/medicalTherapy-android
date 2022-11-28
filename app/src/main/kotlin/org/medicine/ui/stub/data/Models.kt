@@ -1,7 +1,9 @@
 package org.medicine.ui.stub.data
 
 import org.medicine.schedule.data.Medicine
+import org.medicine.source.database.entity.MedicineType
 import org.medicine.tools.EMPTY_STRING
+import org.medicine.ui.screen.dayschedule.model.DayScheduleModel
 import org.medicine.ui.screen.dealform.model.DealFormModel
 import org.medicine.ui.screen.medicineform.model.MedicineFormModel
 import org.medicine.ui.screen.overview.model.TherapyModel
@@ -54,7 +56,7 @@ fun stubTherapyForm(): TherapyFormModel {
     EMPTY_STRING,
     todayDate,
     todayDate.plusDays(5),
-    TherapyFormModel.FailedFields(description = true),
+    TherapyFormModel.FailedFields(description = true, date = true),
   )
 }
 
@@ -90,5 +92,44 @@ fun stubMedicineForm(): MedicineFormModel {
     today,
     afterThreeDays,
     MedicineFormModel.FailedFields(description = true)
+  )
+}
+
+fun stubDaySchedule(): DayScheduleModel {
+
+
+  return DayScheduleModel(
+    name = "Текущий день",
+    LocalDate.now(),
+    listOf(
+      DayScheduleModel.Medicine(
+        id = -1L,
+        name = "Аспирин",
+        description = "Принимать после еды",
+        type = MedicineType.PILLS,
+        dosage = "1 шт.",
+        times = listOf(
+          LocalTime.now()
+        ),
+      ),
+      DayScheduleModel.Medicine(
+        id = -1L,
+        name = "Спрей",
+        description = EMPTY_STRING,
+        type = MedicineType.PILLS,
+        dosage = EMPTY_STRING,
+        times = listOf(
+          LocalTime.now()
+        ),
+      )
+    ),
+    listOf(
+      DayScheduleModel.Deal(
+        id = -1L,
+        name = "Встреча",
+        description = "На Майне",
+        time = LocalTime.now(),
+      )
+    ),
   )
 }

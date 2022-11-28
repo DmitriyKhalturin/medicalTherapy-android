@@ -12,6 +12,7 @@ object TherapyScheduleModelMapper {
 
   fun map(embedded: TherapyScheduleEmbedded): TherapyScheduleModel = embedded.run {
     TherapyScheduleModel(
+      therapy.id,
       therapy.name,
       therapy.startDate,
       therapy.endDate,

@@ -2,7 +2,6 @@ package org.medicine.ui.screen.therapyform.model
 
 import org.medicine.source.database.entity.TherapyEntity
 import org.medicine.tools.EMPTY_STRING
-import org.medicine.tools.time.daysUntil
 
 object TherapyFormModelMapper {
 
@@ -21,7 +20,7 @@ object TherapyFormModelMapper {
       name,
       description,
       startDate,
-      startDate.daysUntil(endDate),
+      endDate,
     )
   }
 }
